@@ -46,5 +46,4 @@ public class Withdrawal {
 		return "Withdrawal [street=" + street + ", postalCode=" + postalCode + ", city=" + city + "]";
 	}
     
-    
 }
