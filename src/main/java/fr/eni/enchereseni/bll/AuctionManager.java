@@ -19,7 +19,7 @@ public interface AuctionManager {
     List<Bid> getUserBids(String username);
     Bid getHighestBidForAuction(int auctionId);
     List<Auction> getUserActiveAuctions(String username);
-
+ 
     // Gestion des statuts d'article
     void markItemAsForSale(int auctionId);
     void markItemAsSold(int auctionId);

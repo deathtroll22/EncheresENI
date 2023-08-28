@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchereseni.bo.Auction;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.dal.util.ConnectionProvider;
 
@@ -145,5 +146,83 @@ public class AuctionDAOImpl implements AuctionDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void createAuction(Auction auction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateAuction(Auction auction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteAuction(int auctionId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Auction getAuctionById(int auctionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Auction> getAuctionsBySeller(String sellerName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Auction> getAuctionsByName(String itemName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Auction> getAllAuctions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void placeBid(int auctionId, double bidAmount, String bidderName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeAuction(int auctionId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Auction> getActiveAuctions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Auction> getClosedAuctions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Auction> getWonAuctionsByUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Auction> getUserActiveAuctions(String username) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
