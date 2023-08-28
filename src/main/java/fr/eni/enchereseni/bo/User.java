@@ -1,4 +1,4 @@
-package fr.eni.user.bo;
+package fr.eni.enchereseni.bo;
 
 public class User {
 	nimporte quoi
