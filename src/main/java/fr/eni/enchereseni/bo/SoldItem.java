@@ -1,10 +1,15 @@
 package fr.eni.enchereseni.bo;
 
+import java.util.Date;
+
 public class SoldItem {
     private int itemNumber;
     private String itemName;
     private String itemDescription;
-    private double soldPrice;
+    private Date auctionStartDate;
+    private Date auctionEndDate;
+    private double startingPrice;
+    private double sellingPrice;
     private String saleStatus;
 
     // Empty constructor
@@ -12,11 +17,15 @@ public class SoldItem {
     }
 
     // Constructor with all variables
-    public SoldItem(int itemNumber, String itemName, String itemDescription, double soldPrice, String saleStatus) {
+    public SoldItem(int itemNumber, String itemName, String itemDescription, Date auctionStartDate,
+                    Date auctionEndDate, double startingPrice, double sellingPrice, String saleStatus) {
         this.itemNumber = itemNumber;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
-        this.soldPrice = soldPrice;
+        this.auctionStartDate = auctionStartDate;
+        this.auctionEndDate = auctionEndDate;
+        this.startingPrice = startingPrice;
+        this.sellingPrice = sellingPrice;
         this.saleStatus = saleStatus;
     }
 
@@ -45,12 +54,36 @@ public class SoldItem {
         this.itemDescription = itemDescription;
     }
 
-    public double getSoldPrice() {
-        return soldPrice;
+    public Date getAuctionStartDate() {
+        return auctionStartDate;
     }
 
-    public void setSoldPrice(double soldPrice) {
-        this.soldPrice = soldPrice;
+    public void setAuctionStartDate(Date auctionStartDate) {
+        this.auctionStartDate = auctionStartDate;
+    }
+
+    public Date getAuctionEndDate() {
+        return auctionEndDate;
+    }
+
+    public void setAuctionEndDate(Date auctionEndDate) {
+        this.auctionEndDate = auctionEndDate;
+    }
+
+    public double getStartingPrice() {
+        return startingPrice;
+    }
+
+    public void setStartingPrice(double startingPrice) {
+        this.startingPrice = startingPrice;
+    }
+
+    public double getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(double sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
     public String getSaleStatus() {
@@ -67,7 +100,10 @@ public class SoldItem {
         return "Item Number: " + itemNumber +
                 ", Item Name: " + itemName +
                 ", Item Description: " + itemDescription +
-                ", Sold Price: " + soldPrice +
+                ", Auction Start Date: " + auctionStartDate +
+                ", Auction End Date: " + auctionEndDate +
+                ", Starting Price: " + startingPrice +
+                ", Selling Price: " + sellingPrice +
                 ", Sale Status: " + saleStatus;
     }
 }
