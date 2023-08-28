@@ -33,5 +33,4 @@ public interface AuctionManager {
 
     // Autres fonctionnalités
     void cancelSaleById(int auctionId);
-    coucou
 }
