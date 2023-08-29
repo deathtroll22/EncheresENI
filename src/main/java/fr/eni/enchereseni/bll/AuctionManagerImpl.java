@@ -17,7 +17,7 @@ public class AuctionManagerImpl implements AuctionManager {
 	private AuctionDAO dao = DAOFact.getAuctionDAO(); 
 	
 	 // Gestion des utilisateurs :
-	@Override
+	/*@Override
 	public User login(String loginIdentifier, String password) throws AuctionManagerException {
         User user = dao.getUserByLoginIdentifier(loginIdentifier);
 
@@ -31,7 +31,7 @@ public class AuctionManagerImpl implements AuctionManager {
         }
 
         return user;
-    }
+    }*/
 
 	@Override
     public void createAccount(User account) throws AuctionManagerException {
@@ -55,7 +55,7 @@ public class AuctionManagerImpl implements AuctionManager {
         // insert user into bdd
         dao.createUser(account);
     }
-    
+    /*
     @Override
     public void logout(User user) throws AuctionManagerException {
         // nettoyage ?
@@ -101,10 +101,10 @@ public class AuctionManagerImpl implements AuctionManager {
     }
     
  // Map pour stocker les enchères avec leurs enchérisseurs et montants
-    private Map<Auction, Map<User, Double>> auctionBids = new HashMap<>();
+    private Map<Auction, Map<User, Integer>> auctionBids = new HashMap<>();
 
     @Override
-    public void bid(User bidder, Auction auction, double bidAmount) throws AuctionManagerException {
+    public void bid(User bidder, Auction auction, Integer bidAmount) throws AuctionManagerException {
         // Vérifiez si le montant de l'enchère est supérieur à l'enchère actuelle et si le crédit de l'utilisateur est suffisant
         if (bidAmount <= auction.getBidAmount() || bidder.getCredit() < bidAmount) {
             throw new AuctionManagerException("Invalid bid.");
@@ -115,11 +115,11 @@ public class AuctionManagerImpl implements AuctionManager {
             auctionBids.put(auction, new HashMap<>());
         }
 
-        Map<User, Double> bids = auctionBids.get(auction);
+        Map<User, Integer> bids = auctionBids.get(auction);
 
         // Mettre à jour le crédit du précédent plus offrant
         if (bids.containsKey(auction.getHighestBidder())) {
-            double previousBid = bids.get(auction.getHighestBidder());
+            Integer previousBid = bids.get(auction.getHighestBidder());
             auction.getHighestBidder().setCredit(auction.getHighestBidder().getCredit() + previousBid);
         }
 
@@ -154,7 +154,7 @@ public class AuctionManagerImpl implements AuctionManager {
         detailedAuction.setCanBid(!isSeller && isAuctionNotStarted);
 
         return detailedAuction;
-    }
+    }*/
 
     
 
