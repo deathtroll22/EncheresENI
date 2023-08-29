@@ -1,6 +1,8 @@
 package fr.eni.enchereseni.bll;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.eni.enchereseni.bo.Auction;
 import fr.eni.enchereseni.bo.SoldItem;
@@ -16,23 +18,22 @@ public class AuctionManagerImpl implements AuctionManager {
 	
 	 // Gestion des utilisateurs :
 	@Override
-    public User login(String loginIdentifier, String password) throws AuctionManagerException {
-        // find user on login identifier (username or email)
+	public User login(String loginIdentifier, String password) throws AuctionManagerException {
         User user = dao.getUserByLoginIdentifier(loginIdentifier);
 
         if (user == null) {
             throw new AuctionManagerException("Login identifier not found.");
         }
 
-        // verify passwords
-        if (!verifyPassword(password, user.getPassword())) {
+        // Verify passwords (you may replace this with your own logic)
+        if (!password.equals(user.getPassword())) {
             throw new AuctionManagerException("Incorrect password.");
         }
 
         return user;
     }
 
-    @Override
+	@Override
     public void createAccount(User account) throws AuctionManagerException {
         // username and email unique
         if (dao.isUsernameTaken(account.getUsername())) {
@@ -51,12 +52,8 @@ public class AuctionManagerImpl implements AuctionManager {
         // credit = 0
         account.setCredit(0);
 
-        // stocker en toute sécurité les mots de passe en bdd
-        String hashedPassword = hashPassword(account.getPassword());
-        account.setPassword(hashedPassword);
-
-        // insert user into ddb
-        dao.insertUser(account);
+        // insert user into bdd
+        dao.createUser(account);
     }
     
     @Override
@@ -76,7 +73,7 @@ public class AuctionManagerImpl implements AuctionManager {
     
     @Override
     public void editMyProfile(User user) throws AuctionManagerException {
-        dao.updateUserProfile(user);
+        dao.updateUser(user);
     }
     
     @Override
@@ -90,19 +87,22 @@ public class AuctionManagerImpl implements AuctionManager {
     // Gestion des enchères
     @Override
     public void sellItem(SoldItem item) throws AuctionManagerException {
-        dao.insertSoldItem(item);
+        dao.createItem(item);
     }
     
     @Override
     public List<Auction> getClosedAuctions() throws AuctionManagerException {
-        return dao.getClosedAuctions();
+        return dao.getUserClosedAuctions();
     }
     
     @Override
     public List<Auction> getActiveAuctions(User user) throws AuctionManagerException {
-        return dao.getActiveAuctionsForUser(user);
+        return dao.getUserActiveAuctions(user);
     }
     
+ // Map pour stocker les enchères avec leurs enchérisseurs et montants
+    private Map<Auction, Map<User, Double>> auctionBids = new HashMap<>();
+
     @Override
     public void bid(User bidder, Auction auction, double bidAmount) throws AuctionManagerException {
         // Vérifiez si le montant de l'enchère est supérieur à l'enchère actuelle et si le crédit de l'utilisateur est suffisant
@@ -110,19 +110,27 @@ public class AuctionManagerImpl implements AuctionManager {
             throw new AuctionManagerException("Invalid bid.");
         }
 
+        // Vérifier si l'enchère est déjà dans la liste des enchères avec les enchérisseurs et montants
+        if (!auctionBids.containsKey(auction)) {
+            auctionBids.put(auction, new HashMap<>());
+        }
+
+        Map<User, Double> bids = auctionBids.get(auction);
+
         // Mettre à jour le crédit du précédent plus offrant
-        if (auction.getHighestBidder() != null) {
-            auction.getHighestBidder().setCredit(auction.getHighestBidder().getCredit() + auction.getBidAmount());
+        if (bids.containsKey(auction.getHighestBidder())) {
+            double previousBid = bids.get(auction.getHighestBidder());
+            auction.getHighestBidder().setCredit(auction.getHighestBidder().getCredit() + previousBid);
         }
 
         // Déduire le montant de l'enchère du crédit de l'enchérisseur
         bidder.setCredit(bidder.getCredit() - bidAmount);
 
         // Mettre à jour les détails de l'enchère
-        auction.setHighestBidder(bidder);
-        auction.setBidAmount(bidAmount);
+        bids.put(bidder, bidAmount);
+        auctionBids.put(auction, bids);
 
-        // mettre à jour les détails de l'enchère et les crédits utilisateur
+        // Mettre à jour les détails de l'enchère et les crédits utilisateur
         dao.updateAuction(auction);
         dao.updateUserCredit(bidder);
     }
