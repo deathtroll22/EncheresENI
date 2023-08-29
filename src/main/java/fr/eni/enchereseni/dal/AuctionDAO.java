@@ -7,14 +7,15 @@ import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
 
 public interface AuctionDAO {
-	public void createItem(SoldItem item);
+	/*public void createItem(SoldItem item);
 	public void deleteItem(SoldItem item);
 	public void updateItem(SoldItem item);
 	public List<SoldItem> getAllItem();
-	public SoldItem findBySeller(int userID);
+	public SoldItem findBySeller(int userID);*/
 	
 	
 	public void createUser (User user);
+	/*
 	public void updateUser (User user);
 	public void deleteUser (User user);
 	public void suspendUser (User user);
@@ -37,12 +38,12 @@ public interface AuctionDAO {
 	public List<Auction> getAllAuctions();
 	
 	public User getUserByLoginIdentifier(String loginIdentifier);
-	public boolean isUsernameTaken(String username);
-	public boolean isEmailTaken(String email);
 	public User getUserProfileByUsername(String username);
 	public void updateUserCredit(User bidder);
 	public void markAuctionAsWon(User winner, Auction auction);
-	public Auction getAuctionDetails(Auction auction);
+	public Auction getAuctionDetails(Auction auction);*/
+	public boolean isUsernameTaken(String username);
+	public boolean isEmailTaken(String email);
 	
 	
 }
