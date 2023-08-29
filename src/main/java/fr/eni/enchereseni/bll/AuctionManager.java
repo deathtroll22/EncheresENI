@@ -31,21 +31,21 @@ public interface AuctionManager {
     void markItemAsDelivered(int auctionId);
 
     // Gestion des comptes
-    void createAccount(UserAccount account);
-    void deleteAccount(String username);
-    UserAccount findAccountByUsername(String username);
+    //void createAccount(UserAccount account);
+    //void deleteAccount(String username);
+    User findAccountByUsername(String username);
     void deactivateAccount(String username);
 
     // Autres fonctionnalités
     void cancelSaleById(int auctionId);
     
   //UTILISATEUR :
-    public void createAccount();
+    public void createAccount(User account) throws AuctionManagerException;
     public void login();
     public void forgotPassword();
     public void rememberMe();
     public void logout();
-    public void deleteAccount();
+    public void deleteAccount(String username);
     public void viewPoints();
     public void viewOtherUserProfile(User otherUser);
     public void viewOngoingAuctions();
