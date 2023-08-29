@@ -24,6 +24,7 @@ public class ConnectionProvider {
 			context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx");
 		} catch (NamingException e) {
+			e.printStackTrace();
 			// pas possible d'accéder à la configuration WEB, on va donc utilisé le
 			// settings.properties
 			try {
