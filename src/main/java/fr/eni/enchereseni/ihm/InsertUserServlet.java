@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
 import fr.eni.enchereseni.bll.AuctionManager;
-
+import fr.eni.enchereseni.bll.BLLException;
 
 
 import java.io.IOException;
