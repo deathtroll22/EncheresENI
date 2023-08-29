@@ -29,6 +29,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/insertUserServlet")
 public class InsertUserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Object user
+		// Votre code pour gérer le traitement GET (affichage de la JSP)
+    	request.setAttribute("user", user);
+        request.getRequestDispatcher("/WEB-INF/insertUser.jsp").forward(request, response);
+    }
        
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pseudo = request.getParameter("pseudo");
@@ -64,7 +72,4 @@ public class InsertUserServlet extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Gérer le doGet si nécessaire
-    }
 }
