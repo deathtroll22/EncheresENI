@@ -7,18 +7,38 @@ import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
 
 public interface AuctionManager {
-    // Gestion des enchères
-    void createAuction(Auction auction);
-    void updateAuction(Auction auction);
-    void deleteAuction(int auctionId);
-    Auction getAuctionById(int auctionId);
+    
+ // Gestion des utilisateurs :
+    public User login(String loginIdentifier, String password) throws AuctionManagerException;
+    public void createAccount(User account) throws AuctionManagerException;
+    public void logout(User user) throws AuctionManagerException;
+    public User viewOtherUserProfile(String username) throws AuctionManagerException;
+    public void editMyProfile(User user) throws AuctionManagerException;
+    public void deleteAccount(User user) throws AuctionManagerException;
+    // 2 public void rememberMe(User user) throws AuctionManagerException;
+    // 2 public void forgotPassword(String loginIdentifier) throws AuctionManagerException;
+    // 3 public void viewPoints();
+    
+ // Gestion des enchères
+    public void sellItem(SoldItem item) throws AuctionManagerException;
+    public List<Auction> getClosedAuctions() throws AuctionManagerException;
+    public List<Auction> getActiveAuctions(User user) throws AuctionManagerException;
+    public void bid(User bidder, Auction auction, double bidAmount) throws AuctionManagerException;
+    public void winSale(User winner, Auction auction) throws AuctionManagerException;
+    public Auction detailsAuction(User user, Auction auction) throws AuctionManagerException;
+    // 2 modifier une vente void updateAuction(Auction auction);
+    // 2 annuler une vente void deleteAuction(int auctionId);
+    // 2 photo pour la vente
+    // 3 pagination
+    // 3 voir les enchérisseurs
+    // 3 achat de crédits
+    
+    
+    /*Auction getAuctionById(int auctionId);
     List<Auction> getAuctionsBySeller(String sellerName);
     List<Auction> getAuctionsByName(String itemName);
     List<Auction> getAllAuctions();
-    void placeBid(int auctionId, double bidAmount, String bidderName);
     void closeAuction(int auctionId);
-    List<Auction> getActiveAuctions();
-    List<Auction> getClosedAuctions();
     List<Auction> getWonAuctionsByUser(String username);
     List<Bid> getBidsForAuction(int auctionId);
     List<Bid> getUserBids(String username);
@@ -30,38 +50,14 @@ public interface AuctionManager {
     void markItemAsSold(int auctionId);
     void markItemAsDelivered(int auctionId);
 
-    // Gestion des comptes
-    //void createAccount(UserAccount account);
-    //void deleteAccount(String username);
-    User findAccountByUsername(String username);
-    void deactivateAccount(String username);
 
     // Autres fonctionnalités
-    void cancelSaleById(int auctionId);
+    void cancelSaleById(int auctionId);*/
     
-  //UTILISATEUR :
-    public void createAccount(User account) throws AuctionManagerException;
-    public void login();
-    public void forgotPassword();
-    public void rememberMe();
-    public void logout();
-    public void deleteAccount(String username);
-    public void viewPoints();
-    public void viewOtherUserProfile(User otherUser);
-    public void viewOngoingAuctions();
     
-    //ACQUEREUR :
-    public void placeBid(SoldItem item, double bidAmount);
-    public void purchaseItem(SoldItem item);
     
-    //VENDEUR :
-    public void listItemsForSale(SoldItem item);
-    public void sellItem(SoldItem item);
-    public void cancelSale(SoldItem item);
+
     
-    //ADMINISTRATEUR :
-    public void disableUserAccount(User user);
-    public void deleteUserAccounts(List<User> users);
-    public void manageArticleCategories(Category category);
+
     
 }
