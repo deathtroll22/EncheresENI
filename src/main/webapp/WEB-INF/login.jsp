@@ -46,7 +46,7 @@
                         	</div>
                         </div>
                        
-                        <button type="submit" class="btn btn-primary">Create My Account</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                         <button type="button" class="btn btn-secondary" onclick="window.location.href='accueil.jsp'">Cancel</button>
                     </form>
                 </div>
