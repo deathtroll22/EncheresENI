@@ -258,19 +258,14 @@ public class AuctionDAOImpl implements AuctionDAO {
 
 
 
-
 	@Override
 	public void createAuction(Auction auction) {
 	    try (Connection con = ConnectionProvider.getConnection()) {
 	        PreparedStatement stmt = con.prepareStatement(CREATE_AUCTION, Statement.RETURN_GENERATED_KEYS);
-	        stmt.setString(1, auction.getItemName());
-	        stmt.setString(2, auction.getItemDescription());
-	        stmt.setDate(3, new java.sql.Date(auction.getAuctionStartDate().getTime()));
-	        stmt.setDate(4, new java.sql.Date(auction.getAuctionEndDate().getTime()));
-	        stmt.setDouble(5, auction.getStartingPrice());
-	        stmt.setDouble(6, auction.getSellingPrice());
-	        stmt.setInt(7, auction.getSellerId());
-	        stmt.setInt(8, auction.getCategoryId());
+	        stmt.setInt(1, User.getUserID());
+	        stmt.setInt(2, SoldItem.getItemId());
+	        stmt.setTimestamp(3, new java.sql.Timestamp(auction.getAuctionDate().getTime()));
+	        stmt.setInt(4, auction.getBidAmount());
 
 	        int affectedRows = stmt.executeUpdate();
 
@@ -289,7 +284,6 @@ public class AuctionDAOImpl implements AuctionDAO {
 	        e.printStackTrace();
 	    }
 	}
-
 	@Override
 	public void updateAuction(Auction auction) {
 	    try (Connection con = ConnectionProvider.getConnection()) {
