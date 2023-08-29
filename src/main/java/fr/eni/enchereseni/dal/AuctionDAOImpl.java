@@ -21,7 +21,8 @@ public class AuctionDAOImpl implements AuctionDAO {
 	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ? WHERE no_article = ?";
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
-	final String SELECT_BY_USER = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?";
+	final String SELECT_USER_BY_USERNAME = "SELECT * FROM Users WHERE username = ?";
+	final String SELECT_USER_BY_EMAIL = "SELECT * FROM Users WHERE email = ?";
 	
 	final String INSERT_USER = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur = ?";
@@ -32,7 +33,7 @@ public class AuctionDAOImpl implements AuctionDAO {
 	final String UPDATE_AUCTION = "UPDATE ENCHERES SET no_utilisateur = ?, no_article = ?, date_enchere = ?, montant_enchere = ? WHERE no_enchere = ?";
 	final String DELETE_AUCTION = "DELETE FROM ENCHERES WHERE no_enchere = ?";
 	final String SELECT_AUCTION_BY_ID = "SELECT * FROM ENCHERES WHERE no_enchere = ?";
-
+/*
 	@Override
 	public void createItem(SoldItem item) {
 	    try (Connection con = ConnectionProvider.getConnection()) {
@@ -158,7 +159,7 @@ public class AuctionDAOImpl implements AuctionDAO {
 	    }
 
 	    return item;
-	}
+	}*/
 
 	
 	@Override
@@ -195,6 +196,41 @@ public class AuctionDAOImpl implements AuctionDAO {
 	    }
 	}
 	
+	@Override
+	public boolean isUsernameTaken(String username) {
+	    try (Connection con = ConnectionProvider.getConnection();
+	         PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Users WHERE username = ?")) {
+	        stmt.setString(1, username);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                int count = rs.getInt(1);
+	                return count > 0;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        // Handle exception
+	    }
+	    return false;
+	}
+
+
+	@Override
+	public boolean isEmailTaken(String email) {
+	    try (Connection con = ConnectionProvider.getConnection();
+	         PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Users WHERE email = ?")) {
+	        stmt.setString(1, email);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                int count = rs.getInt(1);
+	                return count > 0;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        // Handle exception
+	    }
+	    return false;
+	}
+	/*
 	@Override
 	public void updateUser(User user) {
 	    try (Connection con = ConnectionProvider.getConnection()) {
@@ -407,6 +443,9 @@ public class AuctionDAOImpl implements AuctionDAO {
 	public List<Auction> getUserActiveAuctions(String username) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
+
+
+	
 
 }
