@@ -26,7 +26,7 @@ public interface AuctionDAO {
 	public  Auction getAuctionById(int auctionId);
 	
 
-	public void placeBid(int auctionId, double bidAmount, String bidderName);
+	/*public void placeBid(int auctionId, double bidAmount, String bidderName);
 	public void closeAuction(int auctionId);
 	public List<Auction> getActiveAuctions();
 	public List<Auction> getClosedAuctions();
@@ -35,5 +35,5 @@ public interface AuctionDAO {
 	public List<Auction> getAuctionsBySeller(String sellerName);
 	public List<Auction> getAuctionsByName(String itemName);
 	public List<Auction> getAllAuctions();
-	
+	*/
 }
