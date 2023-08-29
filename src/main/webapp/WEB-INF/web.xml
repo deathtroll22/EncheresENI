@@ -39,4 +39,24 @@
     <servlet-name>TestServlet2</servlet-name>
     <url-pattern>/TestServlet2</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NolTestServlet</display-name>
+    <servlet-name>NolTestServlet</servlet-name>
+    <servlet-class>fr.eni.enchereseni.ihm.NolTestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NolTestServlet</servlet-name>
+    <url-pattern>/NolTestServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NolTestServlet2</display-name>
+    <servlet-name>NolTestServlet2</servlet-name>
+    <servlet-class>fr.eni.enchereseni.ihm.NolTestServlet2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NolTestServlet2</servlet-name>
+    <url-pattern>/NolTestServlet2</url-pattern>
+  </servlet-mapping>
 </web-app>
