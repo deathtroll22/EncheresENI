@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Encheres.org</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -26,50 +27,50 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h1 class="text-center">Création d'un nouveau compte</h1>
-            <form action="insertUserServlet" method="post">
+            <h1 class="text-center">Create a New Account</h1>
+            <form action="InsertUserServlet" method="post">
                 <div class="form-group">
-                    <label for="pseudo">Pseudo :</label>
+                    <label for="pseudo">Username :</label>
                     <input type="text" class="form-control" id="pseudo" name="pseudo" required>
                 </div>
                 <div class="form-group">
-                    <label for="nom">Nom :</label>
-                    <input type="text" class="form-control" id="nom" name="nom" required>
+                    <label for="nom">Last Name :</label>
+                    <input type="text" class="form-control" id="nom" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="prenom">Prénom :</label>
-                    <input type="text" class="form-control" id="prenom" name="prenom" required>
+                    <label for="prenom">First Name :</label>
+                    <input type="text" class="form-control" id="prenom" name="first_name" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email :</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="mail" required>
                 </div>
                 <div class="form-group">
-                    <label for="telephone">Téléphone :</label>
-                    <input type="tel" class="form-control" id="telephone" name="telephone">
+                    <label for="telephone">Phone :</label>
+                    <input type="tel" class="form-control" id="telephone" name="phone">
                 </div>
                 <div class="form-group">
-                    <label for="rue">Rue :</label>
-                    <input type="text" class="form-control" id="rue" name="rue" required>
+                    <label for="rue">Street :</label>
+                    <input type="text" class="form-control" id="rue" name="street" required>
                 </div>
                 <div class="form-group">
-                    <label for="code_postal">Code Postal :</label>
-                    <input type="text" class="form-control" id="code_postal" name="code_postal" required>
+                    <label for="code_postal">Postal Code :</label>
+                    <input type="text" class="form-control" id="code_postal" name="post_code" required>
                 </div>
                 <div class="form-group">
-                    <label for="ville">Ville :</label>
-                    <input type="text" class="form-control" id="ville" name="ville" required>
+                    <label for="ville">City :</label>
+                    <input type="text" class="form-control" id="ville" name="city" required>
                 </div>
                 <div class="form-group">
-                    <label for="mot_de_passe">Mot de passe :</label>
-                    <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" required>
+                    <label for="mot_de_passe">Password :</label>
+                    <input type="password" class="form-control" id="mot_de_passe" name="password" required>
                 </div>
                 <div class="form-group">
-                    <label for="confirmer_mot_de_passe">Confirmer le mot de passe :</label>
+                    <label for="confirmer_mot_de_passe">Confirm Password :</label>
                     <input type="password" class="form-control" id="confirmer_mot_de_passe" name="confirmer_mot_de_passe" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Creer mon compte</button>
-                <button type="button" class="btn btn-secondary" onclick="window.location.href='accueil.jsp'">Annuler</button>
+                <button type="submit" class="btn btn-primary">Create My Account</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='accueil.jsp'">Cancel</button>
             </form>
         </div>
     </div>
