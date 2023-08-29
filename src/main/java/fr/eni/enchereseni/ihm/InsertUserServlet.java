@@ -20,6 +20,9 @@ import java.util.List;
 
 @WebServlet("/InsertUserServlet")
 public class InsertUserServlet extends HttpServlet {
+	
+	
+	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         AuctionManager am = new AuctionManager();
