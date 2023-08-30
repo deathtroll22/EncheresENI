@@ -44,7 +44,7 @@
                         <a class="nav-link" href="#">Mon profil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/EncheresENI/LogoutServlet">Déconnexion</a>
+                        <a class="nav-link" href="/LogoutServlet">Déconnexion</a>
                     </li>
                 <% } else { %>
                     <%-- Si l'utilisateur n'est pas connecté, afficher les liens de connexion --%>

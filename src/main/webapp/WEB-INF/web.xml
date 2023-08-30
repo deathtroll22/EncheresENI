@@ -39,5 +39,8 @@
     <servlet-name>home</servlet-name>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
+<<<<<<< HEAD
   
+=======
+>>>>>>> branch 'unstable' of https://github.com/deathtroll22/EncheresENI.git
 </web-app>
