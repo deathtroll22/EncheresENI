@@ -46,8 +46,8 @@ public class InsertUserServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/insertUser.jsp").forward(request, response);
             } else {
                 // Création de l'utilisateur
-                User newUser = new User(username, lastName, firstName, email, phoneNumber, street, postalCode,
-                        city, password, null, false);
+            	User newUser = new User(username, lastName, firstName, email, phoneNumber, street, postalCode, city, password, 0, false);
+
 
                 // Appel à la logique métier pour la création du compte utilisateur
                 AuctionManager manager = AuctionManagerSing.getInstance();

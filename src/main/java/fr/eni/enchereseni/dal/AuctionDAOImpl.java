@@ -171,9 +171,9 @@ public class AuctionDAOImpl implements AuctionDAO {
 	        stmt.setString(3, user.getFirstName());
 	        stmt.setString(4, user.getEmail());
 	        stmt.setString(5, user.getPhoneNumber());
-	        stmt.setString(6, user.getAddress().getStreet());
-	        stmt.setString(7, user.getAddress().getPostalCode());
-	        stmt.setString(8, user.getAddress().getCity());
+	        stmt.setString(6, user.getStreet());
+	        stmt.setString(7, user.getPostalCode());
+	        stmt.setString(8, user.getCity());
 	        stmt.setString(9, user.getPassword());
 	        stmt.setInt(10, user.getCredit());
 	        stmt.setBoolean(11, user.isAdmin());
