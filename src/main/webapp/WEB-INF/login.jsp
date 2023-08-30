@@ -21,7 +21,14 @@
         }
         .form-row {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .form-label {
+            width: 120px; /* Adjust as needed */
+        }
+        .form-group {
+            margin-bottom: 0; /* Remove default margin */
         }
     </style>
 </head>
@@ -35,19 +42,40 @@
                 <div class="card-body">
                     <form action="LoginServlet" method="post">
                         <div class="form-row">
-                        	<div class="form-group">
-                            	<label for="pseudo">Username :</label>
-                            	<input type="text" class="form-control" id="pseudo" name="pseudo" required>
-                       	 	</div>
-                           
+                            <div class="form-label">
+                                <label for="pseudo">Username :</label>
+                            </div>
                             <div class="form-group">
-                            	<label for="mot_de_passe">Password :</label>
-                           		<input type="password" class="form-control" id="password" name="password" required>
-                        	</div>
+                                <input type="text" class="form-control" id="pseudo" name="pseudo" required>
+                            </div>
                         </div>
-                       
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='accueil.jsp'">Cancel</button>
+                        <div class="form-row">
+                            <div class="form-label">
+                                <label for="mot_de_passe">Password :</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group text-right">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Remember Me</label>
+                                </div>
+                                <div class="form-group text-right">
+                                    <a href="forgotPassword.jsp">Forgot Password?</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a href="createAccount.jsp" class="btn btn-lg btn-success w-100">Create an Account</a>
+                        </div>
                     </form>
                 </div>
             </div>
