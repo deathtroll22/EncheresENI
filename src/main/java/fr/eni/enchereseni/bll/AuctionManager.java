@@ -9,8 +9,8 @@ import fr.eni.enchereseni.bo.User;
 public interface AuctionManager {
     
  // Gestion des utilisateurs :
-    //public User login(String loginIdentifier, String password) throws AuctionManagerException;
     public void createAccount(User account) throws AuctionManagerException;
+    public User login(String loginIdentifier, String password) throws AuctionManagerException;
     //public void logout(User user) throws AuctionManagerException;
     //public User viewOtherUserProfile(String username) throws AuctionManagerException;
     //public void editMyProfile(User user) throws AuctionManagerException;
@@ -53,11 +53,4 @@ public interface AuctionManager {
 
     // Autres fonctionnalités
     void cancelSaleById(int auctionId);*/
-    
-    
-    
-
-    
-
-    
 }

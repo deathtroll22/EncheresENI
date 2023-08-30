@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <a href="createAccount.jsp" class="btn btn-lg btn-success w-100">Create an Account</a>
+                            <a class="btn btn-lg btn-success w-100" href="${pageContext.request.contextPath}/InsertUserServlet" >Create an Account</a>
                         </div>
                     </form>
                 </div>

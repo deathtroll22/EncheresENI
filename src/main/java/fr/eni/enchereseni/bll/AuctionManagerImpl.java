@@ -12,27 +12,10 @@ import fr.eni.enchereseni.dal.DAOFact;
 
 public class AuctionManagerImpl implements AuctionManager {
 	
-	
-
 	private AuctionDAO dao = DAOFact.getAuctionDAO(); 
 	
-	 // Gestion des utilisateurs :
-	/*@Override
-	public User login(String loginIdentifier, String password) throws AuctionManagerException {
-        User user = dao.getUserByLoginIdentifier(loginIdentifier);
-
-        if (user == null) {
-            throw new AuctionManagerException("Login identifier not found.");
-        }
-
-        // Verify passwords (you may replace this with your own logic)
-        if (!password.equals(user.getPassword())) {
-            throw new AuctionManagerException("Incorrect password.");
-        }
-
-        return user;
-    }*/
-
+	// Gestion des utilisateurs :
+	//s'inscrire
 	@Override
     public void createAccount(User account) throws AuctionManagerException {
         // username and email unique
@@ -55,6 +38,28 @@ public class AuctionManagerImpl implements AuctionManager {
         // insert user into bdd
         dao.createUser(account);
     }
+	
+	//se connecter
+	@Override
+    public User login(String loginIdentifier, String password) throws AuctionManagerException {
+        // Vérification des entrées utilisateur
+        if (loginIdentifier == null || loginIdentifier.isEmpty() || password == null || password.isEmpty()) {
+            throw new AuctionManagerException("Both username/email and password are required.");
+        }
+
+        User user = dao.getUserByLoginIdentifier(loginIdentifier);
+
+        if (user == null) {
+            throw new AuctionManagerException("Login identifier not found.");
+        }
+        // vérification du mot de passe
+        if (!password.equals(user.getPassword())) {
+            throw new AuctionManagerException("Incorrect password.");
+        }
+        return user;
+    }
+
+	
     /*
     @Override
     public void logout(User user) throws AuctionManagerException {
@@ -155,7 +160,5 @@ public class AuctionManagerImpl implements AuctionManager {
 
         return detailedAuction;
     }*/
-
-    
 
 }
