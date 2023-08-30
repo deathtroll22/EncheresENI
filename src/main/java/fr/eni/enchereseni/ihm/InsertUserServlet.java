@@ -78,7 +78,8 @@ public class InsertUserServlet extends HttpServlet {
 					HttpSession session = request.getSession();
 					session.setAttribute("connectedUser", connectedUser);
 
-					this.getServletContext().getRequestDispatcher("/accueil").forward(request, response);
+					response.sendRedirect(request.getContextPath() + "/LoginServlet");
+					
 				} else {
 					request.setAttribute("error", "no user");
 					dispatcher.forward(request, response);

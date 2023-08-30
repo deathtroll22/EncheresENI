@@ -33,7 +33,7 @@
             <div class="card">
                 <h2 class="card-header text-center">Create a New Account</h2>
                 <div class="card-body">
-                    <form action="InsertUserServlet" method="post">
+                    <form action="LoginServlet" method="post">
                         <div class="form-group">
                             <label for="pseudo">Username :</label>
                             <input type="text" class="form-control" id="pseudo" name="pseudo" required>
@@ -80,7 +80,7 @@
                             <input type="password" class="form-control" id="confirmer_mot_de_passe" name="confirmer_mot_de_passe" required>
                         </div>
                         <button type="submit" class="btn btn-primary" name="Create_Account_Button">Create My Account</button>
-                        <button type="button" class="btn btn-secondary" name="Cancel" onclick="window.location.href='<%= request.getContextPath() %>/AccueilServlet'">Cancel</button>
+                        <button type="button" class="btn btn-secondary" name="Cancel" onclick="window.location.href='<%= request.getContextPath() %>/HomeServlet'">Cancel</button>
 
                     </form>
                 </div>
