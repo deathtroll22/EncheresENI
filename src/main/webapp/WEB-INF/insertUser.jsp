@@ -79,8 +79,9 @@
                             <label for="confirmer_mot_de_passe">Confirm Password :</label>
                             <input type="password" class="form-control" id="confirmer_mot_de_passe" name="confirmer_mot_de_passe" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Create My Account</button>
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='accueil.jsp'">Cancel</button>
+                        <button type="submit" class="btn btn-primary" name="Create_Account_Button">Create My Account</button>
+                        <button type="button" class="btn btn-secondary" name="Cancel" onclick="window.location.href='<%= request.getContextPath() %>/AccueilServlet'">Cancel</button>
+
                     </form>
                 </div>
             </div>
