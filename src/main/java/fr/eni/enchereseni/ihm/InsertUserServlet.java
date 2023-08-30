@@ -5,10 +5,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.RequestDispatcher;
 import fr.eni.enchereseni.bll.AuctionManager;
 import fr.eni.enchereseni.bll.AuctionManagerSing;
-import fr.eni.enchereseni.bll.BLLException;
 import fr.eni.enchereseni.bo.User;
 
 import java.io.IOException;
@@ -27,7 +27,8 @@ public class InsertUserServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/insertUser.jsp");
+			
 		User user = null;
 		
 		try {
@@ -41,16 +42,68 @@ public class InsertUserServlet extends HttpServlet {
 			String city = request.getParameter("city");
 			String password = request.getParameter("password");
 			String passwordconfirm = request.getParameter("confirmer_mot_de_passe");
+			
+			
+		
+		if(username.length()==0 || username.isEmpty() ) {
+			request.setAttribute("error", "please enter a username");
+			dispatcher.forward(request, response);
 		}
-
-		if (request.getParameter("Create_Account_Button") != null) {
-			doAdd(request, response);
-		} else if (request.getParameter("Cancel") != null) {
-			doFact(request, response);
+		else if (firstName.length()==0 || firstName.isEmpty() ) {
+			request.setAttribute("error", "please enter a name");
+			dispatcher.forward(request, response);
 		}
-
-		request.getRequestDispatcher("/WEB-INF/biere.jsp").forward(request, response);
+		else if (lastName.length()==0 || lastName.isEmpty() ) {
+			
+			request.setAttribute("error", "please enter a lastName");			
+			dispatcher.forward(request, response);
+		}
+		else if (email.length()==0 || email.isEmpty() ) {
+			request.setAttribute("error", "please enter a email");
+			dispatcher.forward(request, response);
+		}
+		else if (phoneNumber.length()==0 || phoneNumber.isEmpty() ) {
+			request.setAttribute("error", "please enter a phoneNumber");
+			dispatcher.forward(request, response);
+		}
+		else if (street.length()==0 || street.isEmpty() ) {
+			request.setAttribute("error", "please enter a street");
+			dispatcher.forward(request, response);
+		}
+		else if (postalCode.length()==0 || postalCode.isEmpty() ) {
+			request.setAttribute("error", "please enter a postal Code");
+			dispatcher.forward(request, response);
+		}
+		else if (city.length()==0 || city.isEmpty() ) {
+			request.setAttribute("error", "please enter a city");
+			dispatcher.forward(request, response);
+		}
+		else if (password.length()==0 || password.isEmpty() ) {
+			request.setAttribute("error", "please enter a password");
+			dispatcher.forward(request, response);
+		}
+		else if (passwordconfirm.equals(password)) {
+			
+			user = new User(username, lastName, firstName, email, phoneNumber, street, postalCode, city, passwordconfirm, null, false);
+			
+			
+			if (user != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("ConnectedUser", user);
+				
+				this.getServletContext().getRequestDispatcher("/accueilConnected").forward(request, response);
+			} 
+			else 
+			{
+				request.setAttribute("erreur", "Aucun utilisateur");
+				dispatcher.forward(request, response);
+			}
+			
+			
+			
+		}
+		}
 	}
-
-	
 }
+		
+
