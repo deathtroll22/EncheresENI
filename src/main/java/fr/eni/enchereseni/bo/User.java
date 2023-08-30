@@ -155,11 +155,6 @@ public class User {
 				+ ", postalCode=" + postalCode + ", city=" + city + ", password=" + password + ", credit=" + credit
 				+ ", isAdmin=" + isAdmin + "]";
 	}
-
-	public User getAddress() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
     
 }

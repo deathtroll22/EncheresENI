@@ -33,7 +33,7 @@
             <div class="card">
                 <h2 class="card-header text-center">Create a New Account</h2>
                 <div class="card-body">
-                    <form action="LoginServlet" method="post">
+                    <form action="InsertUserServlet" method="post">
                         <div class="form-group">
                             <label for="pseudo">Username :</label>
                             <input type="text" class="form-control" id="pseudo" name="pseudo" required>

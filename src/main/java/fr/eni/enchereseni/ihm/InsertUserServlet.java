@@ -58,7 +58,7 @@ public class InsertUserServlet extends HttpServlet {
                 session.setAttribute("user", newUser);
                 session.setAttribute("connected", true);
 
-                response.sendRedirect(request.getContextPath() + "/LoginServlet");
+                response.sendRedirect(request.getContextPath() + "/HomeServlet");
             }
         } catch (AuctionManagerException e) {
             
