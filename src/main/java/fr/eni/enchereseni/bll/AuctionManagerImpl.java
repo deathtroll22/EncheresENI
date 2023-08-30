@@ -34,7 +34,7 @@ public class AuctionManagerImpl implements AuctionManager {
     }*/
 
 	@Override
-    public void createUser(User account) throws AuctionManagerException {
+    public void createAccount(User account) throws AuctionManagerException {
         // username and email unique
         if (dao.isUsernameTaken(account.getUsername())) {
             throw new AuctionManagerException("Username already taken.");
