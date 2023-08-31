@@ -165,6 +165,55 @@ public class AuctionDAOImpl implements AuctionDAO {
 	    return user;
 	}
 
+	//afficher un profil
+	@Override
+	public User getUserProfileByUsername(String username) {
+		User user = null;
+
+	    try (Connection con = ConnectionProvider.getConnection();
+	         PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_USERNAME)) {
+	        stmt.setString(1, username);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                user = extractUserFromResultSet(rs);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return user;
+	}
+	
+	//update my profil
+	@Override
+	public void updateMyProfil(User user) {
+	    try (Connection con = ConnectionProvider.getConnection()) {
+	        PreparedStatement stmt = con.prepareStatement(UPDATE_USER);
+	        stmt.setString(1, user.getUsername());
+	        stmt.setString(2, user.getLastName());
+	        stmt.setString(3, user.getFirstName());
+	        stmt.setString(4, user.getEmail());
+	        stmt.setString(5, user.getPhoneNumber());
+	        stmt.setString(6, user.getStreet());
+	        stmt.setString(7, user.getPostalCode());
+	        stmt.setString(8, user.getCity());
+	        stmt.setString(9, user.getPassword());
+	        stmt.setInt(10, user.getCredit());
+	        stmt.setBoolean(11, user.isAdmin());
+	        stmt.setInt(12, user.getUserID());
+
+	        int affectedRows = stmt.executeUpdate();
+
+	        if (affectedRows == 0) {
+	            throw new SQLException("Updating user profile failed, no rows affected.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 
 /*
 	@Override

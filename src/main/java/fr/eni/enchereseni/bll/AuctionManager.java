@@ -11,9 +11,8 @@ public interface AuctionManager {
  // Gestion des utilisateurs :
     public void createAccount(User account) throws AuctionManagerException;
     public User login(String loginIdentifier, String password) throws AuctionManagerException;
-    //public void logout(User user) throws AuctionManagerException;
-    //public User viewOtherUserProfile(String username) throws AuctionManagerException;
-    //public void editMyProfile(User user) throws AuctionManagerException;
+    public User getUserProfileByUsername(String username) throws AuctionManagerException;
+    public void updateMyProfil (User user) throws AuctionManagerException;
     //public void deleteAccount(User user) throws AuctionManagerException;
     // 2 public void rememberMe(User user) throws AuctionManagerException;
     // 2 public void forgotPassword(String loginIdentifier) throws AuctionManagerException;

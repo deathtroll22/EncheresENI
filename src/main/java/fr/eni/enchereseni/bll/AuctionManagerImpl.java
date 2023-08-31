@@ -58,29 +58,39 @@ public class AuctionManagerImpl implements AuctionManager {
         }
         return user;
     }
+	//afficher un profil
+	@Override
+	public User getUserProfileByUsername(String username) throws AuctionManagerException {
+	    // Vérifiez si le nom d'utilisateur est valide (non vide)
+	    if (username == null || username.isEmpty()) {
+	        throw new AuctionManagerException("Username cannot be empty.");
+	    }
+	    
+	    // Appelez la méthode de la DAL
+	    return dao.getUserProfileByUsername(username);
+	}
+
+	@Override
+	public void updateMyProfil(User user) throws AuctionManagerException {
+	    // l'utilisateur est connecté?
+	    if (user == null) {
+	        throw new AuctionManagerException("User must be logged in to update profile.");
+	    }
+
+	    // l'utilisateur met à jour son propre profil?
+	    User existingUser = dao.getUserProfileByUsername(user.getUsername());
+	    if (existingUser == null || existingUser.getUserID() != user.getUserID()) {
+	        throw new AuctionManagerException("Unauthorized profile update.");
+	    }
+
+	    // méthode de la DAL
+	    dao.updateMyProfil(user);
+	}
+
 
 	
     /*
-    @Override
-    public void logout(User user) throws AuctionManagerException {
-        // nettoyage ?
-
-        // Update user status
-        user.setLoggedIn(false);
-        dao.updateUser(user);
-    }
-    
-    @Override
-    public User viewOtherUserProfile(String username) throws AuctionManagerException {
-        
-        return dao.getUserProfileByUsername(username);
-    }
-    
-    @Override
-    public void editMyProfile(User user) throws AuctionManagerException {
-        dao.updateUser(user);
-    }
-    
+      
     @Override
     public void deleteAccount(User user) throws AuctionManagerException {
         dao.deleteUser(user);
