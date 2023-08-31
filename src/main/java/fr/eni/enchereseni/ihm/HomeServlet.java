@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet implementation class home
+ */
 
 @WebServlet("/HomeServlet")
 public class HomeServlet extends HttpServlet {
