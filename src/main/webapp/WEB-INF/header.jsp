@@ -67,10 +67,10 @@ body {
 							href="${pageContext.request.contextPath}/HomeServlet">Enchères</a>
 						</li>
 						<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/SellItem">Vendre un
+							href="${pageContext.request.contextPath}/SellItemServlet">Vendre un
 								article</a></li>
 						<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/MyMrofile">Mon
+							href="${pageContext.request.contextPath}/MyProfileServlet">Mon
 								profil</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="${pageContext.request.contextPath}/LogoutServlet">Déconnexion</a>
