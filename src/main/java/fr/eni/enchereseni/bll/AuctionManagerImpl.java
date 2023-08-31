@@ -12,10 +12,27 @@ import fr.eni.enchereseni.dal.DAOFact;
 
 public class AuctionManagerImpl implements AuctionManager {
 	
+	
+
 	private AuctionDAO dao = DAOFact.getAuctionDAO(); 
 	
-	// Gestion des utilisateurs :
-	//s'inscrire
+	 // Gestion des utilisateurs :
+	/*@Override
+	public User login(String loginIdentifier, String password) throws AuctionManagerException {
+        User user = dao.getUserByLoginIdentifier(loginIdentifier);
+
+        if (user == null) {
+            throw new AuctionManagerException("Login identifier not found.");
+        }
+
+        // Verify passwords (you may replace this with your own logic)
+        if (!password.equals(user.getPassword())) {
+            throw new AuctionManagerException("Incorrect password.");
+        }
+
+        return user;
+    }*/
+
 	@Override
     public void createAccount(User account) throws AuctionManagerException {
         // username and email unique
@@ -38,59 +55,27 @@ public class AuctionManagerImpl implements AuctionManager {
         // insert user into bdd
         dao.createUser(account);
     }
-	
-	//se connecter
-	@Override
-    public User login(String loginIdentifier, String password) throws AuctionManagerException {
-        // Vérification des entrées utilisateur
-        if (loginIdentifier == null || loginIdentifier.isEmpty() || password == null || password.isEmpty()) {
-            throw new AuctionManagerException("Both username/email and password are required.");
-        }
-
-        User user = dao.getUserByLoginIdentifier(loginIdentifier);
-
-        if (user == null) {
-            throw new AuctionManagerException("Login identifier not found.");
-        }
-        // vérification du mot de passe
-        if (!password.equals(user.getPassword())) {
-            throw new AuctionManagerException("Incorrect password.");
-        }
-        return user;
-    }
-	//afficher un profil
-	@Override
-	public User getUserProfileByUsername(String username) throws AuctionManagerException {
-	    // Vérifiez si le nom d'utilisateur est valide (non vide)
-	    if (username == null || username.isEmpty()) {
-	        throw new AuctionManagerException("Username cannot be empty.");
-	    }
-	    
-	    // Appelez la méthode de la DAL
-	    return dao.getUserProfileByUsername(username);
-	}
-
-	@Override
-	public void updateMyProfil(User user) throws AuctionManagerException {
-	    // l'utilisateur est connecté?
-	    if (user == null) {
-	        throw new AuctionManagerException("User must be logged in to update profile.");
-	    }
-
-	    // l'utilisateur met à jour son propre profil?
-	    User existingUser = dao.getUserProfileByUsername(user.getUsername());
-	    if (existingUser == null || existingUser.getUserID() != user.getUserID()) {
-	        throw new AuctionManagerException("Unauthorized profile update.");
-	    }
-
-	    // méthode de la DAL
-	    dao.updateMyProfil(user);
-	}
-
-
-	
     /*
-      
+    @Override
+    public void logout(User user) throws AuctionManagerException {
+        // nettoyage ?
+
+        // Update user status
+        user.setLoggedIn(false);
+        dao.updateUser(user);
+    }
+    
+    @Override
+    public User viewOtherUserProfile(String username) throws AuctionManagerException {
+        
+        return dao.getUserProfileByUsername(username);
+    }
+    
+    @Override
+    public void editMyProfile(User user) throws AuctionManagerException {
+        dao.updateUser(user);
+    }
+    
     @Override
     public void deleteAccount(User user) throws AuctionManagerException {
         dao.deleteUser(user);
@@ -170,5 +155,7 @@ public class AuctionManagerImpl implements AuctionManager {
 
         return detailedAuction;
     }*/
+
+    
 
 }
