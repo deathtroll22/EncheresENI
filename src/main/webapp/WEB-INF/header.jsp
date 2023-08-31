@@ -44,12 +44,12 @@
                         <a class="nav-link" href="#">Mon profil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/LogoutServlet">Déconnexion</a>
+                        <a class="nav-link" href="#">Déconnexion</a>
                     </li>
                 <% } else { %>
                     <%-- Si l'utilisateur n'est pas connecté, afficher les liens de connexion --%>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/LoginServlet">Login/Create Account</a>
+                        <a class="nav-link" href="#">Login/Create Account</a>
                     </li>
                 <% } %>
             </ul>
