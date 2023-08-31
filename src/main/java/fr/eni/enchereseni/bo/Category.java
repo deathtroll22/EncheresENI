@@ -1,14 +1,22 @@
 package fr.eni.enchereseni.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Category {
     private int categoryNumber;
     private String categoryName;
+    private List<SoldItem> items = new ArrayList<SoldItem>();
 
     // Empty constructor
     public Category() {
     }
+    
+    public Category(String categoryName) {
+    	this.categoryName = categoryName;
+    }
 
-    // Constructor with all variables
+	// Constructor with all variables
     public Category(int categoryNumber, String categoryName) {
         this.categoryNumber = categoryNumber;
         this.categoryName = categoryName;
@@ -30,11 +38,19 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+    
+    public List<SoldItem> getItems() {
+		return items;
+	}
 
-    // toString method
-    @Override
-    public String toString() {
-        return "Category Number: " + categoryNumber +
-                ", Category Name: " + categoryName;
-    }
+	public void setItems(List<SoldItem> items) {
+		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryName=" + categoryName + "]";
+	}
+
+    
 }

@@ -29,7 +29,7 @@
     <servlet-name>AddUserServlet</servlet-name>
     <url-pattern>/AddUserServlet</url-pattern>
   </servlet-mapping>
-     <servlet>
+  <servlet>
     <description></description>
     <display-name>home</display-name>
     <servlet-name>home</servlet-name>
