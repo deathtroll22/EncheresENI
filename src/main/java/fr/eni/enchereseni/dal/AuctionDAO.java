@@ -15,13 +15,6 @@ public interface AuctionDAO {
 	
 	
 	public void createUser (User user);
-	public boolean isUsernameTaken(String username);
-	public boolean isEmailTaken(String email);
-	
-	public User login(String username, String password);
-	public User getUserByLoginIdentifier(String username);
-
-
 	/*
 	public void updateUser (User user);
 	public void deleteUser (User user);
@@ -49,5 +42,8 @@ public interface AuctionDAO {
 	public void updateUserCredit(User bidder);
 	public void markAuctionAsWon(User winner, Auction auction);
 	public Auction getAuctionDetails(Auction auction);*/
+	public boolean isUsernameTaken(String username);
+	public boolean isEmailTaken(String email);
+	
 	
 }
