@@ -3,42 +3,66 @@ package fr.eni.enchereseni.bo;
 import java.util.Date;
 
 public class Auction {
+	private User user;
+	private SoldItem soldItem;
     private Date auctionDate;
-    private double bidAmount;
+    private Integer bidAmount;
+    
+	public Auction() {
+		super();
+	}
 
-    // Empty constructor
-    public Auction() {
-    }
+	public Auction(User user, SoldItem soldItem, Date auctionDate, Integer bidAmount) {
+		super();
+		this.user = user;
+		this.soldItem = soldItem;
+		this.auctionDate = auctionDate;
+		this.bidAmount = bidAmount;
+	}
 
-    // Constructor with all variables
-    public Auction(Date auctionDate, double bidAmount) {
-        this.auctionDate = auctionDate;
-        this.bidAmount = bidAmount;
-    }
+	public Auction(Date auctionDate, Integer bidAmount) {
+		super();
+		this.auctionDate = auctionDate;
+		this.bidAmount = bidAmount;
+	}
 
-    // Getter for auctionDate
-    public Date getAuctionDate() {
-        return auctionDate;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    // Setter for auctionDate
-    public void setAuctionDate(Date auctionDate) {
-        this.auctionDate = auctionDate;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    // Getter for bidAmount
-    public double getBidAmount() {
-        return bidAmount;
-    }
+	public SoldItem getSoldItem() {
+		return soldItem;
+	}
 
-    // Setter for bidAmount
-    public void setBidAmount(double bidAmount) {
-        this.bidAmount = bidAmount;
-    }
+	public void setSoldItem(SoldItem soldItem) {
+		this.soldItem = soldItem;
+	}
 
-    // toString method
-    @Override
-    public String toString() {
-        return "Auction Date: " + auctionDate + ", Bid Amount: " + bidAmount;
-    }
+	public Date getAuctionDate() {
+		return auctionDate;
+	}
+
+	public void setAuctionDate(Date auctionDate) {
+		this.auctionDate = auctionDate;
+	}
+
+	public Integer getBidAmount() {
+		return bidAmount;
+	}
+
+	public void setBidAmount(Integer bidAmount) {
+		this.bidAmount = bidAmount;
+	}
+
+	@Override
+	public String toString() {
+		return "Auction [user=" + user + ", soldItem=" + soldItem + ", auctionDate=" + auctionDate + ", bidAmount="
+				+ bidAmount + "]";
+	}
+	
+
 }
