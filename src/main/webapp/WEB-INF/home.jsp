@@ -8,14 +8,20 @@
 <title>Encheres.org - home</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
+	<style>
+	.btn-primary {
+    background-color: #005fb0!important;
+    border-color: #007bff;
+	</style>
 </head>
 <body>
 	<%@ include file="header.jsp"%>
 	<div class="container mt-4">
-		<h1 class="text-center">Liste des Enchères</h1>
+		<h2 class="text-center text-white">Liste des Enchères</h2>
 		<div class="card mt-4">
 			<div class="card-body">
-				<h4 class="text-center mb-3">Filtres et Recherche</h4>
+				<h4 class="text-center text-secondary mb-3">Filtres et Recherche</h4>
 				<form>
 					<div class="row">
 						<div class="col-md-6">
