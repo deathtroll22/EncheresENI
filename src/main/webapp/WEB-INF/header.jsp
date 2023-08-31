@@ -42,7 +42,6 @@ body {
 </style>
 </head>
 <body>
-
 	<nav class="navbar navbar-expand-lg navbar-light bg-white">
 		<div class="container">
 			<a class="navbar-brand"
@@ -86,9 +85,5 @@ body {
 			</div>
 		</div>
 	</nav>
-
-
-	<!-- Le reste de votre contenu de page ici -->
-
 </body>
 </html>

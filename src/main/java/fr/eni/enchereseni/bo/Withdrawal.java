@@ -4,9 +4,8 @@ public class Withdrawal {
 	private String street;       // rue
     private String postalCode;   // code_postal
     private String city;         // ville
-    private SoldItem item;
     
-
+    
 	public Withdrawal() {
 		super();
 	}
@@ -40,14 +39,6 @@ public class Withdrawal {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-	
-	public SoldItem getItem() {
-		return item;
-	}
-
-	public void setItem(SoldItem item) {
-		this.item = item;
 	}
 
 	@Override

@@ -1,40 +1,21 @@
 package fr.eni.enchereseni.bo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
-	private Integer userID; // noUtilisateur
-	private String username; // pseudo
-	private String lastName; // nom
-	private String firstName; // prenom
-	private String email; // email
-	private String phoneNumber; // telephone
-	private String street; // rue
-	private String postalCode; // codePostal
-	private String city; // ville
-	private String password; // motDePasse
-	private Integer credit; // credit
-	private boolean isAdmin; // administrateur
-	private List<Auction> listAuctions = new ArrayList<Auction>();
-	private List<SoldItem> listSoldItems = new ArrayList<SoldItem>();
-
+	private Integer userID;       // noUtilisateur
+    private String username;      // pseudo
+    private String lastName;      // nom
+    private String firstName;     // prenom
+    private String email;         // email
+    private String phoneNumber;   // telephone
+    private String street;        // rue
+    private String postalCode;    // codePostal
+    private String city;          // ville
+    private String password;      // motDePasse
+    private Integer credit;       // credit
+    private boolean isAdmin;      // administrateur
+    
 	public User() {
 		super();
-	}
-
-	public User(String username, String lastName, String firstName, String email, String phoneNumber, String street,
-			String postalCode, String city, String password) {
-		super();
-		this.username = username;
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.street = street;
-		this.postalCode = postalCode;
-		this.city = city;
-		this.password = password;
 	}
 
 	public User(String username, String lastName, String firstName, String email, String phoneNumber, String street,
@@ -51,42 +32,6 @@ public class User {
 		this.password = password;
 		this.credit = credit;
 		this.isAdmin = isAdmin;
-	}	
-
-	public User(String username, String lastName, String firstName, String email, String phoneNumber, String street,
-			String postalCode, String city, String password, Integer credit, boolean isAdmin,
-			List<Auction> listAuctions, List<SoldItem> listSoldItems) {
-		super();
-		this.username = username;
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.street = street;
-		this.postalCode = postalCode;
-		this.city = city;
-		this.password = password;
-		this.credit = credit;
-		this.isAdmin = isAdmin;
-		this.listAuctions = listAuctions;
-		this.listSoldItems = listSoldItems;
-	}
-	
-
-	public List<Auction> getListAuctions() {
-		return listAuctions;
-	}
-
-	public void setListAuctions(List<Auction> listAuctions) {
-		this.listAuctions = listAuctions;
-	}
-
-	public List<SoldItem> getListSoldItems() {
-		return listSoldItems;
-	}
-
-	public void setListSoldItems(List<SoldItem> listSoldItems) {
-		this.listSoldItems = listSoldItems;
 	}
 
 	public User(Integer userID, String username, String lastName, String firstName, String email, String phoneNumber,
@@ -201,22 +146,7 @@ public class User {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-
-	public List<Auction> getAuctions() {
-		return listAuctions;
-	}
-
-	public void setAuctions(List<Auction> auctions) {
-		listAuctions = auctions;
-	}
-
-	public List<SoldItem> getItems() {
-		return listSoldItems;
-	}
-
-	public void setItems(List<SoldItem> items) {
-		this.listSoldItems = items;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -226,5 +156,5 @@ public class User {
 				+ ", isAdmin=" + isAdmin + "]";
 	}
 	
-
+    
 }

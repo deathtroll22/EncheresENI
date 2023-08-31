@@ -24,7 +24,7 @@
     <servlet-name>AddUserServlet</servlet-name>
     <url-pattern>/AddUserServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
+     <servlet>
     <description></description>
     <display-name>SellItemServlet</display-name>
     <servlet-name>SellItemServlet</servlet-name>
