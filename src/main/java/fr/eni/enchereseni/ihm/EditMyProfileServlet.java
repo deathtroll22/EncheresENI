@@ -7,38 +7,63 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import fr.eni.enchereseni.bll.AuctionManager;
+import fr.eni.enchereseni.bll.AuctionManagerException;
+import fr.eni.enchereseni.bll.AuctionManagerImpl;
+import fr.eni.enchereseni.bo.User;
+
 public class EditMyProfileServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public EditMyProfileServlet() {
-        super();
-    }
+	public EditMyProfileServlet() {
+		super();
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: Add any necessary logic to retrieve user data from the database or session
-        // For example:
-        // User user = (User) request.getSession().getAttribute("user");
-        // request.setAttribute("user", user);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+		    throws ServletException, IOException {
+		    
+		    request.getRequestDispatcher("/WEB-INF/editMyProfile.jsp").forward(request, response);
+		}
 
-        request.getRequestDispatcher("/WEB-INF/editMyProfile.jsp").forward(request, response);
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String oldPassword = request.getParameter("oldPassword");
+		String newPassword = request.getParameter("newPassword");
+		String confirmNewPassword = request.getParameter("confirmNewPassword");
+		String firstName = request.getParameter("firstName");
+	    String lastName = request.getParameter("lastName");
+	    String email = request.getParameter("email");
+	    String telephone = request.getParameter("telephone");
+	    String street = request.getParameter("street");
+	    String postalCode = request.getParameter("postalCode");
+	    String city = request.getParameter("city");
+	    
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: Process form data here, update the user's profile and password
+		// Vérifier que les mots de passe sont identiques
+		if (!newPassword.equals(confirmNewPassword)) {
+			request.setAttribute("errorMessage", "Les mots de passe ne sont pas identiques");
+			request.getRequestDispatcher("/WEB-INF/editMyProfile.jsp").forward(request, response);
+			return;
+		}
 
-        // Example of updating user's data
-        // String firstName = request.getParameter("firstName");
-        // String lastName = request.getParameter("lastName");
-        // ...
+		// Modifier le profil en base de données
+		User user = (User) request.getSession().getAttribute("user");
+		user.setPassword(newPassword);
+		user.setFirstName(firstName); 
+	    user.setLastName(lastName);
+	    user.setEmail(email);
+	    user.setPhoneNumber(telephone);
+	    user.setStreet(street);
+	    user.setPostalCode(postalCode);
+	    user.setCity(city);
 
-        // Example of updating password
-        // String oldPassword = request.getParameter("oldPassword");
-        // String newPassword = request.getParameter("newPassword");
-        // String confirmNewPassword = request.getParameter("confirmNewPassword");
-        
-        // TODO: Add validation and error handling
-
-        // After updating, you can redirect to a success page
-        response.sendRedirect(request.getContextPath() + "/ProfileUpdatedServlet");
-    }
+		AuctionManager auctionManager = new AuctionManagerImpl();
+		try {
+			auctionManager.updateMyProfil(user);
+			// Rediriger vers la page de profil
+			response.sendRedirect(request.getContextPath() + "/MyProfileServlet");
+		} catch (AuctionManagerException e) {
+			e.printStackTrace();
+		}
+	}
 }
