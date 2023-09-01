@@ -32,6 +32,9 @@
       .fancy_card a:hover {
         color: #343a40;
     }
+    .img-max-height {
+    max-height: 200px;
+}
     </style>
 </head>
 <body>
@@ -119,7 +122,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <img src="${pageContext.request.contextPath}/img/auction.png"
-                                            alt="Table" class="img-fluid rounded">
+                                            alt="Table" class="img-fluid rounded img-max-height">
                                     </div>
                                     <div class="col-md-8">
                                         <h4>Auction Title</h4>
@@ -139,7 +142,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <img src="${pageContext.request.contextPath}/img/auction.png"
-                                            alt="Table" class="img-fluid rounded">
+                                            alt="Table" class="img-fluid rounded img-max-height">
                                     </div>
                                     <div class="col-md-8">
                                         <h4>Auction Title</h4>
@@ -159,7 +162,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <img src="${pageContext.request.contextPath}/img/auction.png"
-                                            alt="Table" class="img-fluid rounded">
+                                            alt="Table" class="img-fluid rounded  img-max-height">
                                     </div>
                                     <div class="col-md-8">
                                         <h4>Auction Title</h4>
@@ -179,7 +182,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <img src="${pageContext.request.contextPath}/img/auction.png"
-                                            alt="Table" class="img-fluid rounded">
+                                            alt="Table" class="img-fluid rounded  img-max-height">
                                     </div>
                                     <div class="col-md-8">
                                         <h4>Auction Title</h4>
