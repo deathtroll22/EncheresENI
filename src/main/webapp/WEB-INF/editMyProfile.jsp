@@ -33,22 +33,22 @@
 							<div class="form-group">
 								<label for="username" class="highlight-info">Username:</label> <input
 									type="text" class="form-control" id="username" name="username"
-									value=${sessionScope.user.username} readonly>
+									value="${sessionScope.user.username}" readonly>
 							</div>
 							<div class="form-group">
 								<label for="firstName" class="highlight-info">First
 									Name:</label> <input type="text" class="form-control" id="firstName"
-									name="firstName" value=${user.firstName}>
+									name="firstName" value="${user.firstName}">
 							</div>
 							<div class="form-group">
 								<label for="lastName" class="highlight-info">Last Name:</label>
 								<input type="text" class="form-control" id="lastName"
-									name="lastName" value=${user.lastName}>
+									name="lastName" value="${user.lastName}">
 							</div>
 							<div class="form-group">
 								<label for="email" class="highlight-info">Email Address:</label>
 								<input type="email" class="form-control" id="email" name="email"
-									value=${user.email}>
+									value="${user.email}">
 							</div>
 
 						</div>
@@ -56,22 +56,22 @@
 							<div class="form-group">
 								<label for="telephone" class="highlight-info">Telephone:</label>
 								<input type="text" class="form-control" id="telephone"
-									name="telephone" value=${user.phoneNumber}>
+									name="telephone" value="${user.phoneNumber}">
 							</div>
 							<div class="form-group">
 								<label for="street" class="highlight-info">Street:</label> 
 								<input type="text" class="form-control" id="street" name="street"
-									value=${user.street}>
+									value="${user.street}">
 							</div>
 							<div class="form-group">
 								<label for="postalCode" class="highlight-info">Postal
 									Code:</label> <input type="text" class="form-control" id="postalCode"
-									name="postalCode" value=${user.postalCode}>
+									name="postalCode" value="${user.postalCode}">
 							</div>
 							<div class="form-group">
 								<label for="city" class="highlight-info">City:</label> <input
 									type="text" class="form-control" id="city" name="city"
-									value=${user.city}>
+									value="${user.city}">
 							</div>
 						</div>
 						<div class="col-md-4">

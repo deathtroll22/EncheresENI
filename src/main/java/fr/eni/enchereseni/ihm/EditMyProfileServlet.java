@@ -21,13 +21,7 @@ public class EditMyProfileServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		    throws ServletException, IOException {
-		    // Récupérer l'utilisateur à partir de la session
-		    User user = (User) request.getSession().getAttribute("user");
 		    
-		    // Placer l'utilisateur en tant qu'attribut de la requête pour l'afficher dans la JSP
-		    request.setAttribute("user", user);
-
-		    // Forward vers la page d'édition de profil
 		    request.getRequestDispatcher("/WEB-INF/editMyProfile.jsp").forward(request, response);
 		}
 
