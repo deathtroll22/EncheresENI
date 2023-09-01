@@ -26,16 +26,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>SellItemServlet</display-name>
-    <servlet-name>SellItemServlet</servlet-name>
-    <servlet-class>fr.eni.enchereseni.ihm.SellItemServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SellItemServlet</servlet-name>
-    <url-pattern>/SellItemServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>EditMyProfileServlet</display-name>
     <servlet-name>EditMyProfileServlet</servlet-name>
     <servlet-class>fr.eni.enchereseni.ihm.EditMyProfileServlet</servlet-class>
