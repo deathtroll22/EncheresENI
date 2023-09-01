@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f8f9fa; /* bg-light */
+            background-color: white!important; /* bg-light */
         }
         .centered-card {
             display: flex;
@@ -26,13 +26,7 @@
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <h2 class="card-header text-center">Create a New Account</h2>
-                <div class="card-body">
+                <div class=" card-body bg-white">
                     <form action="InsertUserServlet" method="post">
                         <div class="form-group">
                             <label for="pseudo">Username :</label>
@@ -84,10 +78,5 @@
 
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>

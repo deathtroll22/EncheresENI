@@ -35,7 +35,7 @@
 <body>
 	<%@ include file="header.jsp"%>
 	<div class="container mt-4">
-		<h2 class="text-center text-white">Edit My Profile</h2>
+		<h1 class="text-center text-white pacifico">Edit My Profile</h1>
 		<div class="card mt-4">
 			<div class="card-body">
 				<form action="EditMyProfileServlet" method="post">

@@ -33,15 +33,9 @@
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <h2 class="card-header text-center">Login</h2>
                 <div class="card-body">
                     <form action="LoginServlet" method="post">
-                        <div class="form-row">
+                        <div class="form-row mt-2">
                             <div class="form-label">
                                 <label for="pseudo">Username :</label>
                             </div>
@@ -49,15 +43,15 @@
                                 <input type="text" class="form-control" id="pseudo" name="pseudo" required>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row mb-2">
                             <div class="form-label">
                                 <label for="mot_de_passe">Password :</label>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row my-3">
                             <div class="col-6">
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary w-100">Login</button>
@@ -74,14 +68,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-lg btn-success w-100" href="${pageContext.request.contextPath}/InsertUserServlet" >Create an Account</a>
+                           <a class="btn btn-lg btn-success w-100" href="${pageContext.request.contextPath}/InsertUserServlet" data-dismiss="modal" data-toggle="modal" data-target="#insertUserModal">Create an Account</a>
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 </body>
 </html>

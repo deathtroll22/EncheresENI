@@ -19,8 +19,8 @@
 <body>
     <%@ include file="header.jsp"%>
     <div class="container mt-4">
-        <h2 class="text-center text-white">My profile</h2>
-        <div class="card mt-4">
+        <h1 class="text-center text-white pacifico">My profile</h1>
+        <div class="card mt-5">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">

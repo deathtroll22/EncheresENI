@@ -28,7 +28,7 @@ body {
 <body>
 	<%@ include file="header.jsp"%>
 	<div class="container mt-4">
-		<h2 class="text-center text-white">Sell Something!</h2>
+		<h1 class="text-center text-white pacifico">Sell Something!</h1>
 		<div class="card bg-light mt-4">
 			<div class="card-body">
 				<form action="insertItemServlet" method="post">
@@ -74,12 +74,12 @@ body {
 							</div>
 						</div>
 					</div>
-					<div class="container">
+					<div class="container mb-3">
 						<div class="row justify-content-center">
 							<div class="col-md-9">
-								<div class="card m-4 bg-carton shadow-lg text-dark">
+								<div class="card m-4 bg-carton shadow-lg text-white">
 									<div class="card-body">
-										<h4 class="text-center">Pick Up</h4>
+										<h4 class="text-center mb-3">Pick Up</h4>
 										<div class="form-group row">
 											<label class="col-md-3 col-form-label" for="pickupStreet">Street:</label>
 											<div class="col-md-9">
