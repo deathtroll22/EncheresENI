@@ -1,10 +1,9 @@
 package fr.eni.enchereseni.bll;
 
-import java.util.HashMap;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
-import fr.eni.enchereseni.bo.Auction;
+import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
 import fr.eni.enchereseni.dal.AuctionDAO;
@@ -98,77 +97,17 @@ public class AuctionManagerImpl implements AuctionManager {
         // Log the user out
         logout(user);
     }
-    
+    */
     // Gestion des enchères
     @Override
-    public void sellItem(SoldItem item) throws AuctionManagerException {
-        dao.createItem(item);
+    public void createItem(SoldItem item , Integer userID) throws AuctionManagerException {
+        dao.createItem(item, 0);
     }
     
+    //récupérer la liste des catégories
     @Override
-    public List<Auction> getClosedAuctions() throws AuctionManagerException {
-        return dao.getUserClosedAuctions();
+    public List<Category> getAllCategories() throws AuctionManagerException {
+		return dao.getAllCategories();
     }
-    
-    @Override
-    public List<Auction> getActiveAuctions(User user) throws AuctionManagerException {
-        return dao.getUserActiveAuctions(user);
-    }
-    
- // Map pour stocker les enchères avec leurs enchérisseurs et montants
-    private Map<Auction, Map<User, Integer>> auctionBids = new HashMap<>();
-
-    @Override
-    public void bid(User bidder, Auction auction, Integer bidAmount) throws AuctionManagerException {
-        // Vérifiez si le montant de l'enchère est supérieur à l'enchère actuelle et si le crédit de l'utilisateur est suffisant
-        if (bidAmount <= auction.getBidAmount() || bidder.getCredit() < bidAmount) {
-            throw new AuctionManagerException("Invalid bid.");
-        }
-
-        // Vérifier si l'enchère est déjà dans la liste des enchères avec les enchérisseurs et montants
-        if (!auctionBids.containsKey(auction)) {
-            auctionBids.put(auction, new HashMap<>());
-        }
-
-        Map<User, Integer> bids = auctionBids.get(auction);
-
-        // Mettre à jour le crédit du précédent plus offrant
-        if (bids.containsKey(auction.getHighestBidder())) {
-            Integer previousBid = bids.get(auction.getHighestBidder());
-            auction.getHighestBidder().setCredit(auction.getHighestBidder().getCredit() + previousBid);
-        }
-
-        // Déduire le montant de l'enchère du crédit de l'enchérisseur
-        bidder.setCredit(bidder.getCredit() - bidAmount);
-
-        // Mettre à jour les détails de l'enchère
-        bids.put(bidder, bidAmount);
-        auctionBids.put(auction, bids);
-
-        // Mettre à jour les détails de l'enchère et les crédits utilisateur
-        dao.updateAuction(auction);
-        dao.updateUserCredit(bidder);
-    }
-    
-    @Override
-    public void winSale(User winner, Auction auction) throws AuctionManagerException {
-        dao.markAuctionAsWon(winner, auction);
-    }
-    
-    @Override
-    public Auction detailsAuction(User user, Auction auction) throws AuctionManagerException {
-        // auction details
-        Auction detailedAuction = dao.getAuctionDetails(auction);
-
-        // Check if the user is the seller and the auction has not started
-        boolean isSeller = user.equals(detailedAuction.getSeller());
-        boolean isAuctionNotStarted = !detailedAuction.isStarted();
-
-        // Update the auction details to reflect user's permissions
-        detailedAuction.setCanModify(isSeller && isAuctionNotStarted);
-        detailedAuction.setCanBid(!isSeller && isAuctionNotStarted);
-
-        return detailedAuction;
-    }*/
 
 }

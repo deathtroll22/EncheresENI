@@ -1,7 +1,8 @@
 package fr.eni.enchereseni.bo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class SoldItem {
@@ -21,40 +22,67 @@ public class SoldItem {
     // Empty constructor
     public SoldItem() {
     }
+    
+    public SoldItem(String itemName, String itemDescription, Date auctionStartDate, Date auctionEndDate,
+            double startingPrice, int category, String saleStatus, Category categoryItem,
+            String pickupStreet, String pickupPostalCode, String pickupCity, User user) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.auctionStartDate = auctionStartDate;
+        this.auctionEndDate = auctionEndDate;
+        this.startingPrice = startingPrice;
+        this.sellingPrice = 0; 
+        this.saleStatus = saleStatus;
+        this.categoryItem = categoryItem;
+        this.withdrawalLocation = new Withdrawal(pickupStreet, pickupPostalCode, pickupCity);
+        this.user = user;
+    }
 
+    
+    public SoldItem(String itemName, String itemDescription, Date auctionStartDate, Date auctionEndDate,
+            double startingPrice, double sellingPrice, String saleStatus, Category categoryItem,
+            Withdrawal withdrawalLocation, List<Auction> auctions, User user) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.auctionStartDate = auctionStartDate;
+        this.auctionEndDate = auctionEndDate;
+        this.startingPrice = startingPrice;
+        this.sellingPrice = sellingPrice;
+        this.saleStatus = saleStatus;
+        this.categoryItem = categoryItem;
+        this.withdrawalLocation = withdrawalLocation;
+        this.auctions = auctions;
+        this.user = user;
+    }
+    
+    public SoldItem(String itemName, String itemDescription, LocalDate auctionStartDate, LocalDate auctionEndDate,
+            double startingPrice, double sellingPrice, String saleStatus, int category,
+            String pickupStreet, String pickupPostalCode, String pickupCity, User seller) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.auctionStartDate = Date.valueOf(auctionStartDate);
+        this.auctionEndDate = Date.valueOf(auctionEndDate);
+        this.startingPrice = startingPrice;
+        this.sellingPrice = sellingPrice;
+        this.saleStatus = saleStatus;
+        this.categoryItem = new Category(category, ""); // Vous devrez peut-être ajuster cette ligne
+        this.withdrawalLocation = new Withdrawal(pickupStreet, pickupPostalCode, pickupCity); // Vous devrez peut-être ajuster cette ligne
+        this.user = seller;
+    }
+	
 	public SoldItem(String itemName, String itemDescription, Date auctionStartDate, Date auctionEndDate,
-			double startingPrice, double sellingPrice, String saleStatus, Category categoryItem,
-			Withdrawal withdrawalLocation, List<Auction> auctions, User user) {
-		super();
-		this.itemName = itemName;
-		this.itemDescription = itemDescription;
-		this.auctionStartDate = auctionStartDate;
-		this.auctionEndDate = auctionEndDate;
-		this.startingPrice = startingPrice;
-		this.sellingPrice = sellingPrice;
-		this.saleStatus = saleStatus;
-		this.categoryItem = categoryItem;
-		this.withdrawalLocation = withdrawalLocation;
-		this.auctions = auctions;
-		this.user = user;
-	}
-
-	public SoldItem(int itemNumber, String itemName, String itemDescription, Date auctionStartDate, Date auctionEndDate,
-			double startingPrice, double sellingPrice, String saleStatus, Category categoryItem,
-			Withdrawal withdrawalLocation, List<Auction> auctions, User user) {
-		super();
-		this.itemNumber = itemNumber;
-		this.itemName = itemName;
-		this.itemDescription = itemDescription;
-		this.auctionStartDate = auctionStartDate;
-		this.auctionEndDate = auctionEndDate;
-		this.startingPrice = startingPrice;
-		this.sellingPrice = sellingPrice;
-		this.saleStatus = saleStatus;
-		this.categoryItem = categoryItem;
-		this.withdrawalLocation = withdrawalLocation;
-		this.auctions = auctions;
-		this.user = user;
+	        double startingPrice, double sellingPrice, String saleStatus, int category, String pickupStreet,
+	        String pickupPostalCode, String pickupCity, User user) {
+	    this.itemName = itemName;
+	    this.itemDescription = itemDescription;
+	    this.auctionStartDate = auctionStartDate;
+	    this.auctionEndDate = auctionEndDate;
+	    this.startingPrice = startingPrice;
+	    this.sellingPrice = sellingPrice;
+	    this.saleStatus = saleStatus;
+	    this.categoryItem = new Category(category, ""); // Vous devrez peut-être ajuster cette ligne
+	    this.withdrawalLocation = new Withdrawal(pickupStreet, pickupPostalCode, pickupCity); // Vous devrez peut-être ajuster cette ligne
+	    this.user = user;
 	}
 
 	public int getItemNumber() {

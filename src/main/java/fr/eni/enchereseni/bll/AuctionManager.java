@@ -17,8 +17,12 @@ public interface AuctionManager {
     // 2 public void rememberMe(User user) throws AuctionManagerException;
     // 2 public void forgotPassword(String loginIdentifier) throws AuctionManagerException;
     // 3 public void viewPoints();
+	
     
  // Gestion des enchères
+    public void createItem(SoldItem item , Integer userID) throws AuctionManagerException;
+	List<Category> getAllCategories() throws AuctionManagerException;
+
     //public void sellItem(SoldItem item) throws AuctionManagerException;
     //public List<Auction> getClosedAuctions() throws AuctionManagerException;
     // public List<Auction> getActiveAuctions(User user) throws AuctionManagerException;
