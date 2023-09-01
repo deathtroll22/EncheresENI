@@ -34,14 +34,4 @@
     <servlet-name>EditMyProfileServlet</servlet-name>
     <url-pattern>/EditMyProfileServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>DeleteProfileServlet</display-name>
-    <servlet-name>DeleteProfileServlet</servlet-name>
-    <servlet-class>fr.eni.enchereseni.ihm.DeleteProfileServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DeleteProfileServlet</servlet-name>
-    <url-pattern>/DeleteProfileServlet</url-pattern>
-  </servlet-mapping>
 </web-app>
