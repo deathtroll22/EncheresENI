@@ -6,8 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Encheres.org - Edit My Profile</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <style>
 .btn-primary {
 	background-color: #005fb0 !important;
@@ -17,6 +20,16 @@
 .highlight-info {
 	color: #005fb0;
 }
+
+.no-padding-left-right-md-8 {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.no-padding-left-right-md-4 {
+	padding-left: 0;
+	padding-right: 0;
+}
 </style>
 </head>
 <body>
@@ -25,9 +38,7 @@
 		<h2 class="text-center text-white">Edit My Profile</h2>
 		<div class="card mt-4">
 			<div class="card-body">
-				<form
-					action="EditMyProfileServlet"
-					method="post">
+				<form action="EditMyProfileServlet" method="post">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
@@ -59,8 +70,8 @@
 									name="telephone" value="${user.phoneNumber}">
 							</div>
 							<div class="form-group">
-								<label for="street" class="highlight-info">Street:</label> 
-								<input type="text" class="form-control" id="street" name="street"
+								<label for="street" class="highlight-info">Street:</label> <input
+									type="text" class="form-control" id="street" name="street"
 									value="${user.street}">
 							</div>
 							<div class="form-group">
@@ -99,9 +110,57 @@
 							</div>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary btn-block">Save
-						Changes</button>
+					<div class="col-12 mt-4">
+						<div class="row">
+							<div class="col-md-8 px-0">
+								<button type="submit" class="btn btn-primary w-100">Save
+									Changes</button>
+							</div>
+							<div class="col-md-4 p3- pr-0">
+								<button type="button" class="btn btn-danger w-100"
+									data-toggle="modal" data-target="#confirmDeleteModal">
+									Delete My Profile</button>
+							</div>
+						</div>
+					</div>
 				</form>
+
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="confirmDeleteModal" tabindex="-1"
+		role="dialog" aria-labelledby="confirmDeleteModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="confirmDeleteModalLabel">Confirm
+						Profile Deletion</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="DeleteProfileServlet" method="post">
+						<p>Are you sure you want to delete your profile? This action
+							cannot be undone.</p>
+						<label for="deletePassword">Enter your password:</label> <input
+							type="password" id="deletePassword" name="deletePassword"
+							class="form-control">
+						  <div class="modal-footer px-0">
+                        <div class="col-12 row px-0">
+                            <div class="col-6 px-0">
+                                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-6 px-0">
+                                <button type="submit" class="btn btn-danger w-100 ml-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
