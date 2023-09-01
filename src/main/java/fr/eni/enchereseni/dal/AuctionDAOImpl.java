@@ -21,8 +21,8 @@ public class AuctionDAOImpl implements AuctionDAO {
 	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ? WHERE no_article = ?";
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
-	final String SELECT_USER_BY_USERNAME = "SELECT * FROM Users WHERE username = ?";
-	final String SELECT_USER_BY_EMAIL = "SELECT * FROM Users WHERE email = ?";
+	final String SELECT_USER_BY_USERNAME = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
+	final String SELECT_USER_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = ?";
 	
 	final String INSERT_USER = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur = ?";

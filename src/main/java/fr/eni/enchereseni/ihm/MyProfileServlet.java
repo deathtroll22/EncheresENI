@@ -22,6 +22,17 @@ public class MyProfileServlet extends HttpServlet {
     AuctionManager manager = AuctionManagerSing.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("/WEB-INF/myProfile.jsp").forward(request, response);
+    	HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/Login");
+            return;
+        }
+
+        request.setAttribute("user", user);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/myProfile.jsp");
+        dispatcher.forward(request, response);
     }
 }

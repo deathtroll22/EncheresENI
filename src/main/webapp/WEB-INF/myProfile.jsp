@@ -24,19 +24,22 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p><span class="highlight-info">Username:</span> ${sessionScope.user.username}</p>
-                        <p><span class="highlight-info">First Name:</span> John</p>
-                        <p><span class="highlight-info">Last Name:</span> Doe</p>
-                        <p><span class="highlight-info">Email Address:</span> john@example.com</p>
+                        <p><span class="highlight-info">Username: </span> ${sessionScope.user.username}</p>
+                        <p><span class="highlight-info">First Name: </span> ${user.firstName}</p>
+                        <p><span class="highlight-info">Last Name: </span> ${user.lastName}</p>
+                        <p><span class="highlight-info">Email Address: </span> ${user.email}</p>
                     </div>
                     <div class="col-md-6">
-                    	<p><span class="highlight-info">Telephone:</span>0667766775</p>
-                        <p><span class="highlight-info">Street:</span> 123 Main St</p>
-                        <p><span class="highlight-info">Postal Code:</span> 12345</p>
-                        <p><span class="highlight-info">City:</span> Anytown</p>
+                    	<p><span class="highlight-info">Telephone: </span>${user.phoneNumber}</p>
+                        <p><span class="highlight-info">Street: </span>${user.street}</p>
+                        <p><span class="highlight-info">Postal Code: </span>${user.postalCode}</p>
+                        <p><span class="highlight-info">City: </span>${user.city}</p>
                     </div>
                 </div>
-                 <a class="btn btn-primary btn-block" href="${pageContext.request.contextPath}/EditMyProfileServlet">Edit my profile</a>
+                <c:if test="${sessionScope.user.username == user.username}">
+                    <a class="btn btn-primary btn-block" href="${pageContext.request.contextPath}/EditMyProfileServlet">Edit my profile</a>
+                </c:if>
+                 
             </div>
         </div>
     </div>

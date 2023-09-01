@@ -79,7 +79,7 @@ public class AuctionManagerImpl implements AuctionManager {
 
 	    // l'utilisateur met à jour son propre profil?
 	    User existingUser = dao.getUserProfileByUsername(user.getUsername());
-	    if (existingUser == null || existingUser.getUserID() != user.getUserID()) {
+	    if (existingUser == null || !existingUser.getUsername().equals(user.getUsername())) {
 	        throw new AuctionManagerException("Unauthorized profile update.");
 	    }
 
