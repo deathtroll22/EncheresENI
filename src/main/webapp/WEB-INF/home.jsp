@@ -13,6 +13,25 @@
     .btn-primary {
         background-color: #005fb0!important;
         border-color: #007bff;
+        }
+          
+    .fancy_card {
+        box-shadow: 8px 14px 38px rgba(39,44,49,.06), 1px 3px 8px rgba(39,44,49,.03);
+        transition: all .5s ease; /* back to normal */
+    }
+
+    .fancy_card:hover {
+        box-shadow: 8px 28px 50px rgba(39,44,49,.07), 1px 6px 12px rgba(39,44,49,.04);
+        transition: all .2s ease; /* zoom in */
+        transform: translate3D(0,-1px,0) scale(1.03);
+    }
+    .fancy_card a {
+        text-decoration: none;
+        color: inherit;
+    }
+      .fancy_card a:hover {
+        color: #343a40;
+    }
     </style>
 </head>
 <body>
@@ -94,75 +113,83 @@
         <div class="card col-12 bg-white my-4 py-4">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card shadow bg-light mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="${pageContext.request.contextPath}/img/auction.png"
-                                        alt="Table" class="img-fluid rounded">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>Auction Title</h4>
-                                    <p>Price: 100 €</p>
-                                    <p>Auction Ends: August 25, 2023</p>
-                                    <p>Seller: Seller's Name</p>
+                    <div class="card shadow bg-light mb-4 fancy_card">
+                        <a href="ItemServlet" class="card-link">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="${pageContext.request.contextPath}/img/auction.png"
+                                            alt="Table" class="img-fluid rounded">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4>Auction Title</h4>
+                                        <p>Price: 100 €</p>
+                                        <p>Auction Ends: August 25, 2023</p>
+                                        <p>Seller: Seller's Name</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                    </div>
+                </div>
+               <div class="col-md-6">
+                    <div class="card shadow bg-light mb-4 fancy_card">
+                        <a href="ItemServlet" class="card-link">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="${pageContext.request.contextPath}/img/auction.png"
+                                            alt="Table" class="img-fluid rounded">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4>Auction Title</h4>
+                                        <p>Price: 100 €</p>
+                                        <p>Auction Ends: August 25, 2023</p>
+                                        <p>Seller: Seller's Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card shadow bg-light mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="${pageContext.request.contextPath}/img/auction.png"
-                                        alt="Table" class="img-fluid rounded">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>Auction Title</h4>
-                                    <p>Price: 100 €</p>
-                                    <p>Auction Ends: August 25, 2023</p>
-                                    <p>Seller: Seller's Name</p>
+                    <div class="card shadow bg-light mb-4 fancy_card">
+                        <a href="ItemServlet" class="card-link">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="${pageContext.request.contextPath}/img/auction.png"
+                                            alt="Table" class="img-fluid rounded">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4>Auction Title</h4>
+                                        <p>Price: 100 €</p>
+                                        <p>Auction Ends: August 25, 2023</p>
+                                        <p>Seller: Seller's Name</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card shadow bg-light mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="${pageContext.request.contextPath}/img/auction.png"
-                                        alt="Table" class="img-fluid rounded">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>Auction Title</h4>
-                                    <p>Price: 100 €</p>
-                                    <p>Auction Ends: August 25, 2023</p>
-                                    <p>Seller: Seller's Name</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card shadow bg-light mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="${pageContext.request.contextPath}/img/auction.png"
-                                        alt="Table" class="img-fluid rounded">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>Auction Title</h4>
-                                    <p>Price: 100 €</p>
-                                    <p>Auction Ends: August 25, 2023</p>
-                                    <p>Seller: Seller's Name</p>
+                    <div class="card shadow bg-light mb-4 fancy_card">
+                        <a href="ItemServlet" class="card-link">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="${pageContext.request.contextPath}/img/auction.png"
+                                            alt="Table" class="img-fluid rounded">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4>Auction Title</h4>
+                                        <p>Price: 100 €</p>
+                                        <p>Auction Ends: August 25, 2023</p>
+                                        <p>Seller: Seller's Name</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
