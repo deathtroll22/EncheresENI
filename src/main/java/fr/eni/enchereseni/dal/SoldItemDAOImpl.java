@@ -18,10 +18,10 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ? WHERE no_article = ?";
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
-	final String SELECT_ARTICLE =   "SELECT ai.no_article, ai.nom_article, ai.description, ai.date_debut_encheres, ai.date_fin_encheres, ai.prix_initial, ai.prix_vente, ai.no_categorie, ai.no_utilisateur, c.libelle AS categorie, r.rue, r.code_postal, r.ville " +
-									"FROM ARTICLES_VENDUS ai " +
-									"LEFT JOIN CATEGORIES c ON ai.no_categorie = c.no_categorie " +
-									"LEFT JOIN RETRAITS r ON ai.no_article = r.no_article " +
+	final String SELECT_ARTICLE_FOR_AUCTION =   "SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, r.rue, r.code_postal, r.ville " +
+									"FROM ARTICLES_VENDUS av " +
+									"LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
+									"LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
 									"WHERE ai.no_article = ?";
 	
 	
@@ -73,7 +73,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 		
         try (Connection con = ConnectionProvider.getConnection()) {
             
-            PreparedStatement stmt = con.prepareStatement(SELECT_ARTICLE);
+            PreparedStatement stmt = con.prepareStatement(SELECT_ARTICLE_FOR_AUCTION);
             stmt.setInt(1, itemId);
 
             ResultSet rs = stmt.executeQuery();
