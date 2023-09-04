@@ -17,7 +17,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	final String CREATE_ITEM = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_categorie, no_utilisateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ? WHERE no_article = ?";
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
-	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
+	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS ";
 	
 	
 	@Override
@@ -77,7 +77,6 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	            item.setAuctionEndDate(rs.getDate("date_fin_encheres"));
 	            item.setStartingPrice(rs.getDouble("prix_initial"));
 	            item.setSellingPrice(rs.getDouble("prix_vente"));
-	            item.setUserId(rs.getInt("no_utilisateur"));
 
 	            
 //	            int categoryId = rs.getInt("no_categorie");

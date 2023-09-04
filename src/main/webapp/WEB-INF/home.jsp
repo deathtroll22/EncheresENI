@@ -136,7 +136,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-4">
-											<!-- Votre image -->
+											<img src="${pageContext.request.contextPath}/img/auction.png" alt="Table" class="img-fluid rounded img-max-height">
 										</div>
 										<div class="col-md-8">
 											<h4>
@@ -159,7 +159,7 @@
 												</c:otherwise>
 											</c:choose>
 											<p>Auction Ends : ${item.auctionEndDate}</p>
-											<p>Seller ID :</p>
+											<p>Seller ID : ${item }]</p>
 											<!-- Autres informations sur l'article -->
 										</div>
 									</div>
