@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.dal.util.ConnectionProvider;
@@ -56,6 +58,41 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	@Override
+	public List<SoldItem> getAllItems() {
+	    List<SoldItem> itemList = new ArrayList<>();
+	    
+	    try (Connection con = ConnectionProvider.getConnection()) {
+	        Statement stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery(SELECT_ALL);
+	        
+	        while (rs.next()) {
+	            SoldItem item = new SoldItem();
+	            item.setItemNumber(rs.getInt("no_article"));
+	            item.setItemName(rs.getString("nom_article"));
+	            item.setItemDescription(rs.getString("description"));
+	            item.setAuctionStartDate(rs.getDate("date_debut_encheres"));
+	            item.setAuctionEndDate(rs.getDate("date_fin_encheres"));
+	            item.setStartingPrice(rs.getDouble("prix_initial"));
+	            item.setSellingPrice(rs.getDouble("prix_vente"));
+	            item.setUserId(rs.getInt("no_utilisateur"));
+
+	            
+//	            int categoryId = rs.getInt("no_categorie");
+//	            if (!rs.wasNull()) {
+//	                Category categoryItem = getCategoryById(categoryId);
+//	                item.setCategoryItem(categoryItem);
+//	            }
+//	            
+	            itemList.add(item);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return itemList;
 	}
 
 }

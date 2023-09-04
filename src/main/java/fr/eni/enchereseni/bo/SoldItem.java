@@ -18,10 +18,32 @@ public class SoldItem {
     private PickUp withdrawalLocation;
     private List<Auction> auctions = new ArrayList<Auction>();
     private User user;
+	private int userId;
 
-    // Empty constructor
+    public SoldItem(int itemNumber, String itemName, String itemDescription, Date auctionStartDate, Date auctionEndDate,
+			double startingPrice, double sellingPrice, String saleStatus, Category categoryItem,
+			PickUp withdrawalLocation, List<Auction> auctions, User user, int userId) {
+		super();
+		this.itemNumber = itemNumber;
+		this.itemName = itemName;
+		this.itemDescription = itemDescription;
+		this.auctionStartDate = auctionStartDate;
+		this.auctionEndDate = auctionEndDate;
+		this.startingPrice = startingPrice;
+		this.sellingPrice = sellingPrice;
+		this.saleStatus = saleStatus;
+		this.categoryItem = categoryItem;
+		this.withdrawalLocation = withdrawalLocation;
+		this.auctions = auctions;
+		this.user = user;
+		this.userId = userId;
+	}
+
+
+	// Empty constructor
     public SoldItem() {
     }
+    
     
     public SoldItem(String itemName, String itemDescription, Date auctionStartDate, Date auctionEndDate,
             double startingPrice, int category, String saleStatus, Category categoryItem,
@@ -96,7 +118,9 @@ public class SoldItem {
 	public String getItemName() {
 		return itemName;
 	}
-
+	   public void setUserId(int userId) {
+	        this.userId = userId;
+	    }
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
@@ -180,6 +204,7 @@ public class SoldItem {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 
 	@Override
 	public String toString() {
@@ -188,6 +213,6 @@ public class SoldItem {
 				+ startingPrice + ", sellingPrice=" + sellingPrice + ", saleStatus=" + saleStatus + ", categoryItem="
 				+ categoryItem + "]";
 	}
-
+	
     
 }
