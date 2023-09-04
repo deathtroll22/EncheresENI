@@ -6,4 +6,6 @@ public interface SoldItemDAO {
 	
 	public void createItem(SoldItem item, int userId);
 
+	public SoldItem getSoldItemById(int itemId);
+
 }

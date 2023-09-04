@@ -13,4 +13,12 @@ public class SoldItemManagerImpl implements SoldItemManager {
         dao.createItem(item, userID);
     }
 
+	@Override
+	public SoldItem getSoldItemById(int itemId) throws ManagerException {
+		
+		SoldItem soldItem = dao.getSoldItemById(itemId);
+		
+		return soldItem;
+	}
+
 }

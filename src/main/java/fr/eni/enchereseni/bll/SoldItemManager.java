@@ -6,4 +6,6 @@ public interface SoldItemManager {
 	
 	public void createItem(SoldItem item , Integer userID) throws ManagerException;
 
+	public SoldItem getSoldItemById(int itemId)throws ManagerException;
+
 }

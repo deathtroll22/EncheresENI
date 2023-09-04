@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 
+import fr.eni.enchereseni.bo.Category;
+import fr.eni.enchereseni.bo.PickUp;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.dal.util.ConnectionProvider;
 
@@ -16,6 +18,11 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ? WHERE no_article = ?";
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
+	final String SELECT_ARTICLE =   "SELECT ai.no_article, ai.nom_article, ai.description, ai.date_debut_encheres, ai.date_fin_encheres, ai.prix_initial, ai.prix_vente, ai.no_categorie, ai.no_utilisateur, c.libelle AS categorie, r.rue, r.code_postal, r.ville " +
+									"FROM ARTICLES_VENDUS ai " +
+									"LEFT JOIN CATEGORIES c ON ai.no_categorie = c.no_categorie " +
+									"LEFT JOIN RETRAITS r ON ai.no_article = r.no_article " +
+									"WHERE ai.no_article = ?";
 	
 	
 	@Override
@@ -57,5 +64,49 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	        e.printStackTrace();
 	    }
 	}
+
+
+	@Override
+    public SoldItem getSoldItemById(int itemId) {
+		
+		SoldItem soldItem = null;
+		
+        try (Connection con = ConnectionProvider.getConnection()) {
+            
+            PreparedStatement stmt = con.prepareStatement(SELECT_ARTICLE);
+            stmt.setInt(1, itemId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                soldItem = new SoldItem();
+                soldItem.setItemNumber(rs.getInt("no_article"));
+                soldItem.setItemName(rs.getString("nom_article"));
+                soldItem.setItemDescription(rs.getString("description"));
+                soldItem.setAuctionStartDate(rs.getDate("date_debut_encheres"));
+                soldItem.setAuctionEndDate(rs.getDate("date_fin_encheres"));
+                soldItem.setStartingPrice(rs.getDouble("prix_initial"));
+                soldItem.setSellingPrice(rs.getDouble("prix_vente"));
+                soldItem.setSaleStatus(rs.getString("sale_status"));
+
+                // Créer la catégorie et la définir dans l'objet SoldItem
+                Category category = new Category();
+                category.setCategoryNumber(rs.getInt("no_categorie"));
+                category.setCategoryName(rs.getString("categorie"));
+                soldItem.setCategoryItem(category);
+
+                // Créer l'emplacement de retrait et le définir dans l'objet SoldItem
+                PickUp pickup = new PickUp();
+                pickup.setStreet(rs.getString("rue"));
+                pickup.setPostalCode(rs.getString("code_postal"));
+                pickup.setCity(rs.getString("ville"));
+                soldItem.setWithdrawalLocation(pickup);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return soldItem; 
+    }
 
 }

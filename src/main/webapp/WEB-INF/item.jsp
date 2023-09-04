@@ -34,12 +34,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="mb-2 text-center">Item Details</h2>
-                        <p><span class="highlight-info">Item Name: </span> ${itemName}</p>
-                        <p><span class="highlight-info">Description: </span> ${itemDescription}</p>
+                        <p><span class="highlight-info">Item Name: </span> ${soldItem.itemName}</p>
+                        <p><span class="highlight-info">Description: </span> ${soldItem.itemDescription}</p>
                         <p><span class="highlight-info">Category: </span> ${itemCategory}</p>
                         <p><span class="highlight-info">Current Best Offer: </span> ${currentValue} pts by Username</p>
-                        <p><span class="highlight-info">Starting Price: </span> ${startValue} pts</p>
-                        <p><span class="highlight-info">Auction End Date: </span> August 31, 2023</p>
+                        <p><span class="highlight-info">Starting Price: </span> ${soldItem.startingPrice} pts</p>
+                        <p><span class="highlight-info">Auction End Date: </span> ${soldItem.auctionEndDate}</p>
                           <div class="card bg-carton shadow-lg text-white">
                             <div class="card-body">
                                 <h4 class="text-center mb-3">Pick Up :</h4>
