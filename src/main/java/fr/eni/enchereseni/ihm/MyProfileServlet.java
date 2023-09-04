@@ -7,19 +7,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.RequestDispatcher;
-import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerException;
-import fr.eni.enchereseni.bll.AuctionManagerSing;
+import fr.eni.enchereseni.bll.UserManager;
+import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bo.User;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/MyProfileServlet")
 public class MyProfileServlet extends HttpServlet {
 	
 	// Appel à la logique métier pour la création du compte utilisateur
-    AuctionManager manager = AuctionManagerSing.getInstance();
+    UserManager manager = ManagerSing.getUserManager();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	HttpSession session = request.getSession();

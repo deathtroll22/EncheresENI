@@ -7,9 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerException;
-import fr.eni.enchereseni.bll.AuctionManagerImpl;
+import fr.eni.enchereseni.bll.UserManager;
+import fr.eni.enchereseni.bll.ManagerException;
+import fr.eni.enchereseni.bll.UserManagerImpl;
 import fr.eni.enchereseni.bo.User;
 
 public class EditMyProfileServlet extends HttpServlet {
@@ -57,12 +57,12 @@ public class EditMyProfileServlet extends HttpServlet {
 	    user.setPostalCode(postalCode);
 	    user.setCity(city);
 
-		AuctionManager auctionManager = new AuctionManagerImpl();
+		UserManager userManager = new UserManagerImpl();
 		try {
-			auctionManager.updateMyProfil(user);
+			userManager.updateMyProfil(user);
 			// Rediriger vers la page de profil
 			response.sendRedirect(request.getContextPath() + "/MyProfileServlet");
-		} catch (AuctionManagerException e) {
+		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
 	}

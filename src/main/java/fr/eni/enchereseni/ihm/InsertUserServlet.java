@@ -6,9 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerException;
-import fr.eni.enchereseni.bll.AuctionManagerSing;
+import fr.eni.enchereseni.bll.UserManager;
+import fr.eni.enchereseni.bll.ManagerException;
+import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bo.User;
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class InsertUserServlet extends HttpServlet {
 
 
                 // Appel à la logique métier pour la création du compte utilisateur
-                AuctionManager manager = AuctionManagerSing.getInstance();
+                UserManager manager = ManagerSing.getUserManager();
                 manager.createAccount(newUser);
 
                 // Mise en session de l'utilisateur et redirection vers la page de connexion
@@ -60,7 +60,7 @@ public class InsertUserServlet extends HttpServlet {
 
                 response.sendRedirect(request.getContextPath() + "/HomeServlet");
             }
-        } catch (AuctionManagerException e) {
+        } catch (ManagerException e) {
             
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during user creation.");
