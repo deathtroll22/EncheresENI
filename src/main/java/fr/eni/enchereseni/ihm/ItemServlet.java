@@ -5,35 +5,56 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+
+import fr.eni.enchereseni.bll.ManagerException;
+import fr.eni.enchereseni.bll.ManagerSing;
+import fr.eni.enchereseni.bll.SoldItemManager;
+import fr.eni.enchereseni.bo.SoldItem;
+import fr.eni.enchereseni.bo.User;
+
+
 public class ItemServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Ici, vous récupérez les détails de l'article à afficher (par exemple depuis une base de données) et les placez dans des attributs de la requête
-        String itemName = "Item Name Here";
-        String itemDescription = "Item Description Here";
-        String itemCategory = "Item Category Here";
-        // ... Autres détails de l'article ...
+	private static final long serialVersionUID = 1L;
+	
+	public ItemServlet() {
+		super();
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	// identifiant de l'article depuis l'URL
+        int itemId = Integer.parseInt(request.getParameter("itemId"));
+    	
+        try {
+            // article à partir de l'identifiant
+            SoldItemManager itemManager = ManagerSing.getSoldItemManager();
+            SoldItem soldItem = itemManager.getSoldItemById(itemId);
 
-        request.setAttribute("itemName", itemName);
-        request.setAttribute("itemDescription", itemDescription);
-        request.setAttribute("itemCategory", itemCategory);
+            request.setAttribute("soldItem", soldItem);
 
-        // Vous pouvez également récupérer les informations sur les enchères en cours, la meilleure offre, etc.
-
-        // Ensuite, vous transférez le contrôle à la page JSP "item.jsp" pour afficher les détails de l'article et le formulaire d'enchère
-        request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
+            //page JSP pour afficher les détails de l'article
+            request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
+            
+        } catch (ManagerException e) {
+            e.printStackTrace();
+            
+            request.setAttribute("errorMessage", "Erreur lors de la récupération des détails de l'article.");
+            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
+        }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Ici, vous gérez la soumission du formulaire d'enchère
-        String proposal = request.getParameter("proposal");
-        // Traitez la proposition d'enchère et effectuez les actions nécessaires (mise à jour de la base de données, etc.)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// Ici, vous gérez la soumission du formulaire d'enchère
+		String proposal = request.getParameter("proposal");
+		// Traitez la proposition d'enchère et effectuez les actions nécessaires (mise à
+		// jour de la base de données, etc.)
 
-        // Vous pouvez ensuite rediriger l'utilisateur vers la même page pour afficher les détails mis à jour de l'article après l'enchère
-        response.sendRedirect(request.getContextPath() + "/item");
-    }
+		// Vous pouvez ensuite rediriger l'utilisateur vers la même page pour afficher
+		// les détails mis à jour de l'article après l'enchère
+		response.sendRedirect(request.getContextPath() + "/item");
+	}
 }
-
-
-
-

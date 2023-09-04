@@ -15,6 +15,7 @@ public class SoldItemManagerImpl implements SoldItemManager {
     }
 
 	@Override
+<<<<<<< HEAD
 	public List<SoldItem> getAllItems() throws ManagerException {
         try {
             return dao.getAllItems();
@@ -22,4 +23,13 @@ public class SoldItemManagerImpl implements SoldItemManager {
             throw new ManagerException("Error while getting all items", e);
         }
 	}
+=======
+	public SoldItem getSoldItemById(int itemId) throws ManagerException {
+		
+		SoldItem soldItem = dao.getSoldItemById(itemId);
+		
+		return soldItem;
+	}
+
+>>>>>>> origin/nolwenn_item_en_enchere
 }
