@@ -8,10 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import fr.eni.enchereseni.bll.AuctionManager;
+import fr.eni.enchereseni.bll.ManagerException;
 import fr.eni.enchereseni.bo.User;
 import fr.eni.enchereseni.bo.Auction; // Assure-toi que le package et le nom de la classe sont corrects
-import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerSing; // Assure-toi d'importer le AuctionManagerSing
+import fr.eni.enchereseni.bll.ManagerSing; // Assure-toi d'importer le ManagerSing
 
 @WebServlet("/HomeServlet")
 public class HomeServlet extends HttpServlet {
@@ -20,16 +21,22 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = getUserFromSessionOrAuthentication(); // Remplace cette ligne par la récupération de l'utilisateur
-        AuctionManager auctionManager = AuctionManagerSing.getInstance(); // Utilise AuctionManagerSing pour obtenir l'instance d'AuctionManager
-        List<Auction> activeAuctions = auctionManager.getActiveAuctions(user);
+        AuctionManager auctionManager = ManagerSing.getAuctionManager(); // Utilise ManagerSing pour obtenir l'instance d'AuctionManager
+        List<Auction> activeAuctions = null;
+		try {
+			activeAuctions = auctionManager.getActiveAuctions(user);
+		} catch (ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         request.setAttribute("activeAuctions", activeAuctions); // Ajoute la liste d'enchères à l'objet de requête
 
         request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
 
-    // Méthode pour récupérer l'utilisateur (exemple, tu devrais l'adapter)
+ 
     private User getUserFromSessionOrAuthentication() {
-        User user = new User(); // Remplace cette ligne par ta logique de récupération de l'utilisateur
+        User user = new User();
         return user;
     }
 }
