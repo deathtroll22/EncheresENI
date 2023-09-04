@@ -25,7 +25,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 									"FROM ARTICLES_VENDUS av " +
 									"LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
 									"LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
-									"WHERE ai.no_article = ?";
+									"WHERE av.no_article = ?";
 
 	
 	
