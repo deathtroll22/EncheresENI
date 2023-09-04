@@ -1,17 +1,17 @@
 package fr.eni.enchereseni.bo;
 
-public class Withdrawal {
+public class PickUp {
 	private String street;       // rue
     private String postalCode;   // code_postal
     private String city;         // ville
     private SoldItem item;
     
 
-	public Withdrawal() {
+	public PickUp() {
 		super();
 	}
 
-	public Withdrawal(String street, String postalCode, String city) {
+	public PickUp(String street, String postalCode, String city) {
 		super();
 		this.street = street;
 		this.postalCode = postalCode;
