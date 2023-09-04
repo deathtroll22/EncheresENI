@@ -101,7 +101,7 @@ public class AuctionManagerImpl implements AuctionManager {
     // Gestion des enchères
     @Override
     public void createItem(SoldItem item , Integer userID) throws AuctionManagerException {
-        dao.createItem(item, 0);
+        dao.createItem(item, userID);
     }
     
     //récupérer la liste des catégories

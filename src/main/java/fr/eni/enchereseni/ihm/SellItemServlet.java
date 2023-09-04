@@ -105,7 +105,7 @@ public class SellItemServlet extends HttpServlet {
 						System.out.println("Pickup city: " + pickupCity);
 
 						// Insérez l'article en utilisant la méthode createItem de votre gestionnaire
-						manager.createItem(newItem, loggedInUser.getUserID());
+						manager.createItem(newItem, loggedInUserId);
 
 						// Redirigez l'utilisateur vers la page d'accueil
 						response.sendRedirect(request.getContextPath() + "/HomeServlet");
