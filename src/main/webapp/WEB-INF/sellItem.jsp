@@ -20,9 +20,8 @@ body {
 }
 
 .bg-carton {
-	background-color: #b68759!important;
+	background-color: #b68759 !important;
 }
-
 </style>
 </head>
 <body>
@@ -31,7 +30,7 @@ body {
 		<h1 class="text-center text-white pacifico">Sell Something!</h1>
 		<div class="card bg-light mt-4">
 			<div class="card-body">
-				<form action="insertItemServlet" method="post">
+				<form action="SellItemServlet" method="post">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
@@ -47,11 +46,9 @@ body {
 								<label for="category">Category:</label> <select
 									class="form-control" id="category" name="category" required>
 									<option value="" selected disabled>Select a category</option>
-									<option value="1">Computers</option>
-									<option value="2">Furniture</option>
-									<option value="3">Sports and Recreation</option>
-									<option value="4">Clothing</option>
-									<!-- Add more options according to your categories -->
+									<c:forEach items="${categories}" var="category">
+										<option value="${category.categoryNumber}">${category.categoryName}</option>
+									</c:forEach>
 								</select>
 							</div>
 						</div>

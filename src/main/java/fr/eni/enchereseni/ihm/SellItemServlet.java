@@ -1,61 +1,126 @@
 package fr.eni.enchereseni.ihm;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import fr.eni.enchereseni.bll.AuctionManager;
+import fr.eni.enchereseni.bll.AuctionManagerException;
+import fr.eni.enchereseni.bll.AuctionManagerSing;
+import fr.eni.enchereseni.bo.Category;
+import fr.eni.enchereseni.bo.SoldItem;
+import fr.eni.enchereseni.bo.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerException;
-import fr.eni.enchereseni.bll.AuctionManagerSing;
-import fr.eni.enchereseni.bo.SoldItem;
-import fr.eni.enchereseni.bo.User;
-
-import java.io.IOException;
-import java.time.LocalDate;
 
 @WebServlet("/SellItemServlet")
 public class SellItemServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/sellItem.jsp").forward(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			AuctionManager manager = AuctionManagerSing.getInstance();
+			List<Category> categories = manager.getAllCategories();
+			request.setAttribute("categories", categories);
+		} catch (AuctionManagerException e) {
+			e.printStackTrace();
+		}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-            User seller = (User) session.getAttribute("user");
+		request.getRequestDispatcher("/WEB-INF/sellItem.jsp").forward(request, response);
+	}
 
-            String itemName = request.getParameter("itemName");
-            String itemDescription = request.getParameter("itemDescription");
-            int category = Integer.parseInt(request.getParameter("category"));
-            double startingPrice = Double.parseDouble(request.getParameter("startingPrice"));
-            LocalDate auctionStartDate = LocalDate.parse(request.getParameter("auctionStartDate"));
-            LocalDate auctionEndDate = LocalDate.parse(request.getParameter("auctionEndDate"));
-            String pickupStreet = request.getParameter("pickupStreet");
-            String pickupPostalCode = request.getParameter("pickupPostalCode");
-            String pickupCity = request.getParameter("pickupCity");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			// Obtenez l'utilisateur connecté depuis la session
+			HttpSession session = request.getSession();
+			User loggedInUser = (User) session.getAttribute("user");
 
-            if (itemName.isEmpty() || itemDescription.isEmpty() || startingPrice <= 0 ||
-                    auctionStartDate.isAfter(auctionEndDate)) {
-                request.setAttribute("error", "Invalid input. Please check your data.");
-                request.getRequestDispatcher("/WEB-INF/sellItem.jsp").forward(request, response);
-            } else {
-                SoldItem newItem = new SoldItem(itemName, itemDescription, auctionStartDate, auctionEndDate,
-                        startingPrice, 0, "Active", category, pickupStreet, pickupPostalCode, pickupCity, seller);
+			System.out.println("Session ID: " + session.getId());
+			System.out.println("User in session: " + loggedInUser);
 
-                AuctionManager manager = AuctionManagerSing.getInstance();
-                manager.insertItem(newItem);
+			if (loggedInUser != null) {
+				System.out.println("User ID: " + loggedInUser.getUserID());
 
-                response.sendRedirect(request.getContextPath() + "/HomeServlet");
-            }
-        } catch (AuctionManagerException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during item creation.");
-        }
-    }
+				// Obtenez l'ID de l'utilisateur connecté
+				int loggedInUserId = loggedInUser.getUserID();
+
+				// Récupérez les données du formulaire
+				String itemName = request.getParameter("itemName");
+				String itemDescription = request.getParameter("itemDescription");
+				String categoryParameter = request.getParameter("category");
+				double startingPrice = Double.parseDouble(request.getParameter("startingPrice"));
+				Date auctionStartDate = Date.valueOf(request.getParameter("auctionStartDate"));
+				Date auctionEndDate = Date.valueOf(request.getParameter("auctionEndDate"));
+				String pickupStreet = request.getParameter("pickupStreet");
+				String pickupPostalCode = request.getParameter("pickupPostalCode");
+				String pickupCity = request.getParameter("pickupCity");
+
+				// Vérifiez si la catégorie est sélectionnée (non nulle)
+				if (categoryParameter == null || categoryParameter.isEmpty()) {
+					// La catégorie n'est pas sélectionnée, renvoyez un message d'erreur à la page
+					// JSP
+					request.setAttribute("errorMessage", "Please select a category.");
+					request.getRequestDispatcher("/WEB-INF/sellItem.jsp").forward(request, response);
+				} else {
+					// La catégorie est sélectionnée, continuez avec la création de l'article
+					int categoryNumber = Integer.parseInt(categoryParameter);
+
+					// Validez les autres données du formulaire
+					if (itemName.isEmpty() || itemDescription.isEmpty() || startingPrice <= 0
+							|| auctionStartDate.toLocalDate().isAfter(auctionEndDate.toLocalDate())) {
+						// Les données sont invalides, renvoyez un message d'erreur à la page JSP
+						request.setAttribute("errorMessage", "Invalid input. Please check your data.");
+						request.getRequestDispatcher("/WEB-INF/sellItem.jsp").forward(request, response);
+					} else {
+						// Créez une instance de Category en utilisant la valeur de la catégorie
+						Category category = new Category(categoryNumber, "");
+
+						// Créez un nouvel article
+						SoldItem newItem = new SoldItem(itemName, itemDescription, auctionStartDate, auctionEndDate,
+								startingPrice, 0, "Active", category, pickupStreet, pickupPostalCode, pickupCity,
+								loggedInUser);
+
+						// Obtenez une instance de votre gestionnaire AuctionManager
+						AuctionManager manager = AuctionManagerSing.getInstance();
+						
+						//affichage du formulaire dans la console
+						System.out.println("User ID trying to create item: " + loggedInUserId);
+						System.out.println("Item name: " + itemName);
+						System.out.println("Item description: " + itemDescription);
+						System.out.println("Category parameter: " + categoryParameter);
+						System.out.println("Starting price: " + startingPrice);
+						System.out.println("Auction start date: " + auctionStartDate);
+						System.out.println("Auction end date: " + auctionEndDate);
+						System.out.println("Pickup street: " + pickupStreet);
+						System.out.println("Pickup postal code: " + pickupPostalCode);
+						System.out.println("Pickup city: " + pickupCity);
+
+						// Insérez l'article en utilisant la méthode createItem de votre gestionnaire
+						manager.createItem(newItem, loggedInUserId);
+
+						// Redirigez l'utilisateur vers la page d'accueil
+						response.sendRedirect(request.getContextPath() + "/HomeServlet");
+					}
+				}
+			} else {
+				System.out.println("User not found in session.");
+				// Autres actions si nécessaire
+			}
+		} catch (AuctionManagerException e) {
+			// Gérez les exceptions liées à la création de l'article
+			request.setAttribute("errorMessage", "Error during item creation: " + e.getMessage());
+			request.getRequestDispatcher("/WEB-INF/sellItem.jsp").forward(request, response);
+		}
+
+	}
+
 }

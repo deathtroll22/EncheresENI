@@ -2,7 +2,7 @@ package fr.eni.enchereseni.dal;
 
 import java.util.List;
 
-import fr.eni.enchereseni.bo.Auction;
+import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
 
@@ -24,6 +24,9 @@ public interface AuctionDAO {
 	public User getUserProfileByUsername(String username);
 	
 	public void updateMyProfil (User user);
+	
+	public void createItem(SoldItem item, int userId);
+	public List<Category> getAllCategories();
 
 
 	/*
