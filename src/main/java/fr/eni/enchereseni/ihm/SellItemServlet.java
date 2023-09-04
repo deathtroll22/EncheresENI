@@ -2,14 +2,12 @@ package fr.eni.enchereseni.ihm;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerException;
-import fr.eni.enchereseni.bll.AuctionManagerSing;
+import fr.eni.enchereseni.bll.SoldItemManager;
+import fr.eni.enchereseni.bll.CategoryManager;
+import fr.eni.enchereseni.bll.ManagerException;
+import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
@@ -27,10 +25,10 @@ public class SellItemServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			AuctionManager manager = AuctionManagerSing.getInstance();
+			CategoryManager manager = ManagerSing.getCategoryManager();
 			List<Category> categories = manager.getAllCategories();
 			request.setAttribute("categories", categories);
-		} catch (AuctionManagerException e) {
+		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
 
@@ -90,7 +88,7 @@ public class SellItemServlet extends HttpServlet {
 								loggedInUser);
 
 						// Obtenez une instance de votre gestionnaire AuctionManager
-						AuctionManager manager = AuctionManagerSing.getInstance();
+						SoldItemManager managerItem = ManagerSing.getSoldItemManager();
 						
 						//affichage du formulaire dans la console
 						System.out.println("User ID trying to create item: " + loggedInUserId);
@@ -105,7 +103,7 @@ public class SellItemServlet extends HttpServlet {
 						System.out.println("Pickup city: " + pickupCity);
 
 						// Insérez l'article en utilisant la méthode createItem de votre gestionnaire
-						manager.createItem(newItem, loggedInUserId);
+						managerItem.createItem(newItem, loggedInUserId);
 
 						// Redirigez l'utilisateur vers la page d'accueil
 						response.sendRedirect(request.getContextPath() + "/HomeServlet");
@@ -115,7 +113,7 @@ public class SellItemServlet extends HttpServlet {
 				System.out.println("User not found in session.");
 				// Autres actions si nécessaire
 			}
-		} catch (AuctionManagerException e) {
+		} catch (ManagerException e) {
 			// Gérez les exceptions liées à la création de l'article
 			request.setAttribute("errorMessage", "Error during item creation: " + e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/sellItem.jsp").forward(request, response);

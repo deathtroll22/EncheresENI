@@ -6,20 +6,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.RequestDispatcher;
-import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerException;
-import fr.eni.enchereseni.bll.AuctionManagerSing;
+import fr.eni.enchereseni.bll.UserManager;
+import fr.eni.enchereseni.bll.ManagerException;
+import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bo.User;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	
 	// Appel à la logique métier pour la création du compte utilisateur
-    AuctionManager manager = AuctionManagerSing.getInstance();
+    UserManager manager = ManagerSing.getUserManager();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
@@ -42,7 +39,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("error", "Invalid username or password.");
                 request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             }
-        } catch (AuctionManagerException e) {
+        } catch (ManagerException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during login.");
         }

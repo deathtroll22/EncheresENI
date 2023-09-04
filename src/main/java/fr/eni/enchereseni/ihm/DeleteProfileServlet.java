@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import fr.eni.enchereseni.bll.AuctionManager;
-import fr.eni.enchereseni.bll.AuctionManagerException;
-import fr.eni.enchereseni.bll.AuctionManagerSing;
+import fr.eni.enchereseni.bll.ManagerException;
+import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bo.User;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class DeleteProfileServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/editProfile.jsp").forward(request, response);
             } else {
                 // Appel à la logique métier pour supprimer le profil utilisateur
-                AuctionManager manager = AuctionManagerSing.getInstance();
+                AuctionManager manager = ManagerSing.getInstance();
                 manager.deleteProfile(currentUser.getId());
 
                 // Déconnexion de l'utilisateur
@@ -45,7 +45,7 @@ public class DeleteProfileServlet extends HttpServlet {
 
                 response.sendRedirect(request.getContextPath() + "/HomeServlet");
             }
-        } catch (AuctionManagerException e) {
+        } catch (ManagerException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during profile deletion.");
         }

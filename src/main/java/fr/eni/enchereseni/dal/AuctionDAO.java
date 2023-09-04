@@ -14,26 +14,10 @@ public interface AuctionDAO {
 	public SoldItem findBySeller(int userID);*/
 	
 	
-	public void createUser (User user);
-	public boolean isUsernameTaken(String username);
-	public boolean isEmailTaken(String email);
 	
-	public User login(String username, String password);
-	public User getUserByLoginIdentifier(String username);
-	
-	public User getUserProfileByUsername(String username);
-	
-	public void updateMyProfil (User user);
-	
-	public void createItem(SoldItem item, int userId);
-	public List<Category> getAllCategories();
 
 
 	/*
-	
-	public void deleteUser (User user);
-	public void suspendUser (User user);
-	
 	
 	public void createAuction(Auction auction);
 	public void updateAuction(Auction auction);
