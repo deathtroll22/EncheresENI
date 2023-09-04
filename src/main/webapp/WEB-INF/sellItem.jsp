@@ -82,7 +82,7 @@ body {
 											<div class="col-md-9">
 												<input type="text" class="form-control form-control-sm"
 													id="pickupStreet" name="pickupStreet"
-													value="rue des bogues" required>
+													value="${user.street}" required>
 											</div>
 										</div>
 										<div class="form-group row">
@@ -90,7 +90,7 @@ body {
 												Code:</label>
 											<div class="col-md-9">
 												<input type="text" class="form-control form-control-sm"
-													id="pickupPostalCode" name="pickupPostalCode" value="35000"
+													id="pickupPostalCode" name="pickupPostalCode" value="${user.postalCode}"
 													required>
 											</div>
 										</div>
@@ -98,7 +98,7 @@ body {
 											<label class="col-md-3 col-form-label" for="pickupCity">City:</label>
 											<div class="col-md-9">
 												<input type="text" class="form-control form-control-sm"
-													id="pickupCity" name="pickupCity" value="Paris" required>
+													id="pickupCity" name="pickupCity" value="${user.city}" required>
 											</div>
 										</div>
 									</div>

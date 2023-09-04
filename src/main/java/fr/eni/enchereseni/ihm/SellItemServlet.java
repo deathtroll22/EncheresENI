@@ -8,7 +8,9 @@ import fr.eni.enchereseni.bll.SoldItemManager;
 import fr.eni.enchereseni.bll.CategoryManager;
 import fr.eni.enchereseni.bll.ManagerException;
 import fr.eni.enchereseni.bll.ManagerSing;
+import fr.eni.enchereseni.bll.PickUpManager;
 import fr.eni.enchereseni.bo.Category;
+import fr.eni.enchereseni.bo.PickUp;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
 import jakarta.servlet.ServletException;
@@ -82,13 +84,18 @@ public class SellItemServlet extends HttpServlet {
 						// Créez une instance de Category en utilisant la valeur de la catégorie
 						Category category = new Category(categoryNumber, "");
 
-						// Créez un nouvel article
+						// Create new item
 						SoldItem newItem = new SoldItem(itemName, itemDescription, auctionStartDate, auctionEndDate,
 								startingPrice, 0, "Active", category, pickupStreet, pickupPostalCode, pickupCity,
 								loggedInUser);
+						
+						//create new pick up
+						PickUp newPickUp = new PickUp(pickupStreet, pickupPostalCode, pickupCity);
+						
 
-						// Obtenez une instance de votre gestionnaire AuctionManager
+						// instance des managers
 						SoldItemManager managerItem = ManagerSing.getSoldItemManager();
+						PickUpManager managerPickUp = ManagerSing.getPickUpManager();
 						
 						//affichage du formulaire dans la console
 						System.out.println("User ID trying to create item: " + loggedInUserId);
@@ -102,8 +109,12 @@ public class SellItemServlet extends HttpServlet {
 						System.out.println("Pickup postal code: " + pickupPostalCode);
 						System.out.println("Pickup city: " + pickupCity);
 
-						// Insérez l'article en utilisant la méthode createItem de votre gestionnaire
+						// Insert Item 
 						managerItem.createItem(newItem, loggedInUserId);
+						
+						// Insert Pick up
+						int articleId = newItem.getItemNumber();
+						managerPickUp.createPickUp(newPickUp, articleId);
 
 						// Redirigez l'utilisateur vers la page d'accueil
 						response.sendRedirect(request.getContextPath() + "/HomeServlet");
