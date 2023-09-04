@@ -132,7 +132,7 @@
 				<c:forEach var="item" items="${allItems}">
 					<div class="col-md-6">
 						<div class="card shadow bg-light mb-4 fancy_card">
-							<a href="ItemServlet" class="card-link">
+							<a href="<c:url value='/ItemServlet'><c:param name='itemId' value='${item.itemNumber}'/></c:url>" class="card-link">
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-4">
