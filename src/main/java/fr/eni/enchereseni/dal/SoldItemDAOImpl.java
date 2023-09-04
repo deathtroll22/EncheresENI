@@ -19,16 +19,14 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	final String CREATE_ITEM = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_categorie, no_utilisateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ? WHERE no_article = ?";
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
-<<<<<<< HEAD
-	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS ";
-=======
+
 	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
 	final String SELECT_ARTICLE_FOR_AUCTION =   "SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, r.rue, r.code_postal, r.ville " +
 									"FROM ARTICLES_VENDUS av " +
 									"LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
 									"LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
 									"WHERE ai.no_article = ?";
->>>>>>> origin/nolwenn_item_en_enchere
+
 	
 	
 	@Override
