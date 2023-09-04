@@ -25,7 +25,7 @@ public interface AuctionManager {
 
     //public void sellItem(SoldItem item) throws AuctionManagerException;
     //public List<Auction> getClosedAuctions() throws AuctionManagerException;
-    // public List<Auction> getActiveAuctions(User user) throws AuctionManagerException;
+    public List<Auction> getActiveAuctions(User user) throws AuctionManagerException;
     //public void bid(User bidder, Auction auction, Integer bidAmount) throws AuctionManagerException;
     //public void winSale(User winner, Auction auction) throws AuctionManagerException;
     //public Auction detailsAuction(User user, Auction auction) throws AuctionManagerException;
