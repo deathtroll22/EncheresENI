@@ -180,6 +180,7 @@ public class SoldItem {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 
 	@Override
 	public String toString() {
@@ -188,6 +189,6 @@ public class SoldItem {
 				+ startingPrice + ", sellingPrice=" + sellingPrice + ", saleStatus=" + saleStatus + ", categoryItem="
 				+ categoryItem + "]";
 	}
-
+	
     
 }

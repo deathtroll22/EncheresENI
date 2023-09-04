@@ -9,12 +9,12 @@ import fr.eni.enchereseni.bo.User;
 public interface AuctionManager {
         
  // Gestion des enchères
-    
+    public List<Auction> getActiveAuctions(User user) throws ManagerException;
 	
 
     //public void sellItem(SoldItem item) throws ManagerException;
     //public List<Auction> getClosedAuctions() throws ManagerException;
-    // public List<Auction> getActiveAuctions(User user) throws ManagerException;
+    
     //public void bid(User bidder, Auction auction, Integer bidAmount) throws ManagerException;
     //public void winSale(User winner, Auction auction) throws ManagerException;
     //public Auction detailsAuction(User user, Auction auction) throws ManagerException;
