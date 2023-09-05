@@ -137,8 +137,10 @@
                 <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <img src="${pageContext.request.contextPath}/img/auction.png"
-                                            alt="Table" class="img-fluid rounded img-max-height">
+                                     <img src=" https://picsum.photos/200" alt="Table" class="img-fluid rounded img-max-height">
+                          
+                                       <%--  <img src="${pageContext.request.contextPath}/img/auction.png"
+                                            alt="Table" class="img-fluid rounded img-max-height"> --%>
                                     </div>
                                     <div class="col-md-8">
                                         <h4>

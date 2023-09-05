@@ -3,6 +3,7 @@ package fr.eni.enchereseni.bll;
 import fr.eni.enchereseni.bo.User;
 import fr.eni.enchereseni.dal.DAOFact;
 import fr.eni.enchereseni.dal.UserDAO;
+import fr.eni.enchereseni.dal.UserDAOImpl;
 
 public class UserManagerImpl implements UserManager {
 	
@@ -79,5 +80,12 @@ public class UserManagerImpl implements UserManager {
 		    // méthode de la DAL
 		    dao.updateMyProfil(user);
 		}
+
+	    @Override
+	    public void deleteUser(Integer userID) {
+	        // Appeler la méthode de suppression de l'utilisateur depuis la couche DAO
+	        UserDAO userDAO = new UserDAOImpl();
+	        userDAO.deleteUser(userID);
+	    }
 
 }

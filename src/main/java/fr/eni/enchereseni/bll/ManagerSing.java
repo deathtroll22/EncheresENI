@@ -41,4 +41,9 @@ public class ManagerSing {
         }
         return userManagerInstance;
     }
+
+	public static AuctionManager getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
