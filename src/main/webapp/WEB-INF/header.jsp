@@ -71,7 +71,7 @@ body {
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-white-custom">
+	<nav class="navbar py-4 py-lg-0 navbar-expand-lg navbar-light bg-white-custom">
 		<div class="container">
 			<a class="navbar-brand"
 				href="${pageContext.request.contextPath}/HomeServlet"> <!--  <img src="${pageContext.request.contextPath}/img/auction.png" alt="Logo" style="width: 80px;">-->

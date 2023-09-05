@@ -31,6 +31,15 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 		    "LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
 		    "LEFT JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur " +
 		    "WHERE av.no_article = ?";
+	
+	final String SELECT_ALL_ARTICLES = 
+		    "SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, " +
+		    "av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, " +
+		    "r.rue, r.code_postal, r.ville, u.pseudo AS vendeur_pseudo, u.nom AS vendeur_nom, u.prenom AS vendeur_prenom " +
+		    "FROM ARTICLES_VENDUS av " +
+		    "LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
+		    "LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
+		    "LEFT JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur";
 
 	
 	@Override
@@ -78,8 +87,8 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	    List<SoldItem> itemList = new ArrayList<>();
 	    
 	    try (Connection con = ConnectionProvider.getConnection()) {
-	        Statement stmt = con.createStatement();
-	        ResultSet rs = stmt.executeQuery(SELECT_ARTICLE_FOR_AUCTION);
+	    	  Statement stmt = con.createStatement();
+	            ResultSet rs = stmt.executeQuery(SELECT_ALL_ARTICLES);
 	        
 	        while (rs.next()) {
 	            SoldItem item = new SoldItem();
