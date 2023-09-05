@@ -31,6 +31,14 @@ public class ItemServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
+		HttpSession session = request.getSession();
+	    User currentUser = (User) session.getAttribute("user");
+	    
+	    // Vérifier si l'utilisateur est en session
+	    if (currentUser == null) {
+	        response.sendRedirect(request.getContextPath() + "/HomeServlet");
+	        return; // Arrête l'exécution de la méthode pour éviter de continuer le traitement
+	    }
 
 		try {
 			SoldItem soldItem = soldItemManager.getSoldItemById(itemId);
