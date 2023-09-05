@@ -49,7 +49,7 @@
     
     	<h1 class="text-center text-white pacifico">Auction List</h1>
 		<div class="card mt-4">
-			<div class="card-body pt-2">
+			<div class="card-body pt-2 pb-0">
 				<h2 class="text-center text-secondary mb-4 pacifico">Filters</h2>
 				<form>
 					<div class="row">
