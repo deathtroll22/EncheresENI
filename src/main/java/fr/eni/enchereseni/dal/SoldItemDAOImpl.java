@@ -12,6 +12,7 @@ import java.util.List;
 import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.PickUp;
 import fr.eni.enchereseni.bo.SoldItem;
+import fr.eni.enchereseni.bo.User;
 import fr.eni.enchereseni.dal.util.ConnectionProvider;
 
 public class SoldItemDAOImpl implements SoldItemDAO {
@@ -21,13 +22,16 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 
 	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
-	final String SELECT_ARTICLE_FOR_AUCTION =   "SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, r.rue, r.code_postal, r.ville " +
-									"FROM ARTICLES_VENDUS av " +
-									"LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
-									"LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
-									"WHERE av.no_article = ?";
+	final String SELECT_ARTICLE_FOR_AUCTION = 
+		    "SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, " +
+		    "av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, " +
+		    "r.rue, r.code_postal, r.ville, u.pseudo AS vendeur_pseudo, u.nom AS vendeur_nom, u.prenom AS vendeur_prenom " +
+		    "FROM ARTICLES_VENDUS av " +
+		    "LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
+		    "LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
+		    "LEFT JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur " +
+		    "WHERE av.no_article = ?";
 
-	
 	
 	@Override
 	public void createItem(SoldItem item, int userId) {
@@ -125,7 +129,6 @@ public class SoldItemDAOImpl implements SoldItemDAO {
                 soldItem.setAuctionEndDate(rs.getDate("date_fin_encheres"));
                 soldItem.setStartingPrice(rs.getDouble("prix_initial"));
                 soldItem.setSellingPrice(rs.getDouble("prix_vente"));
-                //soldItem.setSaleStatus(rs.getString("sale_status"));
 
                 // Créer la catégorie et la définir dans l'objet SoldItem
                 Category category = new Category();
@@ -139,6 +142,14 @@ public class SoldItemDAOImpl implements SoldItemDAO {
                 pickup.setPostalCode(rs.getString("code_postal"));
                 pickup.setCity(rs.getString("ville"));
                 soldItem.setpickUp(pickup);
+                
+                //info du vendeur
+                User seller = new User();
+                seller.setUserID(rs.getInt("no_utilisateur"));
+                seller.setUsername(rs.getString("vendeur_pseudo"));
+                seller.setLastName(rs.getString("vendeur_nom"));
+                seller.setFirstName(rs.getString("vendeur_prenom"));
+                soldItem.setUser(seller);
 
 
             }
@@ -148,5 +159,6 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 
         return soldItem; 
     }
+
 
 }

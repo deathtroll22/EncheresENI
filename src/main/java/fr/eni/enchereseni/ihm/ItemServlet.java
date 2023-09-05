@@ -40,15 +40,14 @@ public class ItemServlet extends HttpServlet {
             
             //récupérer le pick up
             PickUp pickUp = soldItem.getpickUp();
+            
+            //récupérer le vendeur
+            User user = soldItem.getUser();
 
             request.setAttribute("soldItem", soldItem);
             request.setAttribute("itemCategory", itemCategory);
             request.setAttribute("pickUp", pickUp);
-            
-            System.out.println("Pick Up Street: " + pickUp.getStreet());
-            System.out.println("Pick Up Postal Code: " + pickUp.getPostalCode());
-            System.out.println("Pick Up City: " + pickUp.getCity());
-
+            request.setAttribute("seller", user);
 
             //page JSP pour afficher les détails de l'article
             request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
