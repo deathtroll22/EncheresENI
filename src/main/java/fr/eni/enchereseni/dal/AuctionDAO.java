@@ -1,12 +1,10 @@
 package fr.eni.enchereseni.dal;
 
-import java.util.List;
-
-import fr.eni.enchereseni.bo.Category;
-import fr.eni.enchereseni.bo.SoldItem;
-import fr.eni.enchereseni.bo.User;
+import fr.eni.enchereseni.bll.ManagerException;
 
 public interface AuctionDAO {
+	
+	public void createOrUpdateAuction(int userId, int itemId, int bidAmount) throws ManagerException;
 	/*public void createItem(SoldItem item);
 	public void deleteItem(SoldItem item);
 	public void updateItem(SoldItem item);

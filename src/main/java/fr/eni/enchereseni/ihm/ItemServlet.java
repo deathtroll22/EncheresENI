@@ -61,14 +61,38 @@ public class ItemServlet extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Ici, vous gérez la soumission du formulaire d'enchère
-		String proposal = request.getParameter("proposal");
-		// Traitez la proposition d'enchère et effectuez les actions nécessaires (mise à
-		// jour de la base de données, etc.)
+	        throws ServletException, IOException {
+	    // Récupérez la proposition d'enchère depuis les paramètres de la requête
+	    String proposalStr = request.getParameter("proposal");
+	    
+	    try {
+	        int proposalAmount = Integer.parseInt(proposalStr);
+	        
+	        // Validez la proposition d'enchère
+	        if (isValidProposal(proposalAmount, currentOfferAmount, user.getPoints())) {
+	            // Débitez le montant de la proposition du solde de l'utilisateur
+	            user.setPoints(user.getPoints() - proposalAmount);
 
-		// Vous pouvez ensuite rediriger l'utilisateur vers la même page pour afficher
-		// les détails mis à jour de l'article après l'enchère
-		response.sendRedirect(request.getContextPath() + "/item");
+	            // Créez ou mettez à jour une enchère dans la base de données
+	            createOrUpdateAuction(user.getId(), itemId, proposalAmount);
+
+	            // Redirigez l'utilisateur vers la même page pour afficher les détails mis à jour de l'article
+	            response.sendRedirect(request.getContextPath() + "/item?itemId=" + itemId);
+	        } else {
+	            // La proposition n'est pas valide, vous pouvez gérer l'erreur ici
+	            // Par exemple, renvoyer un message d'erreur à l'utilisateur ou rediriger vers une page d'erreur
+	        }
+	    } catch (NumberFormatException e) {
+	        // Gérez l'exception si la proposition n'est pas un nombre valide
+	        // Par exemple, renvoyer un message d'erreur à l'utilisateur ou rediriger vers une page d'erreur
+	    }
 	}
+
+	private boolean isValidProposal(int proposalAmount, int currentOfferAmount, int userPoints) {
+	    // Vérifiez si la proposition est supérieure à l'offre actuelle
+	    // Vérifiez également si le compte de points de l'utilisateur ne devient pas négatif
+	    return proposalAmount > currentOfferAmount && proposalAmount <= userPoints;
+	}
+
+
 }
