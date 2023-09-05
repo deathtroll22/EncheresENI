@@ -128,12 +128,13 @@
     <!-- Liste des enchères en cours -->
     <div class="card col-12 bg-white my-4 py-4">
         <div class="row">
-            <c:forEach var="item" items="${allItems}">
-                <div class="col-md-6">
-                    <div class="card shadow bg-light mb-4 fancy_card">
-                        <a href="<c:url value='/ItemServlet'><c:param name='itemId' value='${item.itemNumber}'/></c:url>"
-                            class="card-link">
-                            <div class="card-body">
+          <c:forEach var="item" items="${allItems}">
+    <div class="col-md-6">
+        <div class="card shadow bg-light mb-4 fancy_card">
+            <a href="<c:url value='/ItemServlet'><c:param name='itemId' value='${item.itemNumber}'/></c:url>"
+                class="card-link"
+                <c:if test="${sessionScope.user == null}">data-toggle="modal" data-target="#loginModal"</c:if>>
+                <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <img src="${pageContext.request.contextPath}/img/auction.png"
