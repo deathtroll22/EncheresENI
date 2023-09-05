@@ -90,7 +90,7 @@
 								<label for="oldPassword" class="highlight-info">Old
 									Password:</label> <input type="password" class="form-control"
 									id="oldPassword" name="oldPassword"
-									placeholder="Enter old password">
+									placeholder="Enter old password" required>
 							</div>
 						</div>
 						<div class="col-md-4">
