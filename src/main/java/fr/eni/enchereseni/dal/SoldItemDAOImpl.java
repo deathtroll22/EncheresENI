@@ -91,13 +91,27 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	            item.setStartingPrice(rs.getDouble("prix_initial"));
 	            item.setSellingPrice(rs.getDouble("prix_vente"));
 
+	            // Créer la catégorie et la définir dans l'objet SoldItem
+	            Category category = new Category();
+	            category.setCategoryNumber(rs.getInt("no_categorie"));
+	            category.setCategoryName(rs.getString("categorie"));
+	            item.setCategoryItem(category);
+
+	            // Créer l'emplacement de retrait et le définir dans l'objet SoldItem
+	            PickUp pickup = new PickUp();
+	            pickup.setStreet(rs.getString("rue"));
+	            pickup.setPostalCode(rs.getString("code_postal"));
+	            pickup.setCity(rs.getString("ville"));
+	            item.setpickUp(pickup);
 	            
-//	            int categoryId = rs.getInt("no_categorie");
-//	            if (!rs.wasNull()) {
-//	                Category categoryItem = getCategoryById(categoryId);
-//	                item.setCategoryItem(categoryItem);
-//	            }
-//	            
+	            //info du vendeur
+	            User seller = new User();
+	            seller.setUserID(rs.getInt("no_utilisateur"));
+	            seller.setUsername(rs.getString("vendeur_pseudo"));
+	            seller.setLastName(rs.getString("vendeur_nom"));
+	            seller.setFirstName(rs.getString("vendeur_prenom"));
+	            item.setUser(seller);
+
 	            itemList.add(item);
 	        }
 	    } catch (SQLException e) {
@@ -106,7 +120,6 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	    
 	    return itemList;
 	}
-
 
 	@Override
     public SoldItem getSoldItemById(int itemId) {
