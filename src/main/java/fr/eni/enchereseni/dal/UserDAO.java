@@ -14,10 +14,10 @@ public interface UserDAO {
 	public User getUserProfileByUsername(String username);
 	
 	public void updateMyProfil (User user);
-<<<<<<< HEAD
+
 	public void deleteUser(Integer userID);
-=======
+
 	public User getUserById(int userId);
->>>>>>> origin/nolwenn_mardi
+
 
 }

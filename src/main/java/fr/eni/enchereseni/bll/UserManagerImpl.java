@@ -81,14 +81,14 @@ public class UserManagerImpl implements UserManager {
 		    dao.updateMyProfil(user);
 		}
 
-<<<<<<< HEAD
+
 	    @Override
 	    public void deleteUser(Integer userID) {
 	        // Appeler la méthode de suppression de l'utilisateur depuis la couche DAO
 	        UserDAO userDAO = new UserDAOImpl();
 	        userDAO.deleteUser(userID);
 	    }
-=======
+
 		@Override
 		public User getUserById(int userId) throws ManagerException {
 		    
@@ -106,6 +106,6 @@ public class UserManagerImpl implements UserManager {
 		    return user;
 		}
 
->>>>>>> origin/nolwenn_mardi
+
 
 }
