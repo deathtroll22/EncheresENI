@@ -7,23 +7,34 @@ public class Auction {
 	private SoldItem soldItem;
     private Date auctionDate;
     private Integer bidAmount;
+    private int highestBidderUserId;
+
     
 	public Auction() {
 		super();
 	}
 
-	public Auction(User user, SoldItem soldItem, Date auctionDate, Integer bidAmount) {
-		super();
-		this.user = user;
-		this.soldItem = soldItem;
-		this.auctionDate = auctionDate;
-		this.bidAmount = bidAmount;
+	public Auction(User user, SoldItem soldItem, Date auctionDate, Integer bidAmount, int highestBidderUserId) {
+	    super();
+	    this.user = user;
+	    this.soldItem = soldItem;
+	    this.auctionDate = auctionDate;
+	    this.bidAmount = bidAmount;
+	    this.highestBidderUserId = highestBidderUserId;
 	}
 
 	public Auction(Date auctionDate, Integer bidAmount) {
 		super();
 		this.auctionDate = auctionDate;
 		this.bidAmount = bidAmount;
+	}
+
+	public Auction(User user, SoldItem soldItem, Date auctionDate, int bidAmount) {
+		super();
+	    this.user = user;
+	    this.soldItem = soldItem;
+	    this.auctionDate = auctionDate;
+	    this.bidAmount = bidAmount;
 	}
 
 	public User getUser() {
@@ -57,12 +68,22 @@ public class Auction {
 	public void setBidAmount(Integer bidAmount) {
 		this.bidAmount = bidAmount;
 	}
+	
+	public int getHighestBidderUserId() {
+	    return highestBidderUserId;
+	}
+
+	public void setHighestBidderUserId(int highestBidderUserId) {
+	    this.highestBidderUserId = highestBidderUserId;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Auction [user=" + user + ", soldItem=" + soldItem + ", auctionDate=" + auctionDate + ", bidAmount="
-				+ bidAmount + "]";
+	    return "Auction [user=" + user + ", soldItem=" + soldItem + ", auctionDate=" + auctionDate + ", bidAmount="
+	            + bidAmount + ", highestBidderUserId=" + highestBidderUserId + "]";
 	}
+
 	
 
 }
