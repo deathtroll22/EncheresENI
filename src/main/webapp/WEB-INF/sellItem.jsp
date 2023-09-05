@@ -35,12 +35,12 @@ body {
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="itemName">Item Name:</label> <input type="text"
-									class="form-control" id="itemName" name="itemName" required>
+									class="form-control" id="itemName" name="itemName" required maxlength="30">
 							</div>
 							<div class="form-group">
 								<label for="itemDescription">Description:</label>
 								<textarea class="form-control" id="itemDescription"
-									name="itemDescription" required rows="1"></textarea>
+									name="itemDescription" required rows="1" maxlength="300"></textarea>
 							</div>
 							<div class="form-group">
 								<label for="category">Category:</label> <select
