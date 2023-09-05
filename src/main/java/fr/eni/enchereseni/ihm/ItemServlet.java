@@ -13,6 +13,7 @@ import fr.eni.enchereseni.bll.ManagerException;
 import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bll.SoldItemManager;
 import fr.eni.enchereseni.bo.Category;
+import fr.eni.enchereseni.bo.PickUp;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
 
@@ -36,9 +37,18 @@ public class ItemServlet extends HttpServlet {
 
             // Récupérer la catégorie de l'article depuis l'objet soldItem
             Category itemCategory = soldItem.getCategoryItem();
+            
+            //récupérer le pick up
+            PickUp pickUp = soldItem.getpickUp();
 
             request.setAttribute("soldItem", soldItem);
             request.setAttribute("itemCategory", itemCategory);
+            request.setAttribute("pickUp", pickUp);
+            
+            System.out.println("Pick Up Street: " + pickUp.getStreet());
+            System.out.println("Pick Up Postal Code: " + pickUp.getPostalCode());
+            System.out.println("Pick Up City: " + pickUp.getCity());
+
 
             //page JSP pour afficher les détails de l'article
             request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);

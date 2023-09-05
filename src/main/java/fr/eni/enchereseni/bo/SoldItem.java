@@ -15,7 +15,7 @@ public class SoldItem {
     private double sellingPrice;
     private String saleStatus;
     private Category categoryItem;
-    private PickUp withdrawalLocation;
+    private PickUp pickUp;
     private List<Auction> auctions = new ArrayList<Auction>();
     private User user;
 
@@ -34,14 +34,14 @@ public class SoldItem {
         this.sellingPrice = 0; 
         this.saleStatus = saleStatus;
         this.categoryItem = categoryItem;
-        this.withdrawalLocation = new PickUp(pickupStreet, pickupPostalCode, pickupCity);
+        this.pickUp = new PickUp(pickupStreet, pickupPostalCode, pickupCity);
         this.user = user;
     }
 
     
     public SoldItem(String itemName, String itemDescription, Date auctionStartDate, Date auctionEndDate,
             double startingPrice, double sellingPrice, String saleStatus, Category categoryItem,
-            PickUp withdrawalLocation, List<Auction> auctions, User user) {
+            PickUp pickUp, List<Auction> auctions, User user) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.auctionStartDate = auctionStartDate;
@@ -50,7 +50,7 @@ public class SoldItem {
         this.sellingPrice = sellingPrice;
         this.saleStatus = saleStatus;
         this.categoryItem = categoryItem;
-        this.withdrawalLocation = withdrawalLocation;
+        this.pickUp = pickUp;
         this.auctions = auctions;
         this.user = user;
     }
@@ -66,7 +66,7 @@ public class SoldItem {
         this.sellingPrice = sellingPrice;
         this.saleStatus = saleStatus;
         this.categoryItem = new Category(category, ""); // Vous devrez peut-être ajuster cette ligne
-        this.withdrawalLocation = new PickUp(pickupStreet, pickupPostalCode, pickupCity); // Vous devrez peut-être ajuster cette ligne
+        this.pickUp = new PickUp(pickupStreet, pickupPostalCode, pickupCity); // Vous devrez peut-être ajuster cette ligne
         this.user = seller;
     }
 	
@@ -81,7 +81,7 @@ public class SoldItem {
 	    this.sellingPrice = sellingPrice;
 	    this.saleStatus = saleStatus;
 	    this.categoryItem = new Category(category, ""); // Vous devrez peut-être ajuster cette ligne
-	    this.withdrawalLocation = new PickUp(pickupStreet, pickupPostalCode, pickupCity); // Vous devrez peut-être ajuster cette ligne
+	    this.pickUp = new PickUp(pickupStreet, pickupPostalCode, pickupCity); // Vous devrez peut-être ajuster cette ligne
 	    this.user = user;
 	}
 
@@ -157,12 +157,12 @@ public class SoldItem {
 		this.categoryItem = categoryItem;
 	}
 
-	public PickUp getWithdrawalLocation() {
-		return withdrawalLocation;
+	public PickUp getpickUp() {
+		return pickUp;
 	}
 
-	public void setWithdrawalLocation(PickUp withdrawalLocation) {
-		this.withdrawalLocation = withdrawalLocation;
+	public void setpickUp(PickUp pickUp) {
+		this.pickUp = pickUp;
 	}
 
 	public List<Auction> getAuctions() {

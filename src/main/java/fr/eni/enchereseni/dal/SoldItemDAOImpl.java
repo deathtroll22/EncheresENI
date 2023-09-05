@@ -138,7 +138,9 @@ public class SoldItemDAOImpl implements SoldItemDAO {
                 pickup.setStreet(rs.getString("rue"));
                 pickup.setPostalCode(rs.getString("code_postal"));
                 pickup.setCity(rs.getString("ville"));
-                soldItem.setWithdrawalLocation(pickup);
+                soldItem.setpickUp(pickup);
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

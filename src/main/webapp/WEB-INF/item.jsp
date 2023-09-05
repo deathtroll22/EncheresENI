@@ -44,7 +44,7 @@
                             <div class="card-body">
                                 <h4 class="text-center mb-3">Pick Up :</h4>
                                 <div class="row text-center">
-                                    <label class="col-12">Street, Postal Code City</label>
+                                    <label class="col-12"> ${pickUp.street}, ${pickUp.postalCode}, ${pickUp.city}</label>
                                 </div>
                             </div>
                         </div>
