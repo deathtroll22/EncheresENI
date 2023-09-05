@@ -18,6 +18,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	final String SELECT_USER_BY_USERNAME = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 	final String SELECT_USER_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = ?";
+	final String SELECT_USER_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 	
 	// create user
 		@Override
@@ -57,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
 		@Override
 		public boolean isUsernameTaken(String username) {
 			try (Connection con = ConnectionProvider.getConnection();
-					PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Users WHERE username = ?")) {
+					PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_USERNAME, Statement.RETURN_GENERATED_KEYS)) {
 				stmt.setString(1, username);
 				try (ResultSet rs = stmt.executeQuery()) {
 					if (rs.next()) {
@@ -74,7 +75,7 @@ public class UserDAOImpl implements UserDAO {
 		@Override
 		public boolean isEmailTaken(String email) {
 			try (Connection con = ConnectionProvider.getConnection();
-					PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Users WHERE email = ?")) {
+					PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_EMAIL, Statement.RETURN_GENERATED_KEYS)) {
 				stmt.setString(1, email);
 				try (ResultSet rs = stmt.executeQuery()) {
 					if (rs.next()) {
@@ -112,8 +113,7 @@ public class UserDAOImpl implements UserDAO {
 			User user = null;
 
 			try (Connection con = ConnectionProvider.getConnection();
-					PreparedStatement stmt = con
-							.prepareStatement("SELECT * FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?")) {
+					PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_ID, Statement.RETURN_GENERATED_KEYS)) {
 				stmt.setString(1, username);
 				stmt.setString(2, password);
 
@@ -197,6 +197,26 @@ public class UserDAOImpl implements UserDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+
+		@Override
+		public User getUserById(int userId) {
+		    User user = null;
+
+		    try (Connection con = ConnectionProvider.getConnection();
+		            PreparedStatement stmt = con.prepareStatement("SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?")) {
+		        stmt.setInt(1, userId);
+
+		        try (ResultSet rs = stmt.executeQuery()) {
+		            if (rs.next()) {
+		                user = extractUserFromResultSet(rs);
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return user;
 		}
 
 }

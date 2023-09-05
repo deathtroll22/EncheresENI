@@ -29,6 +29,14 @@ public class Auction {
 		this.bidAmount = bidAmount;
 	}
 
+	public Auction(User user, SoldItem soldItem, Date auctionDate, int bidAmount) {
+		super();
+	    this.user = user;
+	    this.soldItem = soldItem;
+	    this.auctionDate = auctionDate;
+	    this.bidAmount = bidAmount;
+	}
+
 	public User getUser() {
 		return user;
 	}

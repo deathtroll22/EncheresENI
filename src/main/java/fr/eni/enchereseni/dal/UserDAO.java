@@ -14,5 +14,6 @@ public interface UserDAO {
 	public User getUserProfileByUsername(String username);
 	
 	public void updateMyProfil (User user);
+	public User getUserById(int userId);
 
 }

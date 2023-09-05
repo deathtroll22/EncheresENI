@@ -80,4 +80,22 @@ public class UserManagerImpl implements UserManager {
 		    dao.updateMyProfil(user);
 		}
 
+		@Override
+		public User getUserById(int userId) throws ManagerException {
+		    
+		    if (userId <= 0) {
+		        throw new ManagerException("Invalid user ID.");
+		    }
+		    
+		   
+		    User user = dao.getUserById(userId);
+
+		    if (user == null) {
+		        throw new ManagerException("User not found.");
+		    }
+
+		    return user;
+		}
+
+
 }
