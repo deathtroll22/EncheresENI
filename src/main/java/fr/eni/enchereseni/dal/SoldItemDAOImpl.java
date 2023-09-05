@@ -79,7 +79,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	    
 	    try (Connection con = ConnectionProvider.getConnection()) {
 	        Statement stmt = con.createStatement();
-	        ResultSet rs = stmt.executeQuery(SELECT_ALL);
+	        ResultSet rs = stmt.executeQuery(SELECT_ARTICLE_FOR_AUCTION);
 	        
 	        while (rs.next()) {
 	            SoldItem item = new SoldItem();

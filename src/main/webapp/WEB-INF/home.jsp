@@ -153,7 +153,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <p>Auction Ends : <fmt:formatDate value="${item.auctionEndDate}" pattern="dd MM yyyy" /></p>
-                                        <p>Seller : </p>
+                                        <p>Seller: <c:out value="${item.user.username}" /></p>
                                         <!-- Autres informations sur l'article -->
                                     </div>
                                 </div>
