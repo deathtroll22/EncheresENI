@@ -9,9 +9,11 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import fr.eni.enchereseni.bll.AuctionManager;
 import fr.eni.enchereseni.bll.ManagerException;
 import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bll.SoldItemManager;
+import fr.eni.enchereseni.bo.Auction;
 import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.PickUp;
 import fr.eni.enchereseni.bo.SoldItem;
@@ -62,29 +64,53 @@ public class ItemServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
-	    // Récupérez la proposition d'enchère depuis les paramètres de la requête
-	    String proposalStr = request.getParameter("proposal");
+		
+		int itemId = Integer.parseInt(request.getParameter("itemId"));
+
+		// Récupérez l'enchère actuelle pour l'article
+		Auction currentAuction = getAuctionForItem(itemId);;
+
+		// Obtenez l'utilisateur connecté
+		User user = (User) session.getAttribute("user"); 
+
+		// Obtenez le montant de l'offre actuelle
+		int currentOfferAmount = currentAuction.getBidAmount();
+		
+		// Créditez le meilleur enchérisseur précédent
+		if (previousBestBidder != null) {
+		    User previousBestBidderUser = previousBestBidder.getUser();
+		    int previousBidAmount = previousBestBidder.getBidAmount();
+		    previousBestBidderUser.setCredit(previousBestBidderUser.getCredit() + previousBidAmount);
+		    // Mettez à jour le crédit de l'utilisateur dans la base de données (vous devrez ajouter cette fonctionnalité)
+		}
+
+		// Affichez le montant de l'offre actuelle sur la page JSP
+		request.setAttribute("currentOfferAmount", currentOfferAmount);
+
+		// Gérez la proposition d'enchère
+		String proposalStr = request.getParameter("proposal");
 	    
 	    try {
 	        int proposalAmount = Integer.parseInt(proposalStr);
 	        
+	        
 	        // Validez la proposition d'enchère
-	        if (isValidProposal(proposalAmount, currentOfferAmount, user.getPoints())) {
+	        if (isValidProposal(proposalAmount, currentOfferAmount, user.getCredit())) {
 	            // Débitez le montant de la proposition du solde de l'utilisateur
-	            user.setPoints(user.getPoints() - proposalAmount);
+	            user.setCredit(user.getCredit() - proposalAmount);
 
 	            // Créez ou mettez à jour une enchère dans la base de données
-	            createOrUpdateAuction(user.getId(), itemId, proposalAmount);
+	            createOrUpdateAuction(user.getUserID(), itemId, proposalAmount);
 
 	            // Redirigez l'utilisateur vers la même page pour afficher les détails mis à jour de l'article
 	            response.sendRedirect(request.getContextPath() + "/item?itemId=" + itemId);
 	        } else {
-	            // La proposition n'est pas valide, vous pouvez gérer l'erreur ici
-	            // Par exemple, renvoyer un message d'erreur à l'utilisateur ou rediriger vers une page d'erreur
+	        	request.setAttribute("errorMessage", "La proposition d'enchère n'est pas valide.");
+	            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	        }
 	    } catch (NumberFormatException e) {
-	        // Gérez l'exception si la proposition n'est pas un nombre valide
-	        // Par exemple, renvoyer un message d'erreur à l'utilisateur ou rediriger vers une page d'erreur
+	    	request.setAttribute("errorMessage", "La proposition d'enchère n'est pas un nombre valide.");
+	        request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	    }
 	}
 

@@ -18,6 +18,12 @@ public class AuctionManagerImpl implements AuctionManager {
 	public List<Auction> getActiveAuctions(User user) throws ManagerException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Auction getPreviousBestBidder(int itemId) throws ManagerException {
+		// TODO Auto-generated method stub
+		return null;
 	} 
 
     

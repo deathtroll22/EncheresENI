@@ -10,6 +10,7 @@ public interface AuctionManager {
         
  // Gestion des enchères
     public List<Auction> getActiveAuctions(User user) throws ManagerException;
+    public Auction getPreviousBestBidder(int itemId) throws ManagerException;
 	
 
     //public void sellItem(SoldItem item) throws ManagerException;
