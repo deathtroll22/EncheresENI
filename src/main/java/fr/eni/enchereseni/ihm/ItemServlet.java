@@ -12,6 +12,7 @@ import java.io.IOException;
 import fr.eni.enchereseni.bll.ManagerException;
 import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bll.SoldItemManager;
+import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
 
@@ -29,11 +30,15 @@ public class ItemServlet extends HttpServlet {
         int itemId = Integer.parseInt(request.getParameter("itemId"));
     	
         try {
-            // article à partir de l'identifiant
+        	// article à partir de l'identifiant
             SoldItemManager itemManager = ManagerSing.getSoldItemManager();
             SoldItem soldItem = itemManager.getSoldItemById(itemId);
 
+            // Récupérer la catégorie de l'article depuis l'objet soldItem
+            Category itemCategory = soldItem.getCategoryItem();
+
             request.setAttribute("soldItem", soldItem);
+            request.setAttribute("itemCategory", itemCategory);
 
             //page JSP pour afficher les détails de l'article
             request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);

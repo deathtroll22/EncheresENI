@@ -36,7 +36,7 @@
                         <h2 class="mb-2 text-center">Item Details</h2>
                         <p><span class="highlight-info">Item Name: </span> ${soldItem.itemName}</p>
                         <p><span class="highlight-info">Description: </span> ${soldItem.itemDescription}</p>
-                        <p><span class="highlight-info">Category: </span> ${itemCategory}</p>
+                        <p><span class="highlight-info">Category: </span> ${itemCategory.categoryName}</p>           
                         <p><span class="highlight-info">Current Best Offer: </span> ${currentValue} pts by Username</p>
                         <p><span class="highlight-info">Starting Price: </span> ${soldItem.startingPrice} pts</p>
                         <p><span class="highlight-info">Auction End Date: </span> ${soldItem.auctionEndDate}</p>

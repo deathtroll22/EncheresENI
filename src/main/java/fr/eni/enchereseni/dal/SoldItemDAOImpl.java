@@ -125,7 +125,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
                 soldItem.setAuctionEndDate(rs.getDate("date_fin_encheres"));
                 soldItem.setStartingPrice(rs.getDouble("prix_initial"));
                 soldItem.setSellingPrice(rs.getDouble("prix_vente"));
-                soldItem.setSaleStatus(rs.getString("sale_status"));
+                //soldItem.setSaleStatus(rs.getString("sale_status"));
 
                 // Créer la catégorie et la définir dans l'objet SoldItem
                 Category category = new Category();
