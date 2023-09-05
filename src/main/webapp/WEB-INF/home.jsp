@@ -1,13 +1,12 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Encheres.org - Home</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <style>
 .btn-primary {
@@ -44,12 +43,14 @@
 </style>
 </head>
 <body>
-	<%@ include file="header.jsp"%>
-	<div class="container mt-4" st>
-		<h1 class="text-center text-white pacifico">Auction List</h1>
+<%@ include file="header.jsp"%>
+<div class="container mt-4">
+    <!-- ... (Filters form) ... -->
+    
+    	<h1 class="text-center text-white pacifico">Auction List</h1>
 		<div class="card mt-4">
-			<div class="card-body">
-				<h2 class="text-center text-secondary mb-3 pacifico">Filters</h2>
+			<div class="card-body pt-2">
+				<h2 class="text-center text-secondary mb-4 pacifico">Filters</h2>
 				<form>
 					<div class="row">
 						<div class="col-md-6">
@@ -124,143 +125,44 @@
 			</div>
 		</div>
 
-		<!-- Liste des enchères en cours -->
-
-
-		<div class="card col-12 bg-white my-4 py-4">
-			<div class="row">
-				<c:forEach var="item" items="${allItems}">
-					<div class="col-md-6">
-						<div class="card shadow bg-light mb-4 fancy_card">
-							<a href="<c:url value='/ItemServlet'><c:param name='itemId' value='${item.itemNumber}'/></c:url>" class="card-link">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-4">
-											<img src="${pageContext.request.contextPath}/img/auction.png" alt="Table" class="img-fluid rounded img-max-height">
-										</div>
-										<div class="col-md-8">
-											<h4>
-												<c:out value="${item.itemName}" />
-											</h4>
-											<c:choose>
-												<c:when test="${item.sellingPrice > item.startingPrice}">
-													<p>
-														Price:
-														<c:out value="${item.sellingPrice}" />
-														€
-													</p>
-												</c:when>
-												<c:otherwise>
-													<p>
-														Price:
-														<c:out value="${item.startingPrice}" />
-														€
-													</p>
-												</c:otherwise>
-											</c:choose>
-											<p>Auction Ends : ${item.auctionEndDate}</p>
-											<p>Seller ID : ${item }]</p>
-											<!-- Autres informations sur l'article -->
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-
-		<div class="card col-12 bg-white my-4 py-4">
-			<div class="row">
-				<c:forEach var="item" items="${allItems}">
-					<div class="col-md-6">
-						<div class="card shadow bg-light mb-4 fancy_card">
-							<a href="ItemServlet" class="card-link">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-4">
-											<img src="${pageContext.request.contextPath}/img/auction.png"
-												alt="Table" class="img-fluid rounded img-max-height">
-										</div>
-										<div class="col-md-8">
-											<h4>
-												<c:out value="${item.itemName}" />
-											</h4>
-											<p>Price: 100 €</p>
-											<p>Auction Ends: August 25, 2023</p>
-											<p>Seller: Seller's Name</p>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</c:forEach>
-
-
-				<div class="col-md-6">
-					<div class="card shadow bg-light mb-4 fancy_card">
-						<a href="ItemServlet" class="card-link">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-4">
-										<img src="${pageContext.request.contextPath}/img/auction.png"
-											alt="Table" class="img-fluid rounded img-max-height">
-									</div>
-									<div class="col-md-8">
-										<h4>Auction Title</h4>
-										<p>Price: 100 €</p>
-										<p>Auction Ends: August 25, 2023</p>
-										<p>Seller: Seller's Name</p>
-									</div>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card shadow bg-light mb-4 fancy_card">
-						<a href="ItemServlet" class="card-link">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-4">
-										<img src="${pageContext.request.contextPath}/img/auction.png"
-											alt="Table" class="img-fluid rounded  img-max-height">
-									</div>
-									<div class="col-md-8">
-										<h4>Auction Title</h4>
-										<p>Price: 100 €</p>
-										<p>Auction Ends: August 25, 2023</p>
-										<p>Seller: Seller's Name</p>
-									</div>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card shadow bg-light mb-4 fancy_card">
-						<a href="ItemServlet" class="card-link">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-4">
-										<img src="${pageContext.request.contextPath}/img/auction.png"
-											alt="Table" class="img-fluid rounded  img-max-height">
-									</div>
-									<div class="col-md-8">
-										<h4>Auction Title</h4>
-										<p>Price: 100 €</p>
-										<p>Auction Ends: August 25, 2023</p>
-										<p>Seller: Seller's Name</p>
-									</div>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Liste des enchères en cours -->
+    <div class="card col-12 bg-white my-4 py-4">
+        <div class="row">
+            <c:forEach var="item" items="${allItems}">
+                <div class="col-md-6">
+                    <div class="card shadow bg-light mb-4 fancy_card">
+                        <a href="<c:url value='/ItemServlet'><c:param name='itemId' value='${item.itemNumber}'/></c:url>"
+                            class="card-link">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="${pageContext.request.contextPath}/img/auction.png"
+                                            alt="Table" class="img-fluid rounded img-max-height">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4>
+                                            <c:out value="${item.itemName}" />
+                                        </h4>
+                                        <c:choose>
+                                            <c:when test="${item.sellingPrice > item.startingPrice}">
+                                                <p>Price: <c:out value="${item.sellingPrice}" /> €</p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <p>Price: <c:out value="${item.startingPrice}" /> pts</p>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <p>Auction Ends : <fmt:formatDate value="${item.auctionEndDate}" pattern="dd MM yyyy" /></p>
+                                        <p>Seller ID : ${item}</p>
+                                        <!-- Autres informations sur l'article -->
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div>
 </body>
 </html>
