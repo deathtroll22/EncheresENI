@@ -11,6 +11,18 @@ public interface SoldItemManager {
 	public SoldItem getSoldItemById(int itemId)throws ManagerException;
 
 	List<SoldItem> getAllItems() throws ManagerException;
+	
+	List<SoldItem> getSoldItemsByCategory(
+		    Integer categoryId,
+		    String itemName,
+		    Boolean openAuctionsFilter,
+		    Boolean ongoingAuctionsFilter,
+		    Boolean wonAuctionsFilter,
+		    Boolean userSellingOpenAuctions,
+		    Boolean userSellingNotStartedAuctions,
+		    Boolean userSellingFinishedAuctions,
+		    Integer userId
+		);
 
 }
 

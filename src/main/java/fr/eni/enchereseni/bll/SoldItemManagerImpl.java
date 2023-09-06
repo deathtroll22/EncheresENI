@@ -31,4 +31,12 @@ public class SoldItemManagerImpl implements SoldItemManager {
 		return soldItem;
 	}
 
+	@Override
+	public List<SoldItem> getSoldItemsByCategory(Integer categoryId, String itemName, Boolean openAuctionsFilter,
+			Boolean ongoingAuctionsFilter, Boolean wonAuctionsFilter, Boolean userSellingOpenAuctions,
+			Boolean userSellingNotStartedAuctions, Boolean userSellingFinishedAuctions, Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

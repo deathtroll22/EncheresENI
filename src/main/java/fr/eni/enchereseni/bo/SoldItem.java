@@ -189,6 +189,7 @@ public class SoldItem {
 				+ startingPrice + ", sellingPrice=" + sellingPrice + ", saleStatus=" + saleStatus + ", categoryItem="
 				+ categoryItem + "]";
 	}
+
 	
     
 }

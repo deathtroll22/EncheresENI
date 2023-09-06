@@ -14,4 +14,17 @@ public interface SoldItemDAO {
 	public SoldItem getSoldItemById(int itemId);
 
 
+
+	List<SoldItem> getSoldItemsByCategory(
+		    Integer categoryId,
+		    String itemName,
+		    Boolean openAuctionsFilter,
+		    Boolean ongoingAuctionsFilter,
+		    Boolean wonAuctionsFilter,
+		    Boolean userSellingOpenAuctions,
+		    Boolean userSellingNotStartedAuctions,
+		    Boolean userSellingFinishedAuctions,
+		    Integer userId
+		);
+
 }

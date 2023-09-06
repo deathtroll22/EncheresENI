@@ -189,6 +189,98 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 
 		return soldItem; 
 	}
+	@Override
+	public List<SoldItem> getSoldItemsByCategory(
+	        Integer categoryId,
+	        String itemName,
+	        Boolean openAuctionsFilter,
+	        Boolean ongoingAuctionsFilter,
+	        Boolean wonAuctionsFilter,
+	        Boolean userSellingOpenAuctions,
+	        Boolean userSellingNotStartedAuctions,
+	        Boolean userSellingFinishedAuctions,
+	        Integer userId
+	){
+	    List<SoldItem> result = new ArrayList<>();
+
+	    try (Connection con = ConnectionProvider.getConnection()) {
+	        String whereClause = "";
+
+	        if (categoryId != null && categoryId != 0) {
+	            whereClause += " AND av.no_categorie = ?";
+	        }
+	        if (itemName != null && !itemName.isEmpty()) {
+	            whereClause += " AND av.nom_article LIKE ?";
+	        }
+	        if (openAuctionsFilter) {
+	            whereClause += " AND CAST(GETDATE() AS DATE) >= CAST(av.date_debut_encheres AS DATE) " +
+	                    "AND CAST(GETDATE() AS DATE) <= CAST(av.date_fin_encheres AS DATE)";
+	        }
+	        if (ongoingAuctionsFilter) {
+	            whereClause += " AND CAST(GETDATE() AS DATE) >= CAST(av.date_debut_encheres AS DATE) " +
+	                    "AND CAST(GETDATE() AS DATE) <= CAST(av.date_fin_encheres AS DATE) " +
+	                    "AND ENCHERES.no_utilisateur = ?";
+	        }
+	        if (wonAuctionsFilter) {
+	            whereClause += " AND CAST(GETDATE() AS DATE) >= CAST(av.date_fin_encheres AS DATE) " +
+	                    "AND av.no_article IN (SELECT ENCHERES.no_article FROM ENCHERES " +
+	                    "WHERE date_enchere = (SELECT MAX(date_enchere) FROM ENCHERES) " +
+	                    "AND ENCHERES.no_utilisateur = ?)";
+	        }
+	        if (userSellingOpenAuctions) {
+	            whereClause += " AND av.no_utilisateur = ? " +
+	                    "AND CAST(GETDATE() AS DATE) >= CAST(av.date_debut_encheres AS DATE) " +
+	                    "AND CAST(GETDATE() AS DATE) <= CAST(av.date_fin_encheres AS DATE)";
+	        }
+	        if (userSellingNotStartedAuctions) {
+	            whereClause += " AND CAST(GETDATE() AS DATE) < CAST(av.date_debut_encheres AS DATE)";
+	        }
+	        if (userSellingFinishedAuctions) {
+	            whereClause += " AND CAST(GETDATE() AS DATE) >= CAST(av.date_fin_encheres AS DATE)";
+	        }
+
+	        String query = String.format(SELECT_ARTICLES_BY_CATEGORY, whereClause);
+	        PreparedStatement stmt = con.prepareStatement(query);
+	        int paramIndex = 1;
+
+	        if (categoryId != null && categoryId != 0) {
+	            stmt.setInt(paramIndex++, categoryId);
+	        }
+	        if (itemName != null && !itemName.isEmpty()) {
+	            stmt.setString(paramIndex++, "%" + itemName + "%");
+	        }
+	        if (ongoingAuctionsFilter) {
+	            stmt.setInt(paramIndex++, userId);
+	        }
+	        if (wonAuctionsFilter) {
+	            stmt.setInt(paramIndex++, userId);
+	        }
+	        if (userSellingOpenAuctions || userSellingNotStartedAuctions || userSellingFinishedAuctions) {
+	            stmt.setInt(paramIndex++, userId);
+	        }
+
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            SoldItem soldItem = new SoldItem(
+	                rs.getString("nomArticle"),
+	                rs.getString("description"),
+	                rs.getDate("dateDebutEnchere"),
+	                rs.getDate("dateFinEnchere"),
+	                rs.getInt("prixInitial"),
+	                rs.getInt("prixVente"),
+	                rs.getString("lienImg"), null, null, null, null
+	            );
+	            soldItem.setItemNumber(rs.getInt("no_article"));
+	            // Vous devez ajouter le reste des informations ici comme les enchères, le vendeur, etc.
+
+	            result.add(soldItem);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return result;
+	}
 
 
 }

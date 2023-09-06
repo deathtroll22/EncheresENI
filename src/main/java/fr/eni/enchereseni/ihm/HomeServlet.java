@@ -57,35 +57,49 @@ public class HomeServlet extends HttpServlet {
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        User user = getUserFromSessionOrAuthentication(); // Remplace cette ligne par la récupération de l'utilisateur
-        SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); // Utilise ManagerSing pour obtenir l'instance de SoldItemManager
-        List<SoldItem> allItems = null;
-        
-        try {
-            // Récupérez le paramètre de recherche
-            String searchInput = request.getParameter("searchInput");
-            
-            // Si la recherche est vide, affichez tous les articles
-            if (searchInput == null || searchInput.isEmpty()) {
-                allItems = soldItemManager.getAllItems();
-            } else {
-                // Sinon, filtrez les articles par nom en utilisant un stream
-                allItems = soldItemManager.getAllItems(); // Récupérez tous les articles
-                allItems = allItems.stream()
-                    .filter(item -> item.getItemName().toLowerCase().contains(searchInput.toLowerCase()))
-                    .collect(Collectors.toList());
-            }
-        } catch (ManagerException e) {
-            // TODO: Gérer l'exception appropriée
-            e.printStackTrace();
-        }
-        
-        request.setAttribute("allItems", allItems); // Ajoutez la liste filtrée à l'objet de requête
+    	    throws ServletException, IOException {
+    	    User user = getUserFromSessionOrAuthentication(); // Remplace cette ligne par la récupération de l'utilisateur
+    	    SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); // Utilise ManagerSing pour obtenir l'instance de SoldItemManager
+    	    List<SoldItem> allItems = null;
+    	    
+    	    try {
+    	        // Récupérez le paramètre de recherche
+    	        String searchInput = request.getParameter("searchInput");
+    	        
+    	        // Récupérez le paramètre de catégorie
+    	        String categorySelect = request.getParameter("categorySelect");
+    	        
+    	        // Si la recherche est vide, affichez tous les articles
+    	        if (searchInput == null || searchInput.isEmpty()) {
+    	            // Utilisez la nouvelle méthode pour récupérer les articles par catégorie
+    	            if (categorySelect != null && !categorySelect.isEmpty()) {
+    	                int categoryId = 0;
+    	                try {
+    	                    categoryId = Integer.parseInt(categorySelect);
+    	                } catch (NumberFormatException ex) {
+    	                    // Gérer l'exception si la conversion échoue
+    	                    ex.printStackTrace();
+    	                }
+    	                allItems = soldItemManager.getSoldItemsByCategory(categoryId, null, false, false, false, false, false, false, null);
+    	            } else {
+    	                allItems = soldItemManager.getAllItems();
+    	            }
+    	        } else {
+    	            // Sinon, filtrez les articles par nom en utilisant un stream
+    	            allItems = soldItemManager.getAllItems(); // Récupérez tous les articles
+    	            allItems = allItems.stream()
+    	                .filter(item -> item.getItemName().toLowerCase().contains(searchInput.toLowerCase()))
+    	                .collect(Collectors.toList());
+    	        }
+    	    } catch (ManagerException e) {
+    	        // TODO: Gérer l'exception appropriée
+    	        e.printStackTrace();
+    	    }
+    	    
+    	    request.setAttribute("allItems", allItems); // Ajoutez la liste filtrée à l'objet de requête
 
-        // Appeler doGet pour rafraîchir la page avec la liste des catégories
-        doGet(request, response);
-    }
-    
+    	    // Appeler doGet pour rafraîchir la page avec la liste des catégories
+    	    doGet(request, response);
+    	}
     
 }
