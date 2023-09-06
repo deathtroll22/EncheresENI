@@ -125,19 +125,19 @@ public class ItemServlet extends HttpServlet {
 	                    return;
 	                } else {
 	                    // La proposition n'est pas valide, renvoyez un message d'erreur à l'utilisateur
-	                    request.setAttribute("errorMessage", "La proposition d'enchère n'est pas valide.");
-	                    request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
+	                    request.setAttribute("errorMessage", "La proposition doit être supérieure à la meilleure offre.");
+	                    request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
 	                }
 	            } catch (NumberFormatException e) {
 	                // Gérer l'exception si la proposition n'est pas un nombre valide
 	                request.setAttribute("errorMessage", "La proposition d'enchère n'est pas un nombre valide.");
-	                request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
+	                request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
 	            }
 	        } else {
 	            // Gérer le cas où proposalStr est vide (l'utilisateur n'a rien saisi)
 	            System.out.println("y a rien dans le champ");
 	            request.setAttribute("errorMessage", "Veuillez entrer une proposition d'enchère.");
-	            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
+	            request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
 	        }
 
 
