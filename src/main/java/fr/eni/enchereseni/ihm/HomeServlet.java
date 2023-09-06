@@ -83,9 +83,9 @@ public class HomeServlet extends HttpServlet {
         
         request.setAttribute("allItems", allItems); // Ajoutez la liste filtrée à l'objet de requête
 
-        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        // Appeler doGet pour rafraîchir la page avec la liste des catégories
+        doGet(request, response);
     }
-
     
     
 }
