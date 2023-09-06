@@ -19,6 +19,8 @@ public class UserDAOImpl implements UserDAO {
 	final String SELECT_USER_BY_USERNAME = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 	final String SELECT_USER_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = ?";
 	final String SELECT_USER_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
+	final String COUNT_USERNAME = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = ?";
+	final String COUNT_USER_MAIL = "SELECT COUNT(*) FROM UTILISATEURS WHERE email = ?";
 
 	// create user
 	@Override
@@ -74,7 +76,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean isUsernameTaken(String username) {
 		try (Connection con = ConnectionProvider.getConnection();
-				PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Users WHERE username = ?")) {
+				PreparedStatement stmt = con.prepareStatement(COUNT_USERNAME)) {
 			stmt.setString(1, username);
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
@@ -92,7 +94,7 @@ public class UserDAOImpl implements UserDAO {
 		User user = null;
 
 		try (Connection con = ConnectionProvider.getConnection();
-				PreparedStatement stmt = con.prepareStatement("SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?")) {
+				PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_ID)) {
 			stmt.setInt(1, userId);
 
 			try (ResultSet rs = stmt.executeQuery()) {
@@ -109,7 +111,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean isEmailTaken(String email) {
 		try (Connection con = ConnectionProvider.getConnection();
-				PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Users WHERE email = ?")) {
+				PreparedStatement stmt = con.prepareStatement(COUNT_USER_MAIL)) {
 			stmt.setString(1, email);
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
@@ -170,7 +172,7 @@ public class UserDAOImpl implements UserDAO {
 		User user = null;
 
 		try (Connection con = ConnectionProvider.getConnection();
-				PreparedStatement stmt = con.prepareStatement("SELECT * FROM UTILISATEURS WHERE pseudo = ?")) {
+				PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_USERNAME)) {
 			stmt.setString(1, loginIdentifier);
 
 			try (ResultSet rs = stmt.executeQuery()) {
