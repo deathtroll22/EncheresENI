@@ -51,12 +51,11 @@
 		<div class="card mt-4">
 			<div class="card-body pt-2 pb-0">
 				<h2 class="text-center text-secondary mb-4 pacifico">Filters</h2>
-				<form>
+				<form method="post" action="HomeServlet">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="text" class="form-control" id="searchInput"
-									placeholder="Search by item name">
+								<input type="text" class="form-control" id="searchInput" name="searchInput" placeholder="Search by item name">
 							</div>
 							<div class="form-group">
 								<select class="form-control" id="categorySelect">
