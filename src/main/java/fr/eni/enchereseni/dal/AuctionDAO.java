@@ -11,6 +11,9 @@ public interface AuctionDAO {
 	public void createOrUpdateAuction(int userId, int itemId, int bidAmount);
     public Auction getPreviousBestBidder(int itemId);
     public List<Auction> getActiveAuctions(User user);
+    public List<Auction> getAuctionsByItemId(int itemId);
+
+    
 	/*public void createItem(SoldItem item);
 	public void deleteItem(SoldItem item);
 	public void updateItem(SoldItem item);
