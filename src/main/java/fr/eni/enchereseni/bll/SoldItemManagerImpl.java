@@ -1,5 +1,6 @@
 package fr.eni.enchereseni.bll;
 
+import java.sql.SQLException;
 import java.util.List;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.dal.DAOFact;
@@ -32,11 +33,20 @@ public class SoldItemManagerImpl implements SoldItemManager {
 	}
 
 	@Override
-	public List<SoldItem> getSoldItemsByCategory(Integer categoryId, String itemName, Boolean openAuctionsFilter,
-			Boolean ongoingAuctionsFilter, Boolean wonAuctionsFilter, Boolean userSellingOpenAuctions,
-			Boolean userSellingNotStartedAuctions, Boolean userSellingFinishedAuctions, Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SoldItem> getSoldItemsByCategory(int categoryId) throws ManagerException {
+	    return dao.getSoldItemsByCategory(categoryId);
 	}
+	
+	@Override
+	public List<SoldItem> getAllItemsWithFilter(String whereClause) throws ManagerException {
+	    try {
+	        return dao.getAllItemsWithFilter(whereClause);
+	    } catch (Exception e) {
+	        throw new ManagerException("Error while getting filtered items", e);
+	    }
+	}
+
+
+
 
 }

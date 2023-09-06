@@ -12,17 +12,10 @@ public interface SoldItemManager {
 
 	List<SoldItem> getAllItems() throws ManagerException;
 	
-	List<SoldItem> getSoldItemsByCategory(
-		    Integer categoryId,
-		    String itemName,
-		    Boolean openAuctionsFilter,
-		    Boolean ongoingAuctionsFilter,
-		    Boolean wonAuctionsFilter,
-		    Boolean userSellingOpenAuctions,
-		    Boolean userSellingNotStartedAuctions,
-		    Boolean userSellingFinishedAuctions,
-		    Integer userId
-		);
+	public List<SoldItem> getSoldItemsByCategory(int categoryId) throws ManagerException;
+	
+	List<SoldItem> getAllItemsWithFilter(String whereClause) throws ManagerException;
+
 
 }
 

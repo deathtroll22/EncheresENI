@@ -33,22 +33,39 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 					"WHERE av.no_article = ?";
 
 	final String SELECT_ALL_ARTICLES = 
-			"SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, " +
-					"av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, " +
-					"r.rue, r.code_postal, r.ville, u.pseudo AS vendeur_pseudo, u.nom AS vendeur_nom, u.prenom AS vendeur_prenom " +
-					"FROM ARTICLES_VENDUS av " +
-					"LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
-					"LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
-					"LEFT JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur";
+		    "SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, " +
+		    "av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, " +
+		    "r.rue, r.code_postal, r.ville, u.pseudo AS vendeur_pseudo, u.nom AS vendeur_nom, u.prenom AS vendeur_prenom " +
+		    "FROM ARTICLES_VENDUS av " +
+		    "LEFT JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
+		    "LEFT JOIN RETRAITS r ON av.no_article = r.no_article " +
+		    "LEFT JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur";
+
+
 	
-	final String SELECT_ARTICLES_BY_CATEGORY =  """
-			SELECT ARTICLES_VENDUS.no_article, nom_article as nomArticle, description, date_debut_encheres AS dateDebutEnchere, date_fin_encheres AS dateFinEnchere, prix_initial as prixInitial, prix_vente as prixVente, lienImg, UTILISATEURS.*, CATEGORIES.*, RETRAITS.* FROM ARTICLES_VENDUS
-			INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur
-			INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie
-			INNER JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article
-			WHERE 1=1
-			%s
-			""";
+	final String SELECT_ARTICLES_BY_CATEGORY = """
+		    SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, 
+		    av.prix_initial , av.prix_vente , c.libelle, r.rue, r.code_postal, r.ville, 
+		    u.pseudo , u.nom , u.prenom 
+		    FROM ARTICLES_VENDUS av
+		    INNER JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur
+		    INNER JOIN CATEGORIES c ON av.no_categorie = c.no_categorie
+		    INNER JOIN RETRAITS r ON av.no_article = r.no_article
+		    WHERE 1=1
+		    %s
+		    """;
+
+	
+	final String SELECT_SOLD_ITEMS_BY_CATEGORY = 
+		    "SELECT av.no_article, av.nom_article, av.description, av.date_debut_encheres, av.date_fin_encheres, " +
+		    "av.prix_initial, av.prix_vente, av.no_categorie, av.no_utilisateur, c.libelle AS categorie, " +
+		    "r.rue, r.code_postal, r.ville, u.pseudo AS vendeur_pseudo, u.nom AS vendeur_nom, u.prenom AS vendeur_prenom " +
+		    "FROM ARTICLES_VENDUS av " +
+		    "INNER JOIN UTILISATEURS u ON av.no_utilisateur = u.no_utilisateur " +
+		    "INNER JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
+		    "INNER JOIN RETRAITS r ON av.no_article = r.no_article " +
+		    "WHERE 1=1 %s";
+
 
 	@Override
 	public void createItem(SoldItem item, int userId) {
@@ -162,7 +179,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 
 				// Créer la catégorie et la définir dans l'objet SoldItem
 				Category category = new Category();
-				category.setCategoryNumber(rs.getInt("no_categorie"));
+				category.setCategoryNumber(rs.getInt("av.no_categorie"));
 				category.setCategoryName(rs.getString("categorie"));
 				soldItem.setCategoryItem(category);
 
@@ -189,7 +206,93 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 
 		return soldItem; 
 	}
+	
 	@Override
+	public List<SoldItem> getSoldItemsByCategory(int categoryId) {
+	    List<SoldItem> soldItems = new ArrayList<>();
+
+	    try (Connection con = ConnectionProvider.getConnection();
+	         PreparedStatement stmt = con.prepareStatement(SELECT_SOLD_ITEMS_BY_CATEGORY)) {
+
+	        stmt.setInt(1, categoryId);
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            SoldItem soldItem = new SoldItem();
+	            soldItem.setItemNumber(rs.getInt("no_article"));
+				soldItem.setItemName(rs.getString("nom_article"));
+				soldItem.setItemDescription(rs.getString("description"));
+				soldItem.setAuctionStartDate(rs.getDate("date_debut_encheres"));
+				soldItem.setAuctionEndDate(rs.getDate("date_fin_encheres"));
+				soldItem.setStartingPrice(rs.getDouble("prix_initial"));
+				soldItem.setSellingPrice(rs.getDouble("prix_vente"));
+	            soldItems.add(soldItem);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return soldItems;
+	}
+	
+	@Override
+	public List<SoldItem> getAllItemsWithFilter(String whereClause) {
+	    List<SoldItem> itemList = new ArrayList<>();
+	    String query = SELECT_ALL_ARTICLES;
+
+	    if (!whereClause.isEmpty()) {
+	        query += " WHERE " + whereClause;
+	    }
+
+	    try (Connection con = ConnectionProvider.getConnection();
+	         Statement stmt = con.createStatement()) {
+
+	        ResultSet rs = stmt.executeQuery(query);
+
+	        while (rs.next()) {
+	            SoldItem item = new SoldItem();
+	            item.setItemNumber(rs.getInt("no_article")); // Spécifiez la table 'av' pour 'no_article'
+	            item.setItemName(rs.getString("nom_article")); // Spécifiez la table 'av' pour 'nom_article'
+	            item.setItemDescription(rs.getString("description")); // Spécifiez la table 'av' pour 'description'
+	            item.setAuctionStartDate(rs.getDate("date_debut_encheres")); // Spécifiez la table 'av' pour 'date_debut_encheres'
+	            item.setAuctionEndDate(rs.getDate("date_fin_encheres")); // Spécifiez la table 'av' pour 'date_fin_encheres'
+	            item.setStartingPrice(rs.getDouble("prix_initial")); // Spécifiez la table 'av' pour 'prix_initial'
+	            item.setSellingPrice(rs.getDouble("prix_vente")); // Spécifiez la table 'av' pour 'prix_vente'
+
+	            // Créer la catégorie et la définir dans l'objet SoldItem
+	            Category category = new Category();
+	            category.setCategoryNumber(rs.getInt("no_categorie")); // Spécifiez la table 'av' pour 'no_categorie'
+	            category.setCategoryName(rs.getString("categorie"));
+	            item.setCategoryItem(category);
+
+	            // Créer l'emplacement de retrait et le définir dans l'objet SoldItem
+	            PickUp pickup = new PickUp();
+	            pickup.setStreet(rs.getString("rue"));
+	            pickup.setPostalCode(rs.getString("code_postal"));
+	            pickup.setCity(rs.getString("ville"));
+	            item.setpickUp(pickup);
+
+	            // Info du vendeur
+	            User seller = new User();
+	            seller.setUserID(rs.getInt("no_utilisateur"));
+	            seller.setUsername(rs.getString("vendeur_pseudo"));
+	            seller.setLastName(rs.getString("vendeur_nom"));
+	            seller.setFirstName(rs.getString("vendeur_prenom"));
+	            item.setUser(seller);
+
+	            itemList.add(item);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return itemList;
+	}
+
+
+
+	/*@Override
 	public List<SoldItem> getSoldItemsByCategory(
 	        Integer categoryId,
 	        String itemName,
@@ -280,7 +383,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	    }
 
 	    return result;
-	}
+	}*/
 
 
 }

@@ -47,27 +47,26 @@
 <body>
 	<%@ include file="header.jsp"%>
 	<div class="container mt-4">
-		<!-- ... (Filters form) ... -->
-		<h1 class="text-center text-white pacifico">Auction List</h1>
-		<div class="card mt-4">
-			<div class="card-body pt-2 pb-0">
-				<h2 class="text-center text-secondary mb-4 pacifico">Filters</h2>
-				<form method="post" action="HomeServlet">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" id="searchInput"
-									name="searchInput" placeholder="Search by item name">
-							</div>
-							<div class="form-group">
-								<select class="form-control" id="categorySelect"
-									name="categorySelect">
-									<option value="">-- Select Category --</option>
-									<c:forEach var="category" items="${categories}">
-										<option value="${category.categoryNumber}">${category.categoryName}</option>
-									</c:forEach>
-								</select>
-							</div>
+    <h1 class="text-center text-white pacifico">Auction List</h1>
+    <div class="card mt-4">
+        <div class="card-body pt-2 pb-0">
+            <h2 class="text-center text-secondary mb-4 pacifico">Filters</h2>
+            <form method="post" action="HomeServlet">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="searchInput" name="searchInput"
+                                   placeholder="Search by item name">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="categorySelect" name="categorySelect">
+                                <option value="">-- Select Category --</option>
+                                <c:forEach var="category" items="${categories}">
+                                    <option value="${category.categoryNumber}">${category.categoryName}</option>
+                                </c:forEach>
+                            </select>
+                            <input type="hidden" name="categorySelectHidden" id="categorySelectHidden" value="">
+                        </div>
 						</div>
 						<c:if test="${sessionScope.user != null}">
 							<div class="col-md-6 row align-items-end pb-3">
@@ -190,4 +189,17 @@
 		</div>
 	</div>
 </body>
+<script>
+    // Fonction pour mettre à jour le champ caché avec la catégorie sélectionnée
+    function updateCategoryHiddenField() {
+        var categorySelect = document.getElementById("categorySelect");
+        var categorySelectHidden = document.getElementById("categorySelectHidden");
+        var selectedCategory = categorySelect.options[categorySelect.selectedIndex].value;
+        categorySelectHidden.value = selectedCategory;
+    }
+
+    // Attachez la fonction à l'événement onchange du sélecteur de catégorie
+    document.getElementById("categorySelect").addEventListener("change", updateCategoryHiddenField);
+</script>
+
 </html>

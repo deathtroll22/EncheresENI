@@ -1,5 +1,6 @@
 package fr.eni.enchereseni.dal;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.enchereseni.bo.SoldItem;
@@ -13,9 +14,12 @@ public interface SoldItemDAO {
 
 	public SoldItem getSoldItemById(int itemId);
 
+	List<SoldItem> getSoldItemsByCategory(int categoryId);
 
 
-	List<SoldItem> getSoldItemsByCategory(
+	List<SoldItem> getAllItemsWithFilter(String whereClause);
+
+	/*List<SoldItem> getSoldItemsByCategory(
 		    Integer categoryId,
 		    String itemName,
 		    Boolean openAuctionsFilter,
@@ -25,6 +29,6 @@ public interface SoldItemDAO {
 		    Boolean userSellingNotStartedAuctions,
 		    Boolean userSellingFinishedAuctions,
 		    Integer userId
-		);
+		);*/
 
 }
