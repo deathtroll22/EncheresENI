@@ -106,6 +106,16 @@ public class UserManagerImpl implements UserManager {
 		    return user;
 		}
 
+		@Override
+		public boolean isUsernameTaken(String username) throws ManagerException {
+			return this.dao.isUsernameTaken(username);
+		}
+
+		@Override
+		public boolean isEmailTaken(String email) throws ManagerException {
+			return this.dao.isEmailTaken(email);
+		}
+
 
 
 }

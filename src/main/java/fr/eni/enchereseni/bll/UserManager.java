@@ -11,6 +11,8 @@ public interface UserManager {
 	public void deleteUser(Integer userID);
 
 	public User getUserById(int userId)throws ManagerException;
+	public boolean isUsernameTaken(String username)throws ManagerException;
+	public boolean isEmailTaken(String email)throws ManagerException;
 
     
     //public void deleteAccount(User user) throws ManagerException;

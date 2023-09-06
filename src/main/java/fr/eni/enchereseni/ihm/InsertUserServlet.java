@@ -45,25 +45,33 @@ public class InsertUserServlet extends HttpServlet {
                 request.setAttribute("error", "Invalid input. Please check your data.");
                 request.getRequestDispatcher("/WEB-INF/insertUser.jsp").forward(request, response);
             } else {
-                // Création de l'utilisateur
-            	User newUser = new User(username, lastName, firstName, email, phoneNumber, street, postalCode, city, password, 0, false);
-
-
                 // Appel à la logique métier pour la création du compte utilisateur
                 UserManager manager = ManagerSing.getUserManager();
-                manager.createAccount(newUser);
 
-                // Mise en session de l'utilisateur et redirection vers la page de connexion
-                HttpSession session = request.getSession();
-                session.setAttribute("user", newUser);
-                session.setAttribute("connected", true);
-
-                response.sendRedirect(request.getContextPath() + "/HomeServlet");
+                // Vérification si le nom d'utilisateur ou l'e-mail est déjà pris
+                if (manager.isUsernameTaken(username) || manager.isEmailTaken(email)) {
+                    request.setAttribute("usernameTaken", manager.isUsernameTaken(username));
+                    request.setAttribute("emailTaken", manager.isEmailTaken(email));
+                    request.getRequestDispatcher("/WEB-INF/insertUser.jsp").forward(request, response);
+                } else {
+                    // Création de l'utilisateur
+                    User newUser = new User(username, lastName, firstName, email, phoneNumber, street, postalCode, city, password, 0, false);
+                    
+                    // Insertion de l'utilisateur dans la base de données
+                    manager.createAccount(newUser);
+                    
+                    // Mise en session de l'utilisateur et redirection vers la page de connexion
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", newUser);
+                    session.setAttribute("connected", true);
+                    
+                    response.sendRedirect(request.getContextPath() + "/HomeServlet");
+                }
             }
         } catch (ManagerException e) {
-            
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during user creation.");
         }
     }
 }
+
