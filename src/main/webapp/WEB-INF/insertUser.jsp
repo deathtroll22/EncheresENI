@@ -13,11 +13,19 @@ body {
 	background-color: white !important; /* bg-light */
 }
 
+.page-specific .centered-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* max-width: 500px; */ /* Vous pouvez commenter cette ligne si nécessaire */
+    width: 100%;
+}
 .centered-card {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
+    max-width: 450px;
+    width: 100%;
 }
 
 .card {
@@ -30,8 +38,8 @@ body {
 }
 </style>
 </head>
-<body>
-	<div class="card-body bg-white" style="max-width: 450px">
+<body class="page-specific">
+	<div class="card-body bg-white mx-auto" style="max-width: 500px">
 		<form action="InsertUserServlet" method="post">
 			<div class="form-group">
 				<label for="pseudo">Username :</label> <input type="text"
