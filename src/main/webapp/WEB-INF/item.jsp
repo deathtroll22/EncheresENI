@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -19,7 +20,7 @@
 }
 
 .image-max-height {
-	max-height: 222px;
+	max-height: 180px;
 }
 
 .bg-carton {
@@ -61,9 +62,9 @@
 								${soldItem.startingPrice} pts
 							</p>
 							<p>
-								<span class="highlight-info">Auction End Date: </span>
-								${soldItem.auctionEndDate}
-							</p>
+    <span class="highlight-info">Auction End Date: </span>
+    <fmt:formatDate value="${soldItem.auctionEndDate}" pattern="dd MM yyyy" />
+</p>
 							<div class="card p-0 bg-carton shadow-lg text-white">
 								<div class="card-body">
 									<h4 class="text-center mb-3">Pick Up :</h4>
