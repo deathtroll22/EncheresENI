@@ -14,7 +14,7 @@ public class User {
 	private String postalCode; // codePostal
 	private String city; // ville
 	private String password; // motDePasse
-	private Integer credit; // credit
+	private int credit; // credit
 	private boolean isAdmin; // administrateur
 	private List<Auction> listAuctions = new ArrayList<Auction>();
 	private List<SoldItem> listSoldItems = new ArrayList<SoldItem>();
@@ -186,12 +186,12 @@ public class User {
 		this.password = password;
 	}
 
-	public Integer getCredit() {
-		return credit;
+	public int getCredit() {
+	    return credit;
 	}
 
-	public void setCredit(Integer credit) {
-		this.credit = credit;
+	public void setCredit(int credit) {
+	    this.credit = credit;
 	}
 
 	public boolean isAdmin() {

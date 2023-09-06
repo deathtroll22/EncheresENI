@@ -1,7 +1,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,20 +56,19 @@
 								${itemCategory.categoryName}
 							</p>
 							<p>
-								<span class="highlight-info">Current Best Offer: </span>
-								<c:choose>
-									<c:when
-										test="${empty currentValue or currentValue <= soldItem.startingPrice}">
-										<strong>No one has bid yet. Be the first !</strong>
-									</c:when>
-									<c:otherwise>
-									${currentValue} pts by ${seller.username}
-									</c:otherwise>
-								</c:choose>
+							    <span class="highlight-info">Current Best Offer: </span>
+							    <c:choose>
+							        <c:when test="${empty highestBid or highestBid <= soldItem.startingPrice}">
+							            <strong>No one has bid yet. Be the first!</strong>
+							        </c:when>
+							        <c:otherwise>
+							            <c:out value="${highestBid}" /> pts by ${highestBidder}
+							        </c:otherwise>
+							    </c:choose>
 							</p>
 							<p>
-								<span class="highlight-info">Starting Price: </span>
-								${soldItem.startingPrice} pts
+							    <span class="highlight-info">Starting Price: </span>
+							    <fmt:formatNumber value="${soldItem.startingPrice}" pattern="###,###" /> pts
 							</p>
 							<p>
 								<span class="highlight-info">Auction End Date: </span>

@@ -22,6 +22,8 @@ public class AuctionDAOImpl implements AuctionDAO {
     final String SELECT_COUNT_AUCTION = "SELECT COUNT(*) FROM ENCHERES WHERE no_utilisateur = ? AND no_article = ?";
     final String CURRENT_AUCTION = "SELECT TOP 1 * FROM ENCHERES WHERE no_article = ? ORDER BY date_enchere DESC";
     final String GET_ACTIVE_AUCTIONS_BY_USER = "SELECT * FROM ENCHERES WHERE no_utilisateur = ? AND date_enchere >= GETDATE()";
+    final String GET_AUCTIONS_BY_ITEM_ID = "SELECT * FROM ENCHERES WHERE no_article = ?";
+
 
     @Override
     public void createOrUpdateAuction(int userId, int itemId, int bidAmount) {
@@ -115,5 +117,25 @@ public class AuctionDAOImpl implements AuctionDAO {
 
         return new Auction(user, soldItem, auctionDate, bidAmount);
     }
+
+    @Override
+    public List<Auction> getAuctionsByItemId(int itemId) {
+        List<Auction> auctions = new ArrayList<>();
+        try (Connection con = ConnectionProvider.getConnection();
+             PreparedStatement stmt = con.prepareStatement(GET_AUCTIONS_BY_ITEM_ID)) {
+            stmt.setInt(1, itemId);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Auction auction = extractAuctionFromResultSet(rs);
+                auctions.add(auction);
+            }
+        } catch (SQLException e) {
+            // Gérez les exceptions SQL ici, par exemple, en la propageant sous forme de RuntimeException
+            throw new RuntimeException("Erreur lors de la récupération des enchères par ID d'article.", e);
+        }
+        return auctions;
+    }
+
 
 }

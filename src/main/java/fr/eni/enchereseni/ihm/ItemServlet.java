@@ -8,8 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.List;
 
 import fr.eni.enchereseni.bll.AuctionManager;
 import fr.eni.enchereseni.bll.ManagerException;
@@ -31,37 +30,56 @@ public class ItemServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int itemId = Integer.parseInt(request.getParameter("itemId"));
-		HttpSession session = request.getSession();
+	        throws ServletException, IOException {
+	    int itemId = Integer.parseInt(request.getParameter("itemId"));
+	    HttpSession session = request.getSession();
 	    User currentUser = (User) session.getAttribute("user");
-	    long millis=System.currentTimeMillis();  
-	      
-	    // creating a new object of the class Date  
-	    java.sql.Date currentDate = new java.sql.Date(millis);       
+	    long millis = System.currentTimeMillis();
+
+	    // Création d'un nouvel objet de la classe Date
+	    java.sql.Date currentDate = new java.sql.Date(millis);
+
 	    // Vérifier si l'utilisateur est en session
 	    if (currentUser == null) {
 	        response.sendRedirect(request.getContextPath() + "/HomeServlet");
 	        return; // Arrête l'exécution de la méthode pour éviter de continuer le traitement
 	    }
 
-		try {
-			SoldItem soldItem = soldItemManager.getSoldItemById(itemId);
-			Category itemCategory = soldItem.getCategoryItem();
-			PickUp pickUp = soldItem.getpickUp();
-			User user = soldItem.getUser();
+	    try {
+	        SoldItem soldItem = soldItemManager.getSoldItemById(itemId);
+	        Category itemCategory = soldItem.getCategoryItem();
+	        PickUp pickUp = soldItem.getpickUp();
+	        User user = soldItem.getUser();
+	        List<Auction> auctions = auctionManager.getAuctionsByItemId(itemId);
 
-			request.setAttribute("soldItem", soldItem);
-			request.setAttribute("itemCategory", itemCategory);
-			request.setAttribute("pickUp", pickUp);
-			request.setAttribute("seller", user);
-			request.setAttribute("currentDate", currentDate);
+	        // Ajoutez ces lignes pour trouver l'enchère la plus élevée et le nom d'utilisateur correspondant
+	        int highestBid = 0;
+	        String highestBidder = "";
 
-			request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
-		} catch (ManagerException e) {
-			handleException(e, request, response);
-		}
+	        for (Auction auction : auctions) {
+	            if (auction.getBidAmount() > highestBid) {
+	                highestBid = auction.getBidAmount();
+	                highestBidder = auction.getUser().getUsername();
+	            }
+	        }
+
+	        request.setAttribute("soldItem", soldItem);
+	        request.setAttribute("itemCategory", itemCategory);
+	        request.setAttribute("pickUp", pickUp);
+	        request.setAttribute("seller", user);
+	        request.setAttribute("currentDate", currentDate);
+	        request.setAttribute("auctions", auctions);
+	        
+	        // Ajoutez ces lignes pour passer les variables `highestBid` et `highestBidder` à la JSP
+	        request.setAttribute("highestBid", highestBid);
+	        request.setAttribute("highestBidder", highestBidder);
+
+	        request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
+	    } catch (ManagerException e) {
+	        handleException(e, request, response);
+	    }
 	}
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
@@ -103,7 +121,8 @@ public class ItemServlet extends HttpServlet {
 	                    user.setCredit(user.getCredit() - proposalAmount);
 	                    auctionManager.createOrUpdateAuction(user.getUserID(), itemId, proposalAmount);
 
-	                    response.sendRedirect(request.getContextPath() + "/item?itemId=" + itemId);
+	                    response.sendRedirect(request.getContextPath() + "/ItemServlet?itemId=" + itemId);
+	                    return;
 	                } else {
 	                    // La proposition n'est pas valide, renvoyez un message d'erreur à l'utilisateur
 	                    request.setAttribute("errorMessage", "La proposition d'enchère n'est pas valide.");
