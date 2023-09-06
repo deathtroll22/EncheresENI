@@ -59,7 +59,7 @@
 									<c:when
 										test="${empty currentValue or currentValue <= soldItem.startingPrice}">
 										<strong>No one has bid yet. Be the first !</strong>
-										</c:when>
+									</c:when>
 									<c:otherwise>
 									${currentValue} pts by ${seller.username}
 									</c:otherwise>
@@ -102,10 +102,19 @@
 								<input type="number" id="proposal" name="proposal"
 									class="form-control"
 									${currentValue > 0 ? 'min=' + currentValue : ''} required>
-								<button type="submit" class="btn btn-primary btn-block mt-3">Bid</button>
+								<c:choose>
+									<c:when test="${soldItem.auctionStartDate.before(currentDate)}">
+										<button type="submit" class="btn btn-primary btn-block mt-3">Bid</button>
+									</c:when>
+									<c:otherwise>
+										<button type="submit" class="btn btn-primary btn-block mt-3"
+											disabled>Come back soon</button>
+									</c:otherwise>
+								</c:choose>
 							</form>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>

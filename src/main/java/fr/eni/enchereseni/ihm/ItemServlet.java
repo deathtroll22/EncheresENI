@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import fr.eni.enchereseni.bll.AuctionManager;
 import fr.eni.enchereseni.bll.ManagerException;
@@ -33,7 +35,10 @@ public class ItemServlet extends HttpServlet {
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
 		HttpSession session = request.getSession();
 	    User currentUser = (User) session.getAttribute("user");
-	    
+	    long millis=System.currentTimeMillis();  
+	      
+	    // creating a new object of the class Date  
+	    java.sql.Date currentDate = new java.sql.Date(millis);       
 	    // Vérifier si l'utilisateur est en session
 	    if (currentUser == null) {
 	        response.sendRedirect(request.getContextPath() + "/HomeServlet");
@@ -50,6 +55,7 @@ public class ItemServlet extends HttpServlet {
 			request.setAttribute("itemCategory", itemCategory);
 			request.setAttribute("pickUp", pickUp);
 			request.setAttribute("seller", user);
+			request.setAttribute("currentDate", currentDate);
 
 			request.getRequestDispatcher("/WEB-INF/item.jsp").forward(request, response);
 		} catch (ManagerException e) {
