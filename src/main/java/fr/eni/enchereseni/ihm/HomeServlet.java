@@ -10,9 +10,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import fr.eni.enchereseni.bll.SoldItemManager; // Assure-toi d'importer le SoldItemManager
+import fr.eni.enchereseni.bll.CategoryManager;
+import fr.eni.enchereseni.bll.CategoryManagerImpl;
 import fr.eni.enchereseni.bll.ManagerException;
+import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
+import fr.eni.enchereseni.dal.CategoryDAO;
 import fr.eni.enchereseni.bll.ManagerSing; // Assure-toi d'importer le ManagerSing
 
 @WebServlet("/HomeServlet")
@@ -32,7 +36,19 @@ public class HomeServlet extends HttpServlet {
         }
         request.setAttribute("allItems", allItems); // Ajoute la liste d'articles à l'objet de requête
 
-        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+        // Récupérer la liste des catégories depuis CategoryDAOImpl
+        CategoryManager category = new CategoryManagerImpl();
+        List<Category> categories = null;
+		try {
+			categories = category.getAllCategories();
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
+        
+        request.setAttribute("categories", categories); // Ajoutez la liste de catégories à l'objet de requête
+
+        
+        request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);  
     }
 
     private User getUserFromSessionOrAuthentication() {
