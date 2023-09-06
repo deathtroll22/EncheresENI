@@ -87,7 +87,7 @@
 					<div class="card">
 						<div class="card-body p-2">
 							<h2 class="text-center mb-3">My Proposal</h2>
-							<form action="ItemServlet" method="post">
+							<form action="ItemServlet?itemId=${soldItem.itemNumber}" method="post">
 								<input type="number" id="proposal" name="proposal" class="form-control" ${currentValue > 0 ? 'min=' + currentValue : ''} required>
 								<button type="submit" class="btn btn-primary btn-block mt-3">Bid</button>
 							</form>
