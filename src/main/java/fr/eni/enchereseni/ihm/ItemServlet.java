@@ -65,8 +65,8 @@ public class ItemServlet extends HttpServlet {
 	    User user = (User) session.getAttribute("user");
 
 	    try {
-	        Auction currentAuction = auctionManager.getPreviousBestBidder(itemId);
-	        int currentValue = currentAuction.getBidAmount();
+	    	Auction currentAuction = auctionManager.getPreviousBestBidder(itemId);
+	        int currentValue = currentAuction != null ? currentAuction.getBidAmount() : 0;
 
 	        System.out.println("currentValue: " + currentValue);
 
@@ -84,22 +84,38 @@ public class ItemServlet extends HttpServlet {
 
 	        String proposalStr = request.getParameter("proposal");
 
-	        try {
-	            int proposalAmount = Integer.parseInt(proposalStr);
+	        System.out.println("proposalStr: " + proposalStr); // Ajoutez cette ligne pour vérifier la valeur de proposalStr
 
-	            if (isValidProposal(proposalAmount, currentValue, user.getCredit())) {
-	                user.setCredit(user.getCredit() - proposalAmount);
-	                auctionManager.createOrUpdateAuction(user.getUserID(), itemId, proposalAmount);
+	        if (proposalStr != null && !proposalStr.isEmpty()) {
+	            try {
+	                int proposalAmount = Integer.parseInt(proposalStr);
 
-	                response.sendRedirect(request.getContextPath() + "/item?itemId=" + itemId);
-	            } else {
-	                request.setAttribute("errorMessage", "La proposition d'enchère n'est pas valide.");
+	                System.out.println("proposalAmount: " + proposalAmount); // Ajoutez cette ligne pour vérifier la valeur de proposalAmount
+
+	                if (isValidProposal(proposalAmount, currentValue, user.getCredit())) {
+	                    // La proposition est valide, vous pouvez la traiter
+	                    user.setCredit(user.getCredit() - proposalAmount);
+	                    auctionManager.createOrUpdateAuction(user.getUserID(), itemId, proposalAmount);
+
+	                    response.sendRedirect(request.getContextPath() + "/item?itemId=" + itemId);
+	                } else {
+	                    // La proposition n'est pas valide, renvoyez un message d'erreur à l'utilisateur
+	                    request.setAttribute("errorMessage", "La proposition d'enchère n'est pas valide.");
+	                    request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
+	                }
+	            } catch (NumberFormatException e) {
+	                // Gérer l'exception si la proposition n'est pas un nombre valide
+	                request.setAttribute("errorMessage", "La proposition d'enchère n'est pas un nombre valide.");
 	                request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	            }
-	        } catch (NumberFormatException e) {
-	            request.setAttribute("errorMessage", "La proposition d'enchère n'est pas un nombre valide.");
+	        } else {
+	            // Gérer le cas où proposalStr est vide (l'utilisateur n'a rien saisi)
+	            System.out.println("y a rien dans le champ");
+	            request.setAttribute("errorMessage", "Veuillez entrer une proposition d'enchère.");
 	            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	        }
+
+
 	    } catch (ManagerException e) {
 	        handleException(e, request, response);
 	    }
