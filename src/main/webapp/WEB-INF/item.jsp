@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -19,7 +20,7 @@
 }
 
 .image-max-height {
-	max-height: 222px;
+	max-height: 180px;
 }
 
 .bg-carton {
@@ -54,7 +55,15 @@
 							</p>
 							<p>
 								<span class="highlight-info">Current Best Offer: </span>
-								${currentValue} pts by Username
+								<c:choose>
+									<c:when
+										test="${empty currentValue or currentValue <= soldItem.startingPrice}">
+										<strong>No one has bid yet. Be the first !</strong>
+										</c:when>
+									<c:otherwise>
+									${currentValue} pts by ${seller.username}
+									</c:otherwise>
+								</c:choose>
 							</p>
 							<p>
 								<span class="highlight-info">Starting Price: </span>
@@ -62,7 +71,8 @@
 							</p>
 							<p>
 								<span class="highlight-info">Auction End Date: </span>
-								${soldItem.auctionEndDate}
+								<fmt:formatDate value="${soldItem.auctionEndDate}"
+									pattern="dd MM yyyy" />
 							</p>
 							<div class="card p-0 bg-carton shadow-lg text-white">
 								<div class="card-body">
@@ -87,8 +97,11 @@
 					<div class="card">
 						<div class="card-body p-2">
 							<h2 class="text-center mb-3">My Proposal</h2>
-							<form action="ItemServlet?itemId=${soldItem.itemNumber}" method="post">
-								<input type="number" id="proposal" name="proposal" class="form-control" ${currentValue > 0 ? 'min=' + currentValue : ''} required>
+							<form action="ItemServlet?itemId=${soldItem.itemNumber}"
+								method="post">
+								<input type="number" id="proposal" name="proposal"
+									class="form-control"
+									${currentValue > 0 ? 'min=' + currentValue : ''} required>
 								<button type="submit" class="btn btn-primary btn-block mt-3">Bid</button>
 							</form>
 						</div>
