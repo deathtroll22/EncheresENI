@@ -7,7 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
+import jakarta.servlet.http.Cookie;
+
 import fr.eni.enchereseni.bll.SoldItemManager;
+import fr.eni.enchereseni.bll.UserManager;
 import fr.eni.enchereseni.bll.CategoryManager;
 import fr.eni.enchereseni.bll.CategoryManagerImpl;
 import fr.eni.enchereseni.bll.ManagerException;
@@ -22,7 +26,22 @@ public class HomeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = getUserFromSessionOrAuthentication(); // Remplacez cette ligne par la récupération de l'utilisateur
+       
+        // Récupérer l'utilisateur à partir du cookie "Remember Me" s'il existe
+        User user = null;
+		try {
+			user = getUserFromRememberMeCookie(request);
+		} catch (NumberFormatException | ManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        if (user == null) {
+            // Si l'utilisateur n'est pas trouvé dans le cookie, récupérez-le depuis la session ou l'authentification
+            user = getUserFromSessionOrAuthentication();
+        }
+
+        
         SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); // Utilisez ManagerSing pour obtenir l'instance de SoldItemManager
         List<SoldItem> allItems = null;
         try {
@@ -46,7 +65,25 @@ public class HomeServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    // Méthode pour récupérer l'utilisateur à partir du cookie "Remember Me"
+    private User getUserFromRememberMeCookie(HttpServletRequest request) throws NumberFormatException, ManagerException {
+        jakarta.servlet.http.Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (((Cookie) cookie).getName().equals("rememberMe")) {
+                    String rememberMeValue = ((Cookie) cookie).getValue();
+                    // Utilisez cette valeur (ID de l'utilisateur) pour récupérer l'utilisateur
+                    // depuis votre gestionnaire d'utilisateurs
+                    UserManager userManager = ManagerSing.getUserManager();
+                    return userManager.getUserById(Integer.parseInt(rememberMeValue));
+                }
+            }
+        }
+        return null; // Retourne null si le cookie "Remember Me" n'est pas trouvé
+    }
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User user = getUserFromSessionOrAuthentication(); // Remplacez cette ligne par la récupération de l'utilisateur
         SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); // Utilisez ManagerSing pour obtenir l'instance de SoldItemManager

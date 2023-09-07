@@ -2,6 +2,7 @@ package fr.eni.enchereseni.ihm;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,6 +32,17 @@ public class LoginServlet extends HttpServlet {
 
             if (user != null) {
                 // Connexion réussie
+
+                // Vérifie si la case "Remember Me" est cochée
+                if (request.getParameter("rememberMe") != null) {
+                    // Crée un cookie "rememberMe" avec l'ID de l'utilisateur
+                    Cookie rememberMeCookie = new Cookie("rememberMe", String.valueOf(user.getUserID()));
+                    // Définit la durée de validité du cookie (30 jours ici)
+                    rememberMeCookie.setMaxAge(30 * 24 * 60 * 60);
+                    // Ajoute le cookie à la réponse
+                    response.addCookie(rememberMeCookie);
+                }
+
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect(request.getContextPath() + "/HomeServlet");

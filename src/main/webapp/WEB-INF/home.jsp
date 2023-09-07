@@ -144,9 +144,6 @@
 											<img
 												src=" https://picsum.photos/200?random=${item.itemNumber}"
 												alt="Table" class="img-fluid rounded img-max-height">
-
-											<%--  <img src="${pageContext.request.contextPath}/img/auction.png"
-                                            alt="Table" class="img-fluid rounded img-max-height"> --%>
 										</div>
 										<div class="col-md-8">
 											<h4>
