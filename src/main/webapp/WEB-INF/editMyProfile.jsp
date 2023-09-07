@@ -86,12 +86,16 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<div class="form-group">
-								<label for="oldPassword" class="highlight-info">Old
-									Password:</label> <input type="password" class="form-control"
-									id="oldPassword" name="oldPassword"
-									placeholder="Enter old password" required>
-							</div>
+						    <div class="form-group">
+						        <label for="oldPassword" class="highlight-info">Old Password:</label>
+						        <input type="password" class="form-control" id="oldPassword" name="oldPassword" placeholder="Enter old password" required>
+						        <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+						        <% if (errorMessage != null) { %>
+						        <div class="alert alert-danger mt-2">
+						            <%= errorMessage %>
+						        </div>
+						        <% } %>
+						    </div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">

@@ -41,13 +41,22 @@ public class EditMyProfileServlet extends HttpServlet {
 
 		// Vérifier que les mots de passe sont identiques
 		if (!newPassword.equals(confirmNewPassword)) {
-			request.setAttribute("errorMessage", "Les mots de passe ne sont pas identiques");
+			request.setAttribute("errorMessage", "The New Password does not match Confirm New Password.");
 			request.getRequestDispatcher("/WEB-INF/editMyProfile.jsp").forward(request, response);
 			return;
 		}
+		
+		// Récupérer l'utilisateur actuel de la session
+	    User user = (User) request.getSession().getAttribute("user");
+
+	    // Vérifier si l'ancien mot de passe correspond au mot de passe actuel de l'utilisateur
+	    if (!user.getPassword().equals(oldPassword)) {
+	        request.setAttribute("errorMessage", "The old password is incorrect.");
+	        request.getRequestDispatcher("/WEB-INF/editMyProfile.jsp").forward(request, response);
+	        return;
+	    }
 
 		// Modifier le profil en base de données
-		User user = (User) request.getSession().getAttribute("user");
 		user.setPassword(newPassword);
 		user.setFirstName(firstName); 
 	    user.setLastName(lastName);
