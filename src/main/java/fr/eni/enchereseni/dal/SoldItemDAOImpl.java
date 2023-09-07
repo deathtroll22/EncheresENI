@@ -179,7 +179,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 
 				// Créer la catégorie et la définir dans l'objet SoldItem
 				Category category = new Category();
-				category.setCategoryNumber(rs.getInt("av.no_categorie"));
+				category.setCategoryNumber(rs.getInt("no_categorie"));
 				category.setCategoryName(rs.getString("categorie"));
 				soldItem.setCategoryItem(category);
 
