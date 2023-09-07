@@ -129,7 +129,6 @@
 		<!-- Liste des enchères en cours -->
 		<div class="card col-12 bg-white my-4 py-4">
 			<div class="row">
-<<<<<<< HEAD
 				<c:forEach var="auction" items="${auctions}">
                     <!-- Affichez les détails de chaque enchère ici -->
                     <div class="col-md-6">
@@ -182,7 +181,7 @@
                         </div>
                     </div>
                 </c:forEach>
-=======
+
 				<c:forEach var="item" items="${allItems}">
 					<div class="col-md-6">
 						<div class="card shadow bg-light mb-4 fancy_card">
@@ -234,7 +233,6 @@
 						</div>
 					</div>
 				</c:forEach>
->>>>>>> branch 'UNSTABLE' of https://github.com/deathtroll22/EncheresENI.git
 			</div>
 		</div>
 	</div>
