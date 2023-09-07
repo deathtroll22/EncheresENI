@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
   <display-name>EncheresENI</display-name>
   <session-config>
-    <session-timeout>1</session-timeout>
+    <session-timeout>7</session-timeout>
   </session-config>
   <welcome-file-list>
     <welcome-file>HomeServlet</welcome-file>
@@ -46,5 +46,15 @@
   <servlet-mapping>
     <servlet-name>ItemServlet</servlet-name>
     <url-pattern>/ItemServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteItemServlet</display-name>
+    <servlet-name>DeleteItemServlet</servlet-name>
+    <servlet-class>fr.eni.enchereseni.ihm.DeleteItemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteItemServlet</servlet-name>
+    <url-pattern>/DeleteItemServlet</url-pattern>
   </servlet-mapping>
 </web-app>

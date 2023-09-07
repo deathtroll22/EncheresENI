@@ -290,6 +290,31 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	    return itemList;
 	}
 
+	@Override
+	public void deleteItem(int itemId) {
+	    try (Connection con = ConnectionProvider.getConnection()) {
+	        // Commencez par supprimer l'article de la table RETRAITS s'il existe
+	        String deletePickUpQuery = "DELETE FROM RETRAITS WHERE no_article = ?";
+	        try (PreparedStatement deletePickUpStmt = con.prepareStatement(deletePickUpQuery)) {
+	            deletePickUpStmt.setInt(1, itemId);
+	            deletePickUpStmt.executeUpdate();
+	        }
+
+	        // Ensuite, supprimez l'article de la table ARTICLES_VENDUS
+	        String deleteItemQuery = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
+	        try (PreparedStatement deleteItemStmt = con.prepareStatement(deleteItemQuery)) {
+	            deleteItemStmt.setInt(1, itemId);
+	            int affectedRows = deleteItemStmt.executeUpdate();
+
+	            if (affectedRows == 0) {
+	                throw new SQLException("Deleting item failed, no rows affected.");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Vous pouvez gérer l'exception de manière appropriée ici
+	    }
+	}
+
 
 
 	/*@Override

@@ -19,6 +19,10 @@ public interface SoldItemDAO {
 
 	List<SoldItem> getAllItemsWithFilter(String whereClause);
 
+
+	public void deleteItem(int itemId);
+
+
 	/*List<SoldItem> getSoldItemsByCategory(
 		    Integer categoryId,
 		    String itemName,

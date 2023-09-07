@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             }
         } catch (ManagerException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during login.");
+            request.getRequestDispatcher("/WEB-INF/erreur.jsp").forward(request, response);
         }
     }
 }
