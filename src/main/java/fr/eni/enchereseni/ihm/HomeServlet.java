@@ -156,18 +156,7 @@ public class HomeServlet extends HttpServlet {
      // Récupérez la valeur du radiobouton sélectionné
         String radioButtonValue = request.getParameter("typeRadio");
 
-        // Appelez la méthode getAuctionsByRadioButton de votre AuctionManager
-        List<Auction> auctions = null;
-        User sessionUser = (User) request.getSession().getAttribute("user");
-        try {
-        	auctions = auctionManager.getAuctionsByRadioButton(radioButtonValue, sessionUser);
-        } catch (ManagerException e) {
-            e.printStackTrace();
-            // Gérez l'exception, par exemple, en renvoyant un message d'erreur à l'utilisateur
-        }
-
-        // Stockez la liste d'enchères dans la requête pour l'afficher dans votre vue (JSP)
-        request.setAttribute("auctions", auctions);
+        
 
         request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
