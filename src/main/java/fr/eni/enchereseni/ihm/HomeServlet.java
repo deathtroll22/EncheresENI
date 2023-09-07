@@ -2,13 +2,14 @@ package fr.eni.enchereseni.ihm;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
-
-import jakarta.servlet.http.Cookie;
 
 import fr.eni.enchereseni.bll.SoldItemManager;
 import fr.eni.enchereseni.bll.UserManager;
@@ -27,20 +28,8 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        
-        // Récupérer l'utilisateur à partir du cookie "Remember Me" s'il existe
-        User user = null;
-		try {
-			user = getUserFromRememberMeCookie(request);
-		} catch (NumberFormatException | ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        if (user == null) {
-            // Si l'utilisateur n'est pas trouvé dans le cookie, récupérez-le depuis la session ou l'authentification
-            user = getUserFromSessionOrAuthentication();
-        }
-
+    	// Si l'utilisateur n'est pas trouvé dans le cookie, récupérez-le depuis la session ou l'authentification
+    	User user = getUserFromSessionOrAuthentication(request);
         
         SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); // Utilisez ManagerSing pour obtenir l'instance de SoldItemManager
         List<SoldItem> allItems = null;
@@ -66,17 +55,15 @@ public class HomeServlet extends HttpServlet {
     }
 
     // Méthode pour récupérer l'utilisateur à partir du cookie "Remember Me"
-    private User getUserFromRememberMeCookie(HttpServletRequest request) throws NumberFormatException, ManagerException {
-        jakarta.servlet.http.Cookie[] cookies = request.getCookies();
+    private User getUserFromRememberMeCookie(HttpServletRequest request) throws ManagerException {
+        Cookie[] cookies = request.getCookies();
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (((Cookie) cookie).getName().equals("rememberMe")) {
-                    String rememberMeValue = ((Cookie) cookie).getValue();
+                if ((cookie.getName().equals("rememberMe"))) {
+                    String rememberMeValue = cookie.getValue();
                     // Utilisez cette valeur (ID de l'utilisateur) pour récupérer l'utilisateur
-                    // depuis votre gestionnaire d'utilisateurs
-                    UserManager userManager = ManagerSing.getUserManager();
-                    return userManager.getUserById(Integer.parseInt(rememberMeValue));
+                    // depuis votre gestionnaire d'utilisateurs;
                 }
             }
         }
@@ -85,7 +72,7 @@ public class HomeServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User user = getUserFromSessionOrAuthentication(); // Remplacez cette ligne par la récupération de l'utilisateur
+        User user = getUserFromSessionOrAuthentication(request); // Remplacez cette ligne par la récupération de l'utilisateur
         SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); // Utilisez ManagerSing pour obtenir l'instance de SoldItemManager
         List<SoldItem> allItems = null;
 
@@ -134,8 +121,24 @@ public class HomeServlet extends HttpServlet {
     }
 
 
-    private User getUserFromSessionOrAuthentication() {
-        User user = new User();
-        return user;
+    private User getUserFromSessionOrAuthentication(HttpServletRequest request) {
+    	 HttpSession session = request.getSession();
+
+    	 User user = null;
+    	 user = (User) session.getAttribute("user");
+    	 
+     	if (user == null) {
+     		System.out.println("Pas d'utilisateur en session - rechercher cookie");
+			try {
+				user = getUserFromRememberMeCookie(request);
+			} catch (ManagerException e) {
+				e.printStackTrace();
+			}
+	        
+	    }
+     	
+     	System.out.println("getUserFromSessionOrAuthentication: " + user);
+    	 
+    	 return user;
     }
 }

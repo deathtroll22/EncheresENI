@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
                 // Vérifie si la case "Remember Me" est cochée
                 if (request.getParameter("rememberMe") != null) {
                     // Crée un cookie "rememberMe" avec l'ID de l'utilisateur
-                    Cookie rememberMeCookie = new Cookie("rememberMe", String.valueOf(user.getUserID()));
+                    Cookie rememberMeCookie = new Cookie("rememberMe", String.valueOf(user.getUsername()));
                     // Définit la durée de validité du cookie (30 jours ici)
                     rememberMeCookie.setMaxAge(30 * 24 * 60 * 60);
                     // Ajoute le cookie à la réponse

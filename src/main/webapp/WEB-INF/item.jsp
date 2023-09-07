@@ -33,7 +33,7 @@
 	padding: 0 !important;
 }
 .bg-light-green {
-    background-color: rgba(200, 255, 200, 1) !important; /* Vert clair sans transparence */
+    background-color: rgba(200, 255, 200, 1); /* Vert clair sans transparence */
 }
 </style>
 </head>

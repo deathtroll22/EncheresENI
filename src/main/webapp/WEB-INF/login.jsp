@@ -48,7 +48,8 @@ body {
 				</div>
 				<div class="form-group">
 					<input type="text" class="form-control" id="pseudo" name="pseudo"
-						required>
+						value="<c:if test="${cookie.rememberMe != null}"><c:out value="${cookie.rememberMe.value}"/></c:if>"
+						placeholder="Enter your username" required>
 				</div>
 			</div>
 			<div class="form-row mb-2">

@@ -68,60 +68,58 @@
                             <input type="hidden" name="categorySelectHidden" id="categorySelectHidden" value="">
                         </div>
 						</div>
-						<c:if test="${sessionScope.user != null}">
-							<div class="col-md-6 row align-items-end pb-3">
-								<div class="col-6">
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="typeRadio"
-											id="typeRadio1" checked> <label
-											class="form-check-label" for="typeRadio1">Purchases</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkbox1"
-											<c:if test="${not empty param.typeRadio && param.typeRadio == 'typeRadio1'}">disabled</c:if>>
-										<label class="form-check-label" for="checkbox1">Open
-											Auctions</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkbox2"
-											<c:if test="${not empty param.typeRadio && param.typeRadio == 'typeRadio1'}">disabled</c:if>>
-										<label class="form-check-label" for="checkbox2">My
-											Ongoing Bids</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkbox3"
-											<c:if test="${not empty param.typeRadio && param.typeRadio == 'typeRadio1'}">disabled</c:if>>
-										<label class="form-check-label" for="checkbox3">My Won
-											Auctions</label>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="typeRadio"
-											id="typeRadio2"> <label class="form-check-label"
-											for="typeRadio2">My Sales</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkbox4"
-											<c:if test="${not empty param.typeRadio && param.typeRadio == 'typeRadio2'}">disabled</c:if>>
-										<label class="form-check-label" for="checkbox4">My
-											Ongoing Sales</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkbox5"
-											<c:if test="${not empty param.typeRadio && param.typeRadio == 'typeRadio2'}">disabled</c:if>>
-										<label class="form-check-label" for="checkbox5">Sales
-											Not Started</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkbox6"
-											<c:if test="${not empty param.typeRadio && param.typeRadio == 'typeRadio2'}">disabled</c:if>>
-										<label class="form-check-label" for="checkbox6">Completed
-											Sales</label>
-									</div>
-								</div>
-							</div>
-						</c:if>
+<c:if test="${sessionScope.user != null}">
+    <div class="col-md-6 row align-items-end pb-3">
+        <div class="col-6">
+            <div class="form-check">
+                <label class="form-check-label" for="typeRadio1"><strong>Purchases</strong></label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="radio1"
+                    name="typeRadio" value="openAuctions"
+                    <c:if test="${param.typeRadio == 'typeRadio1'}">checked</c:if>>
+                <label class="form-check-label" for="radio1">Open Auctions</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="radio2"
+                    name="typeRadio" value="myOngoingBids"
+                    <c:if test="${param.typeRadio == 'typeRadio2'}">checked</c:if>>
+                <label class="form-check-label" for="radio2">My Ongoing Bids</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="radio3"
+                    name="typeRadio" value="myWonAuctions"
+                    <c:if test="${param.typeRadio == 'typeRadio3'}">checked</c:if>>
+                <label class="form-check-label" for="radio3">My Won Auctions</label>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-check">
+                <label class="form-check-label" for="typeRadio2"><strong>My Sales</strong></label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="radio4"
+                    name="typeRadio" value="myOngoingsales"
+                    <c:if test="${param.typeRadio == 'typeRadio4'}">checked</c:if>>
+                <label class="form-check-label" for="radio4">My Ongoing Sales</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="radio5"
+                    name="typeRadio" value="salesNotStarted"
+                    <c:if test="${param.typeRadio == 'typeRadio5'}">checked</c:if>>
+                <label class="form-check-label" for="radio5">Sales Not Started</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="radio6"
+                    name="typeRadio" value="completedSales"
+                    <c:if test="${param.typeRadio == 'typeRadio6'}">checked</c:if>>
+                <label class="form-check-label" for="radio6">Completed Sales</label>
+            </div>
+        </div>
+    </div>
+</c:if>
+
+
 					</div>
 					<button type="submit" class="btn btn-primary btn-block">Search</button>
 				</form>
