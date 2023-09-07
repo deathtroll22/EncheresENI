@@ -53,7 +53,7 @@ public class ItemServlet extends HttpServlet {
 	        List<Auction> auctions = auctionManager.getAuctionsByItemId(itemId);
 
 	        // Ajoutez ces lignes pour trouver l'enchère la plus élevée et le nom d'utilisateur correspondant
-	        int highestBid = 0;
+	        double highestBid = 0;
 	        String highestBidder = "";
 
 	        for (Auction auction : auctions) {
