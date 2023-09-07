@@ -45,6 +45,10 @@ public class SoldItemManagerImpl implements SoldItemManager {
 	        throw new ManagerException("Error while getting filtered items", e);
 	    }
 	}
+	@Override
+	public void deleteItem(int itemId) throws ManagerException {
+	dao.deleteItem(itemId);
+	}
 
 
 

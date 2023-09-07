@@ -16,6 +16,8 @@ public interface SoldItemManager {
 	
 	List<SoldItem> getAllItemsWithFilter(String whereClause) throws ManagerException;
 
+	public void deleteItem(int itemId) throws ManagerException;
+
 
 }
 

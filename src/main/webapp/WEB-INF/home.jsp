@@ -129,6 +129,7 @@
 		<!-- Liste des enchères en cours -->
 		<div class="card col-12 bg-white my-4 py-4">
 			<div class="row">
+<<<<<<< HEAD
 				<c:forEach var="auction" items="${auctions}">
                     <!-- Affichez les détails de chaque enchère ici -->
                     <div class="col-md-6">
@@ -181,6 +182,59 @@
                         </div>
                     </div>
                 </c:forEach>
+=======
+				<c:forEach var="item" items="${allItems}">
+					<div class="col-md-6">
+						<div class="card shadow bg-light mb-4 fancy_card">
+							<a
+								href="<c:url value='/ItemServlet'><c:param name='itemId' value='${item.itemNumber}'/></c:url>"
+								class="card-link"
+								<c:if test="${sessionScope.user == null}">data-toggle="modal" data-target="#loginModal"</c:if>>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-4 px-0 text-center">
+											<img
+												src=" https://picsum.photos/350/200?random=${item.itemNumber}"
+												alt="Table" class="img-fluid rounded img-max-height">
+										</div>
+										<div class="col-md-8 pt-4 pt-md-0 px-4">
+											<h4>
+												<c:out value="${item.itemName}" />
+											</h4>
+											<c:choose>
+												<c:when test="${item.sellingPrice > item.startingPrice}">
+													<p>
+														Price:
+														<c:out value="${item.sellingPrice}" />
+														€
+													</p>
+												</c:when>
+												<c:otherwise>
+													<p>
+														Price:
+														<c:out value="${item.startingPrice}" />
+														pts
+													</p>
+												</c:otherwise>
+											</c:choose>
+											<p>
+												Auction Ends :
+												<fmt:formatDate value="${item.auctionEndDate}"
+													pattern="dd MM yyyy" />
+											</p>
+											<p>
+												Seller:
+												<c:out value="${item.user.username}" />
+											</p>
+											<!-- Autres informations sur l'article -->
+										</div>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</c:forEach>
+>>>>>>> branch 'UNSTABLE' of https://github.com/deathtroll22/EncheresENI.git
 			</div>
 		</div>
 	</div>

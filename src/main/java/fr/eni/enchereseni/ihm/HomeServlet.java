@@ -110,7 +110,7 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         User user = getUserFromSessionOrAuthentication(); // Remplacez cette ligne par la récupération de l'utilisateur
         SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); 
-        List<SoldItem> allItems = null;
+        List<SoldItem> allItems = null; 
 
         try { 
             String searchInput = request.getParameter("searchInput");

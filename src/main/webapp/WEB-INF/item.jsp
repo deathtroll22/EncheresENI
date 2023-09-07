@@ -32,8 +32,10 @@
 .p-2 {
 	padding: 0 !important;
 }
+
 .bg-light-green {
-    background-color: rgba(200, 255, 200, 1); /* Vert clair sans transparence */
+	background-color: rgba(200, 255, 200, 1);
+	/* Vert clair sans transparence */
 }
 </style>
 </head>
@@ -44,7 +46,8 @@
 		<div class="col-12">
 			<div class="row mt-4">
 				<div class="col-md-6 mb-3 pr-md-0 w-100">
-					<div class="card ${sessionScope.user.username == highestBidder && soldItem.auctionEndDate < currentDate ? 'bg-light-green' : ''}">
+					<div
+						class="card ${sessionScope.user.username == highestBidder && soldItem.auctionEndDate < currentDate ? 'bg-light-green' : ''}">
 						<div class="card-body">
 							<p class="text-center fw-bold">
 								<strong>${soldItem.itemName}</strong>
@@ -102,7 +105,8 @@
 					</div>
 				</div>
 				<div class="col-md-6 w-100">
-					<div class="card mb-3 text-center ${sessionScope.user.username == highestBidder && soldItem.auctionEndDate < currentDate ? 'bg-light-green' : ''}">
+					<div
+						class="card mb-3 text-center ${sessionScope.user.username == highestBidder && soldItem.auctionEndDate < currentDate ? 'bg-light-green' : ''}">
 						<div class="card-body">
 							<img
 								src=" https://picsum.photos/400/200?random=${item.itemNumber}"
@@ -151,6 +155,31 @@
 				</div>
 			</div>
 		</div>
+		<c:if test="${soldItem.auctionStartDate.after(currentDate) && sessionScope.user.username == seller.username}">
+		<div class=" col-12 p-4 ">
+			<div class="row">
+				<!-- Colonne pour le bouton Modifier -->
+				<div class="col-md-8 p-0 px-1">
+					<button class="btn btn-primary btn-block"
+						onclick="window.location.href='EditItemServlet?itemId=${soldItem.itemNumber}'">Edit
+						item</button>
+				</div>
+
+				<!-- Colonne pour le bouton Supprimer -->
+				<div class="col-md-4 p-0 px-1">
+					<button class="btn btn-danger btn-block" onclick="confirmDelete()">Delete
+						article</button>
+				</div>
+			</div>
+		</div>
+		</c:if>
 	</div>
 </body>
+<script>
+    function confirmDelete() {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) {
+            window.location.href = 'DeleteItemServlet?itemId=${soldItem.itemNumber}';
+        }
+    }
+</script>
 </html>
