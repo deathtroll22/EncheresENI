@@ -75,7 +75,7 @@ public class AuctionDAOImpl implements AuctionDAO {
                 int bidAmount = rs.getInt("montant_enchere");
                 Date auctionDate = rs.getTimestamp("date_enchere");
                 int highestBidderUserId = rs.getInt("no_enchere");
-                User user = new User(); // Vous devrez implémenter une méthode pour récupérer l'utilisateur par son ID
+                User user = DAOFact.getUserDAO().getUserById(userId);
                 SoldItem soldItem = new SoldItem(); // Vous devrez implémenter une méthode pour récupérer l'article par son ID
                 previousBestBidder = new Auction(user, soldItem, auctionDate, bidAmount, highestBidderUserId);
             }

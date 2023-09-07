@@ -116,6 +116,12 @@ public class UserManagerImpl implements UserManager {
 			return this.dao.isEmailTaken(email);
 		}
 
+		@Override
+		public void updateUserCredit(Integer userID, int credit) throws ManagerException {
+			dao.updateUserCredit(userID, credit);
+		}
+
+
 
 
 }

@@ -18,6 +18,7 @@ public interface UserDAO {
 	public void deleteUser(Integer userID);
 
 	public User getUserById(int userId);
+	public void updateUserCredit(Integer userID, int credit);
 
 
 }

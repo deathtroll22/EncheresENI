@@ -14,16 +14,19 @@ import fr.eni.enchereseni.bll.AuctionManager;
 import fr.eni.enchereseni.bll.ManagerException;
 import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bll.SoldItemManager;
+import fr.eni.enchereseni.bll.UserManager;
 import fr.eni.enchereseni.bo.Auction;
 import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.PickUp;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
+import fr.eni.enchereseni.dal.UserDAO;
 
 public class ItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AuctionManager auctionManager = ManagerSing.getAuctionManager();
 	private final SoldItemManager soldItemManager = ManagerSing.getSoldItemManager();
+	private final UserManager userManager = ManagerSing.getUserManager();
 
 	public ItemServlet() {
 		super();
@@ -100,43 +103,38 @@ public class ItemServlet extends HttpServlet {
 	            User previousBestBidderUser = previousBestBidder.getUser();
 	            int previousBidAmount = previousBestBidder.getBidAmount();
 	            previousBestBidderUser.setCredit(previousBestBidderUser.getCredit() + previousBidAmount);
-	            // Mettez à jour le crédit de l'utilisateur dans la base de données
-	            // Assurez-vous que cette fonctionnalité est implémentée correctement dans votre DAO.
+	            userManager.updateUserCredit(previousBestBidderUser.getUserID(), previousBestBidderUser.getCredit());
 	        }
 
 	        request.setAttribute("currentValue", currentValue);
 
 	        String proposalStr = request.getParameter("proposal");
 
-	        System.out.println("proposalStr: " + proposalStr); // Ajoutez cette ligne pour vérifier la valeur de proposalStr
-
 	        if (proposalStr != null && !proposalStr.isEmpty()) {
 	            try {
 	                int proposalAmount = Integer.parseInt(proposalStr);
 
-	                System.out.println("proposalAmount: " + proposalAmount); // Ajoutez cette ligne pour vérifier la valeur de proposalAmount
-
 	                if (isValidProposal(proposalAmount, currentValue, user.getCredit())) {
 	                    // La proposition est valide, vous pouvez la traiter
 	                    user.setCredit(user.getCredit() - proposalAmount);
+	                    userManager.updateUserCredit(user.getUserID(), user.getCredit());
 	                    auctionManager.createOrUpdateAuction(user.getUserID(), itemId, proposalAmount);
 
 	                    response.sendRedirect(request.getContextPath() + "/ItemServlet?itemId=" + itemId);
 	                    return;
 	                } else {
 	                    // La proposition n'est pas valide, renvoyez un message d'erreur à l'utilisateur
-	                    request.setAttribute("errorMessage", "La proposition d'enchère n'est pas valide.");
+	                    request.setAttribute("errorMessage", "The bid offer is not valid.");
 	                    request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	                }
 	            } catch (NumberFormatException e) {
 	                // Gérer l'exception si la proposition n'est pas un nombre valide
-	                request.setAttribute("errorMessage", "La proposition d'enchère n'est pas un nombre valide.");
+	                request.setAttribute("errorMessage", "The bid amount is not a valid number.");
 	                request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	            }
 	        } else {
 	            // Gérer le cas où proposalStr est vide (l'utilisateur n'a rien saisi)
-	            System.out.println("y a rien dans le champ");
-	            request.setAttribute("errorMessage", "Veuillez entrer une proposition d'enchère.");
+	            request.setAttribute("errorMessage", "Please enter a bid.");
 	            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	        }
 
@@ -154,7 +152,7 @@ public class ItemServlet extends HttpServlet {
 	private void handleException(ManagerException e, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		e.printStackTrace(); // Log the exception for debugging purposes
-		request.setAttribute("errorMessage", "Erreur lors de la récupération des détails de l'article.");
+		request.setAttribute("errorMessage", "Error while retrieving item details.");
 		request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	}
 }
