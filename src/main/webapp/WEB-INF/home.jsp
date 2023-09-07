@@ -138,12 +138,12 @@
 								<c:if test="${sessionScope.user == null}">data-toggle="modal" data-target="#loginModal"</c:if>>
 								<div class="card-body">
 									<div class="row">
-										<div class="col-md-4">
+										<div class="col-md-4 px-0 text-center">
 											<img
-												src=" https://picsum.photos/200?random=${item.itemNumber}"
+												src=" https://picsum.photos/350/200?random=${item.itemNumber}"
 												alt="Table" class="img-fluid rounded img-max-height">
 										</div>
-										<div class="col-md-8">
+										<div class="col-md-8 pt-4 pt-md-0 px-4">
 											<h4>
 												<c:out value="${item.itemName}" />
 											</h4>
