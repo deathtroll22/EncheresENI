@@ -83,13 +83,13 @@
             <div class="form-check">
                 <input type="radio" class="form-check-input" id="radio2"
                     name="typeRadio" value="myOngoingBids"
-                    <c:if test="${param.typeRadio == 'typeRadio2'}">checked</c:if>>
+                    <c:if test="${param.typeRadio == 'radio2'}">checked</c:if>>
                 <label class="form-check-label" for="radio2">My Ongoing Bids</label>
             </div>
             <div class="form-check">
                 <input type="radio" class="form-check-input" id="radio3"
                     name="typeRadio" value="myWonAuctions"
-                    <c:if test="${param.typeRadio == 'typeRadio3'}">checked</c:if>>
+                    <c:if test="${param.typeRadio == 'radio3'}">checked</c:if>>
                 <label class="form-check-label" for="radio3">My Won Auctions</label>
             </div>
         </div>
@@ -100,19 +100,19 @@
             <div class="form-check">
                 <input type="radio" class="form-check-input" id="radio4"
                     name="typeRadio" value="myOngoingsales"
-                    <c:if test="${param.typeRadio == 'typeRadio4'}">checked</c:if>>
+                    <c:if test="${param.typeRadio == 'radio4'}">checked</c:if>>
                 <label class="form-check-label" for="radio4">My Ongoing Sales</label>
             </div>
             <div class="form-check">
                 <input type="radio" class="form-check-input" id="radio5"
                     name="typeRadio" value="salesNotStarted"
-                    <c:if test="${param.typeRadio == 'typeRadio5'}">checked</c:if>>
+                    <c:if test="${param.typeRadio == 'radio5'}">checked</c:if>>
                 <label class="form-check-label" for="radio5">Sales Not Started</label>
             </div>
             <div class="form-check">
                 <input type="radio" class="form-check-input" id="radio6"
                     name="typeRadio" value="completedSales"
-                    <c:if test="${param.typeRadio == 'typeRadio6'}">checked</c:if>>
+                    <c:if test="${param.typeRadio == 'radio6'}">checked</c:if>>
                 <label class="form-check-label" for="radio6">Completed Sales</label>
             </div>
         </div>

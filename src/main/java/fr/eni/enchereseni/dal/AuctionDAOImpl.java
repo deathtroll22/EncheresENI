@@ -24,12 +24,11 @@ public class AuctionDAOImpl implements AuctionDAO {
     final String GET_ACTIVE_AUCTIONS_BY_USER = "SELECT * FROM ENCHERES WHERE no_utilisateur = ? AND date_enchere >= GETDATE()";
     final String GET_AUCTIONS_BY_ITEM_ID = "SELECT * FROM ENCHERES WHERE no_article = ?";
     
-    final String SELECT_MY_SOLDITEM_OPEN = "SELECT *"
-            + " FROM ARTICLES_VENDUS AV"
-            + " WHERE AV.no_utilisateur = ?"
-            + "   AND AV.date_debut_encheres <= GETDATE()"
-            + "   AND AV.date_fin_encheres > GETDATE()";
-
+	final String SELECT_MY_SOLDITEM_OPEN = "SELECT *"
+			+ " FROM ARTICLES_VENDUS AV"
+			+ " WHERE AV.no_utilisateur = ?"
+			+ "  AND AV.date_debut_encheres <= GETDATE()"
+			+ "  AND AV.date_fin_encheres > GETDATE()";
 	
 	final String SELECT_MY_FUTUR_SOLDITEM = "SELECT *"
 			+ " FROM ARTICLES_VENDUS AV"
@@ -42,12 +41,12 @@ public class AuctionDAOImpl implements AuctionDAO {
 			+ "  AND AV.date_fin_encheres <= GETDATE()";
 	
 	final String GET_ACTIVE_AUCTIONS = "SELECT * FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article WHERE AV.date_fin_encheres > GETDATE()";
-    final String GET_USER_ACTIVE_AUCTIONS = "SELECT E.* FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"+
-    										"WHERE AV.date_debut_encheres <= GETDATE() AND AV.date_fin_encheres > GETDATE() AND E.no_utilisateur = ?";
+    final String GET_USER_ACTIVE_AUCTIONS = "SELECT * FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"+
+    										" WHERE AV.date_debut_encheres <= GETDATE() AND AV.date_fin_encheres > GETDATE() AND E.no_utilisateur = ?";
     final String SELECT_MY_WIN_AUCTIONS = "SELECT * FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"
-    		+ "WHERE AV.date_fin_encheres <= GETDATE() AND E.no_utilisateur = ? AND E.montant_enchere = "
-    		+ "   ( SELECT MAX(E.montant_enchere)"
-    		+ "    FROM ENCHERES E WHERE no_article = AV.no_article)";
+    		+ " WHERE AV.date_fin_encheres <= GETDATE() AND E.no_utilisateur = ? AND E.montant_enchere = "
+    		+ "   ( SELECT MAX(montant_enchere)"
+    		+ "    FROM ENCHERES WHERE no_article = AV.no_article)";
 
 
     @Override
@@ -116,16 +115,22 @@ public class AuctionDAOImpl implements AuctionDAO {
         List<Auction> activeAuctions = new ArrayList<>();
         try (Connection con = ConnectionProvider.getConnection();
              PreparedStatement stmt = con.prepareStatement(GET_ACTIVE_AUCTIONS_BY_USER)) {
-            stmt.setInt(1, user.getUserID()); 
+            stmt.setInt(1, user.getUserID());
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                // Créez des objets Auction à partir des données de la base de données
-                Auction auction = extractAuctionFromResultSet(rs); 
+                int userId = rs.getInt("no_utilisateur");
+                int itemId = rs.getInt("no_article");
+                int bidAmount = rs.getInt("montant_enchere");
+                Date auctionDate = rs.getTimestamp("date_enchere");
+                User auctionUser = DAOFact.getUserDAO().getUserById(userId);
+                SoldItem soldItem = DAOFact.getSoldItemDAO().getSoldItemById(itemId);
+                Auction auction = new Auction(auctionUser, soldItem, auctionDate, bidAmount);
                 activeAuctions.add(auction);
             }
         } catch (SQLException e) {
             // Gérez les exceptions SQL ici
+            throw new RuntimeException("Erreur lors de la récupération des enchères actives par utilisateur.", e);
         }
         return activeAuctions;
     }
@@ -170,7 +175,6 @@ public class AuctionDAOImpl implements AuctionDAO {
              PreparedStatement stmt = createPreparedStatement(con, radioButtonValue, user)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                // Créez des objets Auction à partir des données de la base de données
                 Auction auction = extractAuctionFromResultSet(rs);
                 auctions.add(auction);
             }
@@ -219,6 +223,7 @@ public class AuctionDAOImpl implements AuctionDAO {
 
         return stmt;
     }
+
 
 
 }
