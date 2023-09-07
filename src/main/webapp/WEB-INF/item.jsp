@@ -95,42 +95,45 @@
 								alt="Table" class="img-fluid rounded img-max-height">
 						</div>
 					</div>
-					
-					
-<c:choose>
-    <c:when test="${sessionScope.user == highestBidder && soldItem.auctionEndDate < currentDate}">
-        <div class="card p-0">
-            <div class="card-body pb-1">
-                <img class="mb-3" alt="trophy" src="img/trophy.png"
-                    style="width: 100px; display: block; margin: 0 auto;">
-                <h4 class="text-center mb-3" style="color: green;">You won this item !</h4>
-            </div>
-        </div>
-    </c:when>
-    <c:otherwise>
-        <div class="card">
-            <div class="card-body p-2">
-                <h2 class="text-center mb-3">My Proposal</h2>
-                <form action="ItemServlet?itemId=${soldItem.itemNumber}" method="post">
-                    <input type="number" id="proposal" name="proposal" class="form-control" required
-                        value="${Math.max(soldItem.startingPrice, highestBid)}"
-                        min="${Math.max(soldItem.startingPrice, highestBid) + 1 }">
-                    <c:choose>
-                        <c:when test="${soldItem.auctionStartDate.before(currentDate)}">
-                            <button type="submit" class="btn btn-primary btn-block mt-3">Bid</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="submit" class="btn btn-primary btn-block mt-3" disabled>Come back soon</button>
-                        </c:otherwise>
-                    </c:choose>
-                </form>
-            </div>
-        </div>
-    </c:otherwise>
-</c:choose>
 
 
-
+					<c:choose>
+						<c:when
+							test="${sessionScope.user == highestBidder && soldItem.auctionEndDate < currentDate}">
+							<div class="card p-0">
+								<div class="card-body pb-1">
+									<img class="mb-3" alt="trophy" src="img/trophy.png"
+										style="width: 100px; display: block; margin: 0 auto;">
+									<h4 class="text-center mb-3" style="color: green;">You won
+										this item !</h4>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="card">
+								<div class="card-body p-2">
+									<h2 class="text-center mb-3">My Proposal</h2>
+									<form action="ItemServlet?itemId=${soldItem.itemNumber}"
+										method="post">
+										<input type="number" id="proposal" name="proposal"
+											class="form-control" required
+											value="${Math.max(soldItem.startingPrice, highestBid)}"
+											min="${Math.max(soldItem.startingPrice, highestBid) + 1 }">
+										<c:choose>
+											<c:when
+												test="${soldItem.auctionStartDate.before(currentDate)}">
+												<button type="submit" class="btn btn-primary btn-block mt-3">Bid</button>
+											</c:when>
+											<c:otherwise>
+												<button type="submit" class="btn btn-primary btn-block mt-3"
+													disabled>Come back soon</button>
+											</c:otherwise>
+										</c:choose>
+									</form>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
