@@ -70,10 +70,21 @@
 							</p>
 
 							<p>
-								<span class="highlight-info">Auction End Date: </span>
-								<fmt:formatDate value="${soldItem.auctionEndDate}"
-									pattern="dd MM yyyy" />
+								<c:choose>
+									<c:when test="${soldItem.auctionEndDate < currentDate}">
+										<span class="highlight-info">Auction End Date: </span>
+										<span style="color: red;">ENDED (<fmt:formatDate
+												value="${soldItem.auctionEndDate}" pattern="dd MM yyyy" />)
+										</span>
+									</c:when>
+									<c:otherwise>
+										<span class="highlight-info">Auction End Date: </span>
+										<fmt:formatDate value="${soldItem.auctionEndDate}"
+											pattern="dd MM yyyy" />
+									</c:otherwise>
+								</c:choose>
 							</p>
+
 							<div class="card p-0 bg-carton shadow-lg text-white">
 								<div class="card-body">
 									<h4 class="text-center mb-3">Pick Up :</h4>
@@ -91,7 +102,7 @@
 					<div class="card mb-3 text-center">
 						<div class="card-body">
 							<img
-								src=" https://picsum.photos/350/200?random=${item.itemNumber}"
+								src=" https://picsum.photos/400/200?random=${item.itemNumber}"
 								alt="Table" class="img-fluid rounded img-max-height">
 						</div>
 					</div>
@@ -99,8 +110,8 @@
 
 					<c:choose>
 						<c:when
-							test="${sessionScope.user == highestBidder && soldItem.auctionEndDate < currentDate}">
-							<div class="card p-0">
+							test="${sessionScope.user.username == highestBidder && soldItem.auctionEndDate < currentDate}">
+							<div class="card p-3">
 								<div class="card-body pb-1">
 									<img class="mb-3" alt="trophy" src="img/trophy.png"
 										style="width: 100px; display: block; margin: 0 auto;">
