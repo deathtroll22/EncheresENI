@@ -14,16 +14,19 @@ import fr.eni.enchereseni.bll.AuctionManager;
 import fr.eni.enchereseni.bll.ManagerException;
 import fr.eni.enchereseni.bll.ManagerSing;
 import fr.eni.enchereseni.bll.SoldItemManager;
+import fr.eni.enchereseni.bll.UserManager;
 import fr.eni.enchereseni.bo.Auction;
 import fr.eni.enchereseni.bo.Category;
 import fr.eni.enchereseni.bo.PickUp;
 import fr.eni.enchereseni.bo.SoldItem;
 import fr.eni.enchereseni.bo.User;
+import fr.eni.enchereseni.dal.UserDAO;
 
 public class ItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AuctionManager auctionManager = ManagerSing.getAuctionManager();
 	private final SoldItemManager soldItemManager = ManagerSing.getSoldItemManager();
+	private final UserManager userManager = ManagerSing.getUserManager();
 
 	public ItemServlet() {
 		super();
@@ -100,25 +103,21 @@ public class ItemServlet extends HttpServlet {
 	            User previousBestBidderUser = previousBestBidder.getUser();
 	            int previousBidAmount = previousBestBidder.getBidAmount();
 	            previousBestBidderUser.setCredit(previousBestBidderUser.getCredit() + previousBidAmount);
-	            // Mettez à jour le crédit de l'utilisateur dans la base de données
-	            // Assurez-vous que cette fonctionnalité est implémentée correctement dans votre DAO.
+	            userManager.updateUserCredit(previousBestBidderUser.getUserID(), previousBestBidderUser.getCredit());
 	        }
 
 	        request.setAttribute("currentValue", currentValue);
 
 	        String proposalStr = request.getParameter("proposal");
 
-	        System.out.println("proposalStr: " + proposalStr); // Ajoutez cette ligne pour vérifier la valeur de proposalStr
-
 	        if (proposalStr != null && !proposalStr.isEmpty()) {
 	            try {
 	                int proposalAmount = Integer.parseInt(proposalStr);
 
-	                System.out.println("proposalAmount: " + proposalAmount); // Ajoutez cette ligne pour vérifier la valeur de proposalAmount
-
 	                if (isValidProposal(proposalAmount, currentValue, user.getCredit())) {
 	                    // La proposition est valide, vous pouvez la traiter
 	                    user.setCredit(user.getCredit() - proposalAmount);
+	                    userManager.updateUserCredit(user.getUserID(), user.getCredit());
 	                    auctionManager.createOrUpdateAuction(user.getUserID(), itemId, proposalAmount);
 
 	                    response.sendRedirect(request.getContextPath() + "/ItemServlet?itemId=" + itemId);

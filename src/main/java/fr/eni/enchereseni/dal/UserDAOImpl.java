@@ -21,6 +21,7 @@ public class UserDAOImpl implements UserDAO {
 	final String SELECT_USER_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 	final String COUNT_USERNAME = "SELECT COUNT(*) FROM UTILISATEURS WHERE pseudo = ?";
 	final String COUNT_USER_MAIL = "SELECT COUNT(*) FROM UTILISATEURS WHERE email = ?";
+	final String UPDATE_CREDIT_USER = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
 
 	// create user
 	@Override
@@ -235,5 +236,24 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void updateUserCredit(Integer userID, int credit) {
+	    
+	    try (Connection con = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(UPDATE_CREDIT_USER);	        
+			stmt.setInt(1, credit);
+			stmt.setInt(2, userID);
+
+	        int rowsUpdated = stmt.executeUpdate();
+
+	        if (rowsUpdated != 1) {
+	            throw new SQLException("Failed to update user credit.");
+	        }
+	    } catch (SQLException e) {
+			e.printStackTrace();
+	    } 
+	}
+
 
 }
