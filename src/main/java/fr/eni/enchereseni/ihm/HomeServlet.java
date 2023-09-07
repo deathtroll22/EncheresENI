@@ -142,7 +142,7 @@ public class HomeServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        request.setAttribute("allItems", allItems);
+        request.setAttribute("allItems", allItems); 
 
         CategoryManager category = new CategoryManagerImpl();
         List<Category> categories = null;
