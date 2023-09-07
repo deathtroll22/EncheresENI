@@ -41,4 +41,10 @@ public class AuctionManagerImpl implements AuctionManager {
 		List<Auction> AuctionsById = dao.getAuctionsByItemId(itemId);
 		return AuctionsById;
 	}
+
+	@Override
+	public List<Auction> getAuctionsByRadioButton(String radioButtonValue, User user) throws ManagerException {
+		List<Auction> AuctionsByRadioButton  = dao.getAuctionsByRadioButton(radioButtonValue, user);
+		return AuctionsByRadioButton;
+	}
 }

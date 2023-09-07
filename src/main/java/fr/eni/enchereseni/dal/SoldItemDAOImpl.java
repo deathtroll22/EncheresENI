@@ -65,7 +65,7 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 		    "INNER JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
 		    "INNER JOIN RETRAITS r ON av.no_article = r.no_article " +
 		    "WHERE 1=1 %s";
-
+		
 
 	@Override
 	public void createItem(SoldItem item, int userId) {

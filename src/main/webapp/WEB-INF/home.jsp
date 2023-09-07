@@ -77,7 +77,7 @@
             <div class="form-check">
                 <input type="radio" class="form-check-input" id="radio1"
                     name="typeRadio" value="openAuctions"
-                    <c:if test="${param.typeRadio == 'typeRadio1'}">checked</c:if>>
+                    <c:if test="${empty param.typeRadio or param.typeRadio == 'openAuctions'}">checked</c:if>>
                 <label class="form-check-label" for="radio1">Open Auctions</label>
             </div>
             <div class="form-check">
@@ -129,57 +129,58 @@
 		<!-- Liste des enchères en cours -->
 		<div class="card col-12 bg-white my-4 py-4">
 			<div class="row">
-				<c:forEach var="item" items="${allItems}">
-					<div class="col-md-6">
-						<div class="card shadow bg-light mb-4 fancy_card">
-							<a
-								href="<c:url value='/ItemServlet'><c:param name='itemId' value='${item.itemNumber}'/></c:url>"
-								class="card-link"
-								<c:if test="${sessionScope.user == null}">data-toggle="modal" data-target="#loginModal"</c:if>>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-4">
-											<img
-												src=" https://picsum.photos/200?random=${item.itemNumber}"
-												alt="Table" class="img-fluid rounded img-max-height">
-										</div>
-										<div class="col-md-8">
-											<h4>
-												<c:out value="${item.itemName}" />
-											</h4>
-											<c:choose>
-												<c:when test="${item.sellingPrice > item.startingPrice}">
-													<p>
-														Price:
-														<c:out value="${item.sellingPrice}" />
-														€
-													</p>
-												</c:when>
-												<c:otherwise>
-													<p>
-														Price:
-														<c:out value="${item.startingPrice}" />
-														pts
-													</p>
-												</c:otherwise>
-											</c:choose>
-											<p>
-												Auction Ends :
-												<fmt:formatDate value="${item.auctionEndDate}"
-													pattern="dd MM yyyy" />
-											</p>
-											<p>
-												Seller:
-												<c:out value="${item.user.username}" />
-											</p>
-											<!-- Autres informations sur l'article -->
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</c:forEach>
+				<c:forEach var="auction" items="${auctions}">
+                    <!-- Affichez les détails de chaque enchère ici -->
+                    <div class="col-md-6">
+                        <div class="card shadow bg-light mb-4 fancy_card">
+                            <a
+                                href="<c:url value='/ItemServlet'><c:param name='itemId' value='${auction.soldItem.itemNumber}'/></c:url>"
+                                class="card-link"
+                                <c:if test="${sessionScope.user == null}">data-toggle="modal" data-target="#loginModal"</c:if>>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img
+                                                src=" https://picsum.photos/200?random=${auction.soldItem.itemNumber}"
+                                                alt="Table" class="img-fluid rounded img-max-height">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h4>
+                                                <c:out value="${auction.soldItem.itemName}" />
+                                            </h4>
+                                            <c:choose>
+                                                <c:when test="${auction.soldItem.sellingPrice > auction.soldItem.startingPrice}">
+                                                    <p>
+                                                        Price:
+                                                        <c:out value="${auction.soldItem.sellingPrice}" />
+                                                        €
+                                                    </p>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <p>
+                                                        Price:
+                                                        <c:out value="${auction.soldItem.startingPrice}" />
+                                                        pts
+                                                    </p>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <p>
+                                                Auction Ends :
+                                                <fmt:formatDate value="${auction.soldItem.auctionEndDate}"
+                                                    pattern="dd MM yyyy" />
+                                            </p>
+                                            <p>
+                                                Seller:
+                                                <c:out value="${auction.user.username}" />
+                                            </p>
+                                            <!-- Autres informations sur l'article -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </c:forEach>
 			</div>
 		</div>
 	</div>
@@ -196,5 +197,22 @@
     // Attachez la fonction à l'événement onchange du sélecteur de catégorie
     document.getElementById("categorySelect").addEventListener("change", updateCategoryHiddenField);
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const filterButtons = document.querySelectorAll(".form-check-input");
+        
+        filterButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                const radioValue = button.value;
+                // Définissez la valeur du champ caché typeRadio sur la valeur du bouton radio cliqué
+                document.querySelector("input[name='typeRadio']").value = radioValue;
+                // Soumettez le formulaire
+                document.querySelector("form").submit();
+            });
+        });
+    });
+</script>
+
+
 
 </html>

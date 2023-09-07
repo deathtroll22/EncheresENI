@@ -12,6 +12,7 @@ public interface AuctionDAO {
     public Auction getPreviousBestBidder(int itemId);
     public List<Auction> getActiveAuctions(User user);
     public List<Auction> getAuctionsByItemId(int itemId);
+	List<Auction> getAuctionsByRadioButton(String radioButtonValue, User user);
 
     
 	/*public void createItem(SoldItem item);

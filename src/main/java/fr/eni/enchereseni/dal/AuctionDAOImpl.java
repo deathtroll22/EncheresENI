@@ -23,6 +23,30 @@ public class AuctionDAOImpl implements AuctionDAO {
     final String CURRENT_AUCTION = "SELECT TOP 1 * FROM ENCHERES WHERE no_article = ? ORDER BY date_enchere DESC";
     final String GET_ACTIVE_AUCTIONS_BY_USER = "SELECT * FROM ENCHERES WHERE no_utilisateur = ? AND date_enchere >= GETDATE()";
     final String GET_AUCTIONS_BY_ITEM_ID = "SELECT * FROM ENCHERES WHERE no_article = ?";
+    
+	final String SELECT_MY_SOLDITEM_OPEN = "SELECT AV.*"
+			+ "FROM ARTICLES_VENDUS AV"
+			+ "WHERE AV.no_utilisateur = ?"
+			+ "  AND AV.date_debut_encheres <= GETDATE()"
+			+ "  AND AV.date_fin_encheres > GETDATE()";
+	
+	final String SELECT_MY_FUTUR_SOLDITEM = "SELECT AV.*"
+			+ "FROM ARTICLES_VENDUS AV"
+			+ "WHERE AV.no_utilisateur = ?"
+			+ "  AND AV.date_debut_encheres > GETDATE()";
+	
+	final String SELECT_MY_EXPIRED_SOLDITEMS = "SELECT AV.*"
+			+ "FROM ARTICLES_VENDUS AV"
+			+ "WHERE AV.no_utilisateur = ?"
+			+ "  AND AV.date_fin_encheres <= GETDATE()";
+	
+	final String GET_ACTIVE_AUCTIONS = "SELECT * FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article WHERE AV.date_fin_encheres > GETDATE()";
+    final String GET_USER_ACTIVE_AUCTIONS = "SELECT E.* FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"+
+    										"WHERE AV.date_debut_encheres <= GETDATE() AND AV.date_fin_encheres > GETDATE() AND E.no_utilisateur = ?";
+    final String SELECT_MY_WIN_AUCTIONS = "SELECT E.* FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"
+    		+ "WHERE AV.date_fin_encheres <= GETDATE() AND E.no_utilisateur = ? AND E.montant_enchere = "
+    		+ "   ( SELECT MAX(montant_enchere)"
+    		+ "    FROM ENCHERES WHERE no_article = AV.no_article)";
 
 
     @Override
@@ -135,6 +159,64 @@ public class AuctionDAOImpl implements AuctionDAO {
             throw new RuntimeException("Erreur lors de la récupération des enchères par ID d'article.", e);
         }
         return auctions;
+    }
+    
+    @Override
+    public List<Auction> getAuctionsByRadioButton(String radioButtonValue, User user) {
+        List<Auction> auctions = new ArrayList<>();
+
+        try (Connection con = ConnectionProvider.getConnection();
+             PreparedStatement stmt = createPreparedStatement(con, radioButtonValue, user)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                // Créez des objets Auction à partir des données de la base de données
+                Auction auction = extractAuctionFromResultSet(rs);
+                auctions.add(auction);
+            }
+        } catch (SQLException e) {
+            // Gérez les exceptions SQL ici
+            throw new RuntimeException("Erreur lors de la récupération des enchères par radiobouton.", e);
+        }
+
+        return auctions;
+    }
+
+    // Méthode pour créer la PreparedStatement en fonction de la valeur du radiobouton
+    private PreparedStatement createPreparedStatement(Connection con, String radioButtonValue, User user) throws SQLException {
+        String query = "";
+
+        switch (radioButtonValue) {
+            case "openAuctions":
+                query = GET_ACTIVE_AUCTIONS;
+                break;
+            case "myOngoingBids":
+                query = GET_USER_ACTIVE_AUCTIONS;
+                break;
+            case "myWonAuctions":
+                query = SELECT_MY_WIN_AUCTIONS;
+                break;
+            case "myOngoingsales":
+                query = SELECT_MY_SOLDITEM_OPEN;
+                break;
+            case "salesNotStarted":
+                query = SELECT_MY_FUTUR_SOLDITEM;
+                break;
+            case "completedSales":
+                query = SELECT_MY_EXPIRED_SOLDITEMS;
+                break;
+            default:
+                // Gestion de cas par défaut
+                throw new IllegalArgumentException("Radiobouton inconnu : " + radioButtonValue);
+        }
+
+        PreparedStatement stmt = con.prepareStatement(query);
+
+        if ("myOngoingBids".equals(radioButtonValue) || "myWonAuctions".equals(radioButtonValue) || "myOngoingsales".equals(radioButtonValue)
+                || "salesNotStarted".equals(radioButtonValue) || "completedSales".equals(radioButtonValue)) {
+            stmt.setInt(1, user.getUserID());
+        }
+
+        return stmt;
     }
 
 
