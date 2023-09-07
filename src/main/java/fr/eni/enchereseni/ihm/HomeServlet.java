@@ -112,7 +112,7 @@ public class HomeServlet extends HttpServlet {
         SoldItemManager soldItemManager = ManagerSing.getSoldItemManager(); 
         List<SoldItem> allItems = null;
 
-        try {
+        try { 
             String searchInput = request.getParameter("searchInput");
             String categorySelect = request.getParameter("categorySelect");
 
