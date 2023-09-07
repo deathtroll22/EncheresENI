@@ -44,7 +44,7 @@ body {
 			<div class="form-group">
 				<label for="pseudo">Username :</label> <input type="text"
 					class="form-control" id="pseudo" name="pseudo" required
-					pattern="[A-Za-z0-9]+">
+					pattern="[A-Za-z0-9]+" title="The username only accepts alphanumeric characters">
 			</div>
 
 			<div class="form-row">
@@ -62,8 +62,9 @@ body {
 					class="form-control" id="email" name="mail" required>
 			</div>
 			<div class="form-group">
-				<label for="telephone">Phone :</label> <input type="tel"
-					class="form-control" id="telephone" name="phone">
+				<label for="telephone">Phone :</label> 
+				<input type="tel" class="form-control" id="telephone" name="phone"
+				pattern="[0-9]{10}" title="Please enter a 10-digit phone number">
 			</div>
 			<div class="form-group">
 				<label for="rue">Street :</label> <input type="text"
@@ -71,8 +72,9 @@ body {
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-6">
-					<label for="code_postal">Postal Code :</label> <input type="text"
-						class="form-control" id="code_postal" name="post_code" required>
+					<label for="code_postal">Postal Code :</label> 
+					<input type="text" class="form-control" id="code_postal" name="post_code" required
+					pattern="\d{5}" title="Please enter a valid 5-digit postal code">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="ville">City :</label> <input type="text"

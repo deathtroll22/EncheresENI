@@ -67,7 +67,7 @@
 							<div class="form-group">
 								<label for="telephone" class="highlight-info">Telephone:</label>
 								<input type="text" class="form-control" id="telephone"
-									name="telephone" value="${user.phoneNumber}">
+									name="telephone" value="${user.phoneNumber}" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
 							</div>
 							<div class="form-group">
 								<label for="street" class="highlight-info">Street:</label> <input
@@ -77,7 +77,7 @@
 							<div class="form-group">
 								<label for="postalCode" class="highlight-info">Postal
 									Code:</label> <input type="text" class="form-control" id="postalCode"
-									name="postalCode" value="${user.postalCode}">
+									name="postalCode" value="${user.postalCode}" pattern="\d{5}" title="Please enter a valid 5-digit postal code">>
 							</div>
 							<div class="form-group">
 								<label for="city" class="highlight-info">City:</label> <input
