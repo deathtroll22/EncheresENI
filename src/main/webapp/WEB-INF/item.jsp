@@ -67,8 +67,7 @@
 										<strong>No one has bid yet. Be the first!</strong>
 									</c:when>
 									<c:otherwise>
-										<c:out value="${highestBid}" /> pts by ${highestBidder}
-        </c:otherwise>
+										<c:out value="${highestBid}" /> pts by ${highestBidder}</c:otherwise>
 								</c:choose>
 							</p>
 
