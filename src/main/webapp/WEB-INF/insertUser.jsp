@@ -90,13 +90,11 @@ body {
 			</div>
 
 			<% if (request.getAttribute("usernameTaken") != null && (boolean) request.getAttribute("usernameTaken")) { %>
-			<div class="alert alert-danger" role="alert">Le nom
-				d'utilisateur est déjà pris.</div>
+			<div class="alert alert-danger" role="alert">The username is already taken.</div>
 			<% } %>
 
 			<% if (request.getAttribute("emailTaken") != null && (boolean) request.getAttribute("emailTaken")) { %>
-			<div class="alert alert-danger" role="alert">L'adresse e-mail
-				est déjà enregistrée.</div>
+			<div class="alert alert-danger" role="alert">The email address is already registered</div>
 			<% } %>
 
 			<% if (request.getAttribute("error") != null) { %>

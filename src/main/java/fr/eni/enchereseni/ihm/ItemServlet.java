@@ -124,18 +124,17 @@ public class ItemServlet extends HttpServlet {
 	                    return;
 	                } else {
 	                    // La proposition n'est pas valide, renvoyez un message d'erreur à l'utilisateur
-	                    request.setAttribute("errorMessage", "La proposition d'enchère n'est pas valide.");
+	                    request.setAttribute("errorMessage", "The bid offer is not valid.");
 	                    request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	                }
 	            } catch (NumberFormatException e) {
 	                // Gérer l'exception si la proposition n'est pas un nombre valide
-	                request.setAttribute("errorMessage", "La proposition d'enchère n'est pas un nombre valide.");
+	                request.setAttribute("errorMessage", "The bid amount is not a valid number.");
 	                request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	            }
 	        } else {
 	            // Gérer le cas où proposalStr est vide (l'utilisateur n'a rien saisi)
-	            System.out.println("y a rien dans le champ");
-	            request.setAttribute("errorMessage", "Veuillez entrer une proposition d'enchère.");
+	            request.setAttribute("errorMessage", "Please enter a bid.");
 	            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	        }
 
@@ -153,7 +152,7 @@ public class ItemServlet extends HttpServlet {
 	private void handleException(ManagerException e, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		e.printStackTrace(); // Log the exception for debugging purposes
-		request.setAttribute("errorMessage", "Erreur lors de la récupération des détails de l'article.");
+		request.setAttribute("errorMessage", "Error while retrieving item details.");
 		request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response);
 	}
 }
