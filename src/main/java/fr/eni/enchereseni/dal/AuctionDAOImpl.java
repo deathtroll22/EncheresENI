@@ -24,29 +24,30 @@ public class AuctionDAOImpl implements AuctionDAO {
     final String GET_ACTIVE_AUCTIONS_BY_USER = "SELECT * FROM ENCHERES WHERE no_utilisateur = ? AND date_enchere >= GETDATE()";
     final String GET_AUCTIONS_BY_ITEM_ID = "SELECT * FROM ENCHERES WHERE no_article = ?";
     
-	final String SELECT_MY_SOLDITEM_OPEN = "SELECT AV.*"
-			+ "FROM ARTICLES_VENDUS AV"
-			+ "WHERE AV.no_utilisateur = ?"
-			+ "  AND AV.date_debut_encheres <= GETDATE()"
-			+ "  AND AV.date_fin_encheres > GETDATE()";
+    final String SELECT_MY_SOLDITEM_OPEN = "SELECT *"
+            + " FROM ARTICLES_VENDUS AV"
+            + " WHERE AV.no_utilisateur = ?"
+            + "   AND AV.date_debut_encheres <= GETDATE()"
+            + "   AND AV.date_fin_encheres > GETDATE()";
+
 	
-	final String SELECT_MY_FUTUR_SOLDITEM = "SELECT AV.*"
-			+ "FROM ARTICLES_VENDUS AV"
-			+ "WHERE AV.no_utilisateur = ?"
+	final String SELECT_MY_FUTUR_SOLDITEM = "SELECT *"
+			+ " FROM ARTICLES_VENDUS AV"
+			+ " WHERE AV.no_utilisateur = ?"
 			+ "  AND AV.date_debut_encheres > GETDATE()";
 	
-	final String SELECT_MY_EXPIRED_SOLDITEMS = "SELECT AV.*"
-			+ "FROM ARTICLES_VENDUS AV"
-			+ "WHERE AV.no_utilisateur = ?"
+	final String SELECT_MY_EXPIRED_SOLDITEMS = "SELECT *"
+			+ " FROM ARTICLES_VENDUS AV"
+			+ " WHERE AV.no_utilisateur = ?"
 			+ "  AND AV.date_fin_encheres <= GETDATE()";
 	
 	final String GET_ACTIVE_AUCTIONS = "SELECT * FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article WHERE AV.date_fin_encheres > GETDATE()";
     final String GET_USER_ACTIVE_AUCTIONS = "SELECT E.* FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"+
     										"WHERE AV.date_debut_encheres <= GETDATE() AND AV.date_fin_encheres > GETDATE() AND E.no_utilisateur = ?";
-    final String SELECT_MY_WIN_AUCTIONS = "SELECT E.* FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"
+    final String SELECT_MY_WIN_AUCTIONS = "SELECT * FROM ENCHERES E INNER JOIN ARTICLES_VENDUS AV ON E.no_article = AV.no_article"
     		+ "WHERE AV.date_fin_encheres <= GETDATE() AND E.no_utilisateur = ? AND E.montant_enchere = "
-    		+ "   ( SELECT MAX(montant_enchere)"
-    		+ "    FROM ENCHERES WHERE no_article = AV.no_article)";
+    		+ "   ( SELECT MAX(E.montant_enchere)"
+    		+ "    FROM ENCHERES E WHERE no_article = AV.no_article)";
 
 
     @Override

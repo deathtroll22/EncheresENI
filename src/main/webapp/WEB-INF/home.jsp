@@ -249,22 +249,5 @@
     // Attachez la fonction à l'événement onchange du sélecteur de catégorie
     document.getElementById("categorySelect").addEventListener("change", updateCategoryHiddenField);
 </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const filterButtons = document.querySelectorAll(".form-check-input");
-        
-        filterButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                const radioValue = button.value;
-                // Définissez la valeur du champ caché typeRadio sur la valeur du bouton radio cliqué
-                document.querySelector("input[name='typeRadio']").value = radioValue;
-                // Soumettez le formulaire
-                document.querySelector("form").submit();
-            });
-        });
-    });
-</script>
-
-
 
 </html>
