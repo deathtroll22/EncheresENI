@@ -10,8 +10,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-
+import jakarta.servlet.http.HttpSession;
+s
 public class EditItemServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -25,10 +25,10 @@ public class EditItemServlet extends HttpServlet {
             SoldItemManager manager = ManagerSing.getSoldItemManager();
             SoldItem itemToEdit = manager.getSoldItemById(itemId);
 
-            // Placez l'article à éditer dans la session ou les attributs de la requête
+            // Placez l'article à éditer dans les attributs de la requête pour préremplir les champs
             request.setAttribute("itemToEdit", itemToEdit);
 
-            // Redirigez l'utilisateur vers la page d'édition
+            // Redirigez l'utilisateur vers la page d'édition (editItem.jsp)
             request.getRequestDispatcher("/WEB-INF/editItem.jsp").forward(request, response);
         } catch (ManagerException e) {
             // Gérez les exceptions liées à l'édition de l'article
