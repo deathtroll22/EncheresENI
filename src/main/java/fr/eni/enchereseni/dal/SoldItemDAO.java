@@ -23,6 +23,9 @@ public interface SoldItemDAO {
 	public void deleteItem(int itemId);
 
 
+	public void updateSoldItem(SoldItem solItem);
+
+
 	/*List<SoldItem> getSoldItemsByCategory(
 		    Integer categoryId,
 		    String itemName,

@@ -18,7 +18,6 @@ import fr.eni.enchereseni.dal.util.ConnectionProvider;
 public class SoldItemDAOImpl implements SoldItemDAO {
 
 	final String CREATE_ITEM = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_categorie, no_utilisateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, prix_vente = ? WHERE no_article = ?";
 	final String DELETE_ITEM = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 
 	final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
@@ -65,6 +64,13 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 		    "INNER JOIN CATEGORIES c ON av.no_categorie = c.no_categorie " +
 		    "INNER JOIN RETRAITS r ON av.no_article = r.no_article " +
 		    "WHERE 1=1 %s";
+	
+	final String UPDATE_ITEM = "UPDATE ARTICLES_VENDUS " +
+            "SET nom_article = ?, description = ?, " +
+            "date_debut_encheres = ?, date_fin_encheres = ?, " +
+            "prix_initial = ?, prix_vente = ?, " +
+            "no_categorie = ? " +  
+            "WHERE no_article = ?";
 		
 
 	@Override
@@ -314,6 +320,30 @@ public class SoldItemDAOImpl implements SoldItemDAO {
 	        e.printStackTrace(); // Vous pouvez gérer l'exception de manière appropriée ici
 	    }
 	}
+
+	@Override
+	public void updateSoldItem(SoldItem soldItem) {
+	    try (Connection con = ConnectionProvider.getConnection()) {
+	        
+	        PreparedStatement stmt = con.prepareStatement(UPDATE_ITEM, Statement.RETURN_GENERATED_KEYS );
+	        stmt.setString(1, soldItem.getItemName());
+	        stmt.setString(2, soldItem.getItemDescription());
+	        stmt.setDate(3, soldItem.getAuctionStartDate());
+	        stmt.setDate(4, soldItem.getAuctionEndDate());
+	        stmt.setDouble(5, soldItem.getStartingPrice());
+	        stmt.setDouble(6, soldItem.getSellingPrice());
+	        stmt.setInt(7, soldItem.getCategoryItem().getCategoryNumber());    
+
+	        int affectedRows = stmt.executeUpdate();
+
+	        if (affectedRows == 0) {
+	            throw new SQLException("Updating item failed, no rows affected.");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 
 
 

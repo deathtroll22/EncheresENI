@@ -18,6 +18,8 @@ public interface SoldItemManager {
 
 	public void deleteItem(int itemId) throws ManagerException;
 
+	public void updateSoldItem(SoldItem solItem) throws ManagerException;
+
 
 }
 

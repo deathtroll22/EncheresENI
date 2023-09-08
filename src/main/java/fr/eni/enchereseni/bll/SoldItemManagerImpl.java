@@ -50,6 +50,11 @@ public class SoldItemManagerImpl implements SoldItemManager {
 	dao.deleteItem(itemId);
 	}
 
+	@Override
+	public void updateSoldItem(SoldItem solItem) throws ManagerException {
+		dao.updateSoldItem(solItem);		
+	}
+
 
 
 
