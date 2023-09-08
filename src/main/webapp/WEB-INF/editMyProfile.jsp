@@ -77,7 +77,7 @@
 							<div class="form-group">
 								<label for="postalCode" class="highlight-info">Postal
 									Code:</label> <input type="text" class="form-control" id="postalCode"
-									name="postalCode" value="${user.postalCode}" pattern="\d{5}" title="Please enter a valid 5-digit postal code">>
+									name="postalCode" value="${user.postalCode}" pattern="\d{5}" title="Please enter a valid 5-digit postal code">
 							</div>
 							<div class="form-group">
 								<label for="city" class="highlight-info">City:</label> <input

@@ -141,7 +141,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <img
-                                                src=" https://picsum.photos/200?random=${auction.soldItem.itemNumber}"
+                                                src=" https://picsum.photos/350/200?random=${auction.soldItem.itemNumber}"
                                                 alt="Table" class="img-fluid rounded img-max-height">
                                         </div>
                                         <div class="col-md-8">

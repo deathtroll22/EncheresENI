@@ -155,6 +155,8 @@
 				</div>
 			</div>
 		</div>
+		
+		
 		<c:if test="${soldItem.auctionStartDate.after(currentDate) && sessionScope.user.username == seller.username}">
 		<div class=" col-12 p-4 ">
 			<div class="row">
@@ -164,7 +166,6 @@
 						onclick="window.location.href='EditItemServlet?itemId=${soldItem.itemNumber}'">Edit
 						item</button>
 				</div>
-
 				<!-- Colonne pour le bouton Supprimer -->
 				<div class="col-md-4 p-0 px-1">
 					<button class="btn btn-danger btn-block" onclick="confirmDelete()">Delete
